@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types'
 
-import { RenderLatexField } from '../components/latex/LatexField'
+import { generateLatexField } from '../components/latex/LatexField'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -19,7 +19,7 @@ export const Problems: CollectionConfig = {
       label: 'Rendered Content',
       admin: {
         components: {
-          Field: RenderLatexField,
+          Field: generateLatexField({ targetFieldName: 'content' }),
         },
       },
     },
