@@ -4,20 +4,7 @@ import { useFormFields } from 'payload/components/forms'
 import { useDocumentInfo } from 'payload/components/utilities'
 import { Field } from 'payload/types'
 
-const ReactMarkdown = React.lazy(() => import('react-markdown'))
-
-let rehypeKatex: any
-let remarkFrontmatter: any
-let remarkGfm: any
-let remarkMath: any
-;(async () => {
-  if (typeof window !== 'undefined') {
-    rehypeKatex = (await import('rehype-katex')).default
-    remarkFrontmatter = (await import('remark-frontmatter')).default
-    remarkGfm = (await import('remark-gfm')).default
-    remarkMath = (await import('remark-math')).default
-  }
-})()
+import { LatexMarkdown } from './LatexMarkdown'
 
 interface UIFieldProps {
   name: string
@@ -43,13 +30,7 @@ export const RenderLatexField = (props: UIFieldProps) => {
 
   if (typeof source?.value !== 'undefined') {
     // return null
-    return (
-      <ReactMarkdown
-        children={source.value as string}
-        remarkPlugins={[remarkMath, remarkGfm, remarkFrontmatter]}
-        rehypePlugins={[rehypeKatex]}
-      />
-    )
+    return <LatexMarkdown>{source.value as string}</LatexMarkdown>
   }
   return null
 }
