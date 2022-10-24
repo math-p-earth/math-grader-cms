@@ -1,30 +1,26 @@
 import { CollectionConfig } from 'payload/types'
 
-import { flattenText } from '../util/functions/flattenElement'
-
-const populateContentText = async ({ data }) => {
-  return {
-    ...data,
-    contentText: flattenText(data.content),
-  }
-}
+import { RenderLatexField } from '../components/latex/LatexField'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
   admin: {
-    useAsTitle: 'contentText',
+    useAsTitle: 'content',
   },
   fields: [
     {
       name: 'content',
-      type: 'richText',
+      type: 'textarea',
       required: true,
     },
     {
-      name: 'contentText',
-      type: 'text',
+      name: 'content-render',
+      type: 'ui',
+      label: 'Rendered Content',
       admin: {
-        readOnly: true,
+        components: {
+          Field: RenderLatexField,
+        },
       },
     },
     {
@@ -64,7 +60,4 @@ export const Problems: CollectionConfig = {
       ],
     },
   ],
-  hooks: {
-    beforeChange: [populateContentText],
-  },
 }

@@ -10,6 +10,24 @@ export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
     user: Users.slug,
+    indexHTML: path.join(__dirname, 'admin/index.html'),
+    webpack: (config) => {
+      return {
+        ...config,
+        module: {
+          ...config.module,
+          rules: [
+            ...config.module?.rules,
+            {
+              test: /\.m?js$/,
+              resolve: {
+                fullySpecified: false,
+              },
+            },
+          ],
+        },
+      }
+    },
   },
   collections: [Users, Problems, Drills],
   typescript: {
