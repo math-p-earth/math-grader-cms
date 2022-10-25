@@ -11,12 +11,14 @@ export const Problems: CollectionConfig = {
     {
       name: 'content',
       type: 'textarea',
+      admin: {
+        description: 'Content of the problem in markdown. Supports LaTeX.',
+      },
       required: true,
     },
     {
-      name: 'content-render',
+      name: 'content-latex',
       type: 'ui',
-      label: 'Rendered Content',
       admin: {
         components: {
           Field: generateLatexField({ targetFieldName: 'content' }),
@@ -24,25 +26,25 @@ export const Problems: CollectionConfig = {
       },
     },
     {
-      name: 'problemType',
+      name: 'type',
       type: 'select',
       required: true,
       options: [
         {
-          label: 'Multiple Choice',
-          value: 'multipleChoice',
+          label: 'MCQ',
+          value: 'MCQ',
         },
         {
-          label: 'Short Answer',
-          value: 'shortAnswer',
+          label: 'SHORT',
+          value: 'SHORT',
         },
         {
-          label: 'True/False',
-          value: 'trueFalse',
+          label: 'TF',
+          value: 'TF',
         },
         {
-          label: 'Proof',
-          value: 'proof',
+          label: 'PROOF',
+          value: 'PROOF',
         },
       ],
     },
@@ -50,14 +52,30 @@ export const Problems: CollectionConfig = {
       name: 'choices',
       type: 'array',
       admin: {
-        condition: (data) => data.problemType === 'multipleChoice',
+        condition: (data) => data.type === 'MCQ',
       },
       fields: [
         {
           name: 'choice',
-          type: 'text',
+          type: 'textarea',
+          admin: {
+            description: 'Content of the problem in markdown. Supports LaTeX.',
+          },
+        },
+        {
+          name: 'choice-latex',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: generateLatexField({ targetFieldName: '__PATH__.choice' }),
+            },
+          },
         },
       ],
+    },
+    {
+      name: 'answer',
+      type: 'textarea',
     },
   ],
 }
