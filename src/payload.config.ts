@@ -6,7 +6,7 @@ import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Tags } from './collections/Tags'
-import Users from './collections/Users'
+import { Users } from './collections/Users'
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
