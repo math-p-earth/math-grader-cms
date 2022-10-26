@@ -2,7 +2,7 @@ import { buildConfig } from 'payload/config'
 
 import path from 'path'
 
-import { Drills } from './collections/Drills'
+import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import Users from './collections/Users'
@@ -30,7 +30,7 @@ export default buildConfig({
       }
     },
   },
-  collections: [Users, Problems, Drills, Sources],
+  collections: [Users, Problems, ProblemLists, Sources],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

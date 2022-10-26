@@ -1,5 +1,7 @@
 import { CollectionConfig, Field } from 'payload/types'
 
+import { Source } from '../payload-types'
+
 const bookFields: Field[] = [
   {
     type: 'row',
@@ -85,7 +87,7 @@ export const Sources: CollectionConfig = {
       type: 'group',
       fields: bookFields,
       admin: {
-        condition: (data) => data.type === 'BOOK',
+        condition: (data: Source) => data.type === 'BOOK',
         hideGutter: true,
       },
     },
@@ -95,7 +97,7 @@ export const Sources: CollectionConfig = {
       type: 'group',
       fields: paperFields,
       admin: {
-        condition: (data) => data.type === 'PAPER',
+        condition: (data: Source) => data.type === 'PAPER',
         hideGutter: false,
       },
     },

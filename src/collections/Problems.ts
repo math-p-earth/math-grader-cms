@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload/types'
 
 import { generateLatexField } from '../components/latex/LatexField'
+import { Problem } from '../payload-types'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -52,7 +53,7 @@ export const Problems: CollectionConfig = {
       name: 'choices',
       type: 'array',
       admin: {
-        condition: (data) => data.type === 'MCQ',
+        condition: (data: Problem) => data.type === 'MCQ',
       },
       fields: [
         {
