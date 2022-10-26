@@ -22,6 +22,18 @@ export const ProblemLists: CollectionConfig = {
           label: 'Drill',
           value: 'DRILL',
         },
+        {
+          label: 'Lecture Problem',
+          value: 'LECTURE_PROBLEM',
+        },
+        {
+          label: 'Collection',
+          value: 'COLLECTION',
+        },
+        {
+          label: 'Challenge',
+          value: 'CHALLENGE',
+        },
       ],
     },
     {
