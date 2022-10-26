@@ -5,6 +5,7 @@ import path from 'path'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
+import { Tags } from './collections/Tags'
 import Users from './collections/Users'
 
 export default buildConfig({
@@ -30,7 +31,7 @@ export default buildConfig({
       }
     },
   },
-  collections: [Users, Problems, ProblemLists, Sources],
+  collections: [Users, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

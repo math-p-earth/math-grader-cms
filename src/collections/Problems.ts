@@ -82,6 +82,18 @@ export const Problems: CollectionConfig = {
       name: 'source',
       type: 'relationship',
       relationTo: ['sources'],
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'tags',
+      type: 'relationship',
+      relationTo: ['tags'],
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
 }
