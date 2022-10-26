@@ -17,7 +17,7 @@ export const Problems: CollectionConfig = {
       required: true,
     },
     {
-      name: 'content-latex',
+      name: 'contentLatex',
       type: 'ui',
       admin: {
         components: {
@@ -63,7 +63,7 @@ export const Problems: CollectionConfig = {
           },
         },
         {
-          name: 'choice-latex',
+          name: 'choiceLatex',
           type: 'ui',
           admin: {
             components: {
@@ -76,6 +76,11 @@ export const Problems: CollectionConfig = {
     {
       name: 'answer',
       type: 'textarea',
+    },
+    {
+      name: 'source',
+      type: 'relationship',
+      relationTo: ['sources'],
     },
   ],
 }
