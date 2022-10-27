@@ -39,7 +39,7 @@ export const ProblemLists: CollectionConfig = {
     {
       name: 'problems',
       type: 'relationship',
-      relationTo: ['problems'],
+      relationTo: 'problems',
       hasMany: true,
     },
   ],

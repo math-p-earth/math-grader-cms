@@ -81,7 +81,7 @@ export const Problems: CollectionConfig = {
     {
       name: 'source',
       type: 'relationship',
-      relationTo: ['sources'],
+      relationTo: 'sources',
       admin: {
         position: 'sidebar',
       },
@@ -89,7 +89,7 @@ export const Problems: CollectionConfig = {
     {
       name: 'tags',
       type: 'relationship',
-      relationTo: ['tags'],
+      relationTo: 'tags',
       hasMany: true,
       admin: {
         position: 'sidebar',

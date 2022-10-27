@@ -33,10 +33,8 @@ export interface Problem {
     id?: string;
   }[];
   answer?: string;
-  source?: {
-    value: string | Source;
-    relationTo: 'sources';
-  };
+  source?: string | Source;
+  tags?: string[] | Tag[];
   createdAt: string;
   updatedAt: string;
 }
@@ -62,22 +60,24 @@ export interface Source {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  name?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "problem-lists".
  */
 export interface ProblemList {
   id: string;
   name?: string;
   description?: string;
-  type?: 'DRILL';
-  problems?:
-    | {
-        value: string;
-        relationTo: 'problems';
-      }[]
-    | {
-        value: Problem;
-        relationTo: 'problems';
-      }[];
+  type?: 'DRILL' | 'LECTURE_PROBLEM' | 'COLLECTION' | 'CHALLENGE';
+  problems?: string[] | Problem[];
   createdAt: string;
   updatedAt: string;
 }
