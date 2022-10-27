@@ -8,6 +8,9 @@ export const Problems: CollectionConfig = {
   admin: {
     useAsTitle: 'content',
   },
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       name: 'content',

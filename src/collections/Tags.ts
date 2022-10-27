@@ -3,12 +3,7 @@ import { CollectionAfterReadHook, CollectionConfig, Where } from 'payload/types'
 import { Problem, Tag } from '../payload-types'
 
 // TODO: Reconsider this. A separate API call for problems with query params might be better.
-const addRelatedProblemsHook: CollectionAfterReadHook<Tag> = async ({
-  doc,
-  req,
-  query,
-  findMany,
-}) => {
+const addRelatedProblemsHook: CollectionAfterReadHook<Tag> = async ({ doc, req }) => {
   if (req.payloadAPI === 'REST') {
     const where: Where = {
       tags: {
@@ -31,6 +26,9 @@ export const Tags: CollectionConfig = {
   slug: 'tags',
   admin: {
     useAsTitle: 'name',
+  },
+  access: {
+    read: () => true,
   },
   fields: [
     {
