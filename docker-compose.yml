@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: math-grader-cms
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - PORT=${PORT}
+      - MONGODB_URI=mongodb://mongo/math-grader-cms
+      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
+  
+  mongo:
+    image: mongo:6.0.2
+    container_name: math-grader-mongo
+    restart: unless-stopped

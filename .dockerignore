@@ -1,0 +1,9 @@
+build/
+dist/
+node_modules/
+.dockerignore
+.gitignore
+.prettierrc.js
+docker-compose.yml
+Dockerfile
+nodemon.json
