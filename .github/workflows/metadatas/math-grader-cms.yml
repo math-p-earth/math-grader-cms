@@ -1,5 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
+metadata:
+  name: math-grader-cms
 spec:
   template:
     metadata:
