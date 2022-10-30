@@ -9,7 +9,8 @@ import { Tags } from './collections/Tags'
 import { Users } from './collections/Users'
 
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
+  // Disabled until we have a static IP or domain name
+  // serverURL: 'http://localhost:3000',
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
