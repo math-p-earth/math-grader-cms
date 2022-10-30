@@ -29,4 +29,3 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
-      serviceAccountName: math-grader-cms@math-p-earth.iam.gserviceaccount.com
