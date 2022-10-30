@@ -107,3 +107,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           metadata: .github/workflows/metadatas/math-grader-cms.yml
+          region: ${{ env.REGION }}

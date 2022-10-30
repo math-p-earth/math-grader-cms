@@ -2,10 +2,6 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: math-grader-cms
-  labels:
-    cloud.googleapis.com/location: asia-southeast1
-  annotations:
-    run.googleapis.com/ingress: all
 spec:
   template:
     metadata:
