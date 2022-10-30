@@ -8,8 +8,9 @@ on:
 env:
   REGION: asia-southeast1
 
-# required by google-github-actions/auth@v0
 permissions:
+  contents: read
+  # required by google-github-actions/auth@v0
   id-token: write
 
 jobs:
