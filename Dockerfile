@@ -24,8 +24,6 @@ COPY ["package.json", "pnpm-lock.yaml", "./"]
 
 RUN pnpm install --frozen-lockfile --prod
 
-COPY . .
-
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/build ./build
 
