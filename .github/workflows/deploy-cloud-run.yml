@@ -25,7 +25,7 @@ jobs:
       - name: Get tag value
         id: tag
         run: |
-          git fetch --tags origin
+          git fetch --tags -f origin
           if TAG=$(git describe --exact-match --match 'v*' HEAD); then
             echo "Found tag: $TAG"
             echo "tag=$TAG" >> $GITHUB_OUTPUT
