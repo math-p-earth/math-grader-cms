@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '1'
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      containers:
+        - env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: CMS_MONGODB_URI
+            - name: PAYLOAD_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: CMS_PAYLOAD_SECRET
+          image: ${IMAGE}
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      serviceAccountName: math-grader-cms@math-p-earth.iam.gserviceaccount.com
