@@ -27,6 +27,7 @@ jobs:
         run: |
           git fetch --tags origin
           if TAG=$(git describe --exact-match --match 'v*' HEAD); then
+            echo "Found tag: $TAG"
             echo "tag=$TAG" >> $GITHUB_OUTPUT
             echo "image=$REGION-docker.pkg.dev/math-p-earth/math-p-earth/math-grader-cms:$TAG" >> $GITHUB_OUTPUT
           fi
@@ -100,7 +101,7 @@ jobs:
 
       - name: Set metadata file
         run: |
-          sed -i 's/\${IMAGE}/${{ needs.prepare.outputs.image }}/g' .github/workflows/metadatas/math-grader-cms.yml
+          sed -i 's|\${IMAGE}|${{ needs.prepare.outputs.image }}|g' .github/workflows/metadatas/math-grader-cms.yml
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
