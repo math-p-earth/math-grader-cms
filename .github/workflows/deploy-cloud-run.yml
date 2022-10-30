@@ -21,12 +21,11 @@ jobs:
       image: ${{ steps.tag.outputs.image }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Get tag value
         id: tag
         run: |
+          git fetch --tags origin
           if TAG=$(git describe --exact-match --match 'v*' HEAD); then
             echo "tag=$TAG" >> $GITHUB_OUTPUT
             echo "image=$REGION-docker.pkg.dev/math-p-earth/math-p-earth/math-grader-cms:$TAG" >> $GITHUB_OUTPUT
