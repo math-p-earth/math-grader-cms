@@ -75,6 +75,8 @@ jobs:
     needs: build-push
 
     steps:
+      - uses: actions/checkout@v3
+
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
