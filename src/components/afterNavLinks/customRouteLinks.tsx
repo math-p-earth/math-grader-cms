@@ -1,6 +1,7 @@
 import React from 'react'
 
-// import { Chevron } from 'payload/components/icons'
+import { Chevron } from 'payload/components'
+
 import { NavLink } from 'react-router-dom'
 
 const customRoutes = [
@@ -20,7 +21,7 @@ export const customRouteLinks: React.FC = () => {
       <nav>
         {customRoutes.map((route, index) => (
           <NavLink className="nav__link" activeClassName="active" to={route.href}>
-            {/* <Chevron /> */}
+            <Chevron />
             {route.label}
           </NavLink>
         ))}
