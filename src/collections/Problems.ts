@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types'
 
-import { generateLatexField } from '../components/latex/LatexField'
+import { generateLatexField } from '../admin/components/latex/LatexField'
 import { Problem } from '../payload-types'
 
 export const Problems: CollectionConfig = {

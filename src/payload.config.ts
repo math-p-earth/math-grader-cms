@@ -7,7 +7,7 @@ import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Tags } from './collections/Tags'
 import { Users } from './collections/Users'
-import { customRouteLinks } from './components/afterNavLinks/customRouteLinks'
+import { afterNavLinks } from './admin/components/afterNavLinks'
 
 export default buildConfig({
   // Disabled until we have a static IP or domain name
@@ -15,9 +15,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
-    components: {
-      afterNavLinks: [customRouteLinks]
-    },
+    components: { afterNavLinks },
     webpack: (config) => {
       return {
         ...config,
