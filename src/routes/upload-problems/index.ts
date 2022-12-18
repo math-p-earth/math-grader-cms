@@ -3,16 +3,16 @@ import z from 'zod'
 import { PayloadRequest } from 'payload/types'
 import { Problem, Source } from '../../payload-types'
 import { uploadProblemInputSchema } from './schema'
-z.ZodError
 
 const zodSchema = z.object({
-  input: uploadProblemInputSchema
+  input: z.string()
 })
 
 export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, next: NextFunction) => {
   try {
     const { payload } = req
-    const { input } = zodSchema.parse(req.body)
+    const { input: rawInput } = zodSchema.parse(req.body)
+    const input = uploadProblemInputSchema.parse(JSON.parse(rawInput))
 
     // create source
     let source: Source = null
@@ -25,7 +25,6 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
           type: input.source.type,
         },
       })
-      console.log('created source', source.name)
     }
 
     // create problems
@@ -44,11 +43,10 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
         })
       })
     )
-    console.log('created problems', problems.map((problem) => problem.content))
 
     // create problem list
     if (input.problemList) {
-      const problemList = await payload.create({
+      await payload.create({
         collection: 'problem-lists',
         data: {
           name: input.problemList.name,
@@ -57,9 +55,13 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
           problems: problems.map((problem) => problem.id),
         },
       })
-      console.log('created problemList', problemList.name)
     }
-    res.send("Success!")
+    let message = (input.problemList) ? `Created problem list "${input.problemList.name}" with ${problems.length} problems` : `Created ${problems.length} problems`
+    if (source) {
+      message += ` and source "${source.name}"`
+    }
+    message += '.'
+    res.json({ message })
   } catch (err) {
     // TODO: extract zod error handler to separate file
     if (err instanceof z.ZodError) {

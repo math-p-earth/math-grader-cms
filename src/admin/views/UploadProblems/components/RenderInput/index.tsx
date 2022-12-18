@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { Label, useField } from 'payload/components/forms'
+import { useField } from 'payload/components/forms'
 
-import { isInputType, isProblemListInput } from '../../../../../routes/upload-problems/parser'
+import z from 'zod'
+
+import { uploadProblemInputSchema } from '../../../../../routes/upload-problems/schema'
 
 interface RenderInputProps {
   inputPath: string
@@ -16,23 +18,78 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
   if (!value) {
     return null
   }
+
+  let input
   try {
-    const input = JSON.parse(value)
-    if (isProblemListInput(input)) {
-      // TODO: render problem list
+    input = JSON.parse(value)
+  } catch (err) {
+    return <h3>Invalid JSON</h3>
+  }
+
+  let parsedInput: z.infer<typeof uploadProblemInputSchema>
+  try {
+    parsedInput = uploadProblemInputSchema.parse(input)
+  } catch (err) {
+    if (err instanceof z.ZodError) {
       return (
         <div>
-          <h2>Type: Problem List</h2>
+          <h3>Invalid input</h3>
+          <ol>
+            {err.issues.map((issue) => (
+              <li key={issue.path.join('.')}>
+                <h4>{issue.path.join('.')}</h4>
+                <p>{issue.message}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       )
     }
-    if (isInputType(input?.type)) {
-      return <h3>Invalid input for type: {input?.type}</h3>
-    }
-    return <h3>Invalid input type</h3>
-  } catch (e) {
-    return <h3>Invalid JSON</h3>
+    return (
+      <div>
+        <h3>Invalid input</h3>
+      </div>
+    )
   }
+
+  return (
+    <div>
+      {parsedInput.source && (
+        <div>
+          <h3>Source</h3>
+          <p>
+            <strong>Name:</strong> {parsedInput.source.name}
+          </p>
+          <p>
+            <strong>Description:</strong> {parsedInput.source.description}
+          </p>
+          <p>
+            <strong>Type:</strong> {parsedInput.source.type}
+          </p>
+        </div>
+      )}
+      {parsedInput.problemList && (
+        <div>
+          <h3>Problem List</h3>
+          <p>
+            <strong>Name:</strong> {parsedInput.problemList.name}
+          </p>
+          <p>
+            <strong>Description:</strong> {parsedInput.problemList.description}
+          </p>
+          <p>
+            <strong>Type:</strong> {parsedInput.problemList.type}
+          </p>
+        </div>
+      )}
+      {parsedInput.problems.map((problem, index) => (
+        <div key={index}>
+          <h3>Problem {index + 1}</h3>
+          <p>{problem.content}</p>
+        </div>
+      ))}
+    </div>
+  )
 }
 
 export default RenderInput

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Button, Eyebrow, Gutter } from 'payload/components/elements'
+import { Eyebrow, Gutter } from 'payload/components/elements'
 import { Form } from 'payload/components/forms'
 import { useStepNav } from 'payload/components/hooks'
 import { DefaultTemplate } from 'payload/components/templates'
@@ -10,9 +10,6 @@ import { AdminView } from 'payload/config'
 import RenderFields from 'payload/dist/admin/components/forms/RenderFields'
 import FormSubmit from 'payload/dist/admin/components/forms/Submit'
 import fieldTypes from 'payload/dist/admin/components/forms/field-types'
-// TODO: ask Payload team to properly export Textarea in their API
-import Textarea from 'payload/dist/admin/components/forms/field-types/Textarea'
-import { Props as TextareaProps } from 'payload/dist/admin/components/forms/field-types/Textarea/types'
 
 import { Redirect } from 'react-router-dom'
 
@@ -45,28 +42,14 @@ const UploadProblemsView: AdminView = ({ user, canAccessAdmin }) => {
     ])
   }, [setStepNav])
 
-  const problemsInputProps: TextareaProps = {
-    name: 'problems-input',
-    label: 'Problems Input (JSON)',
-    required: true,
-    admin: {
-      placeholder: 'Enter problems input here!',
-    },
-  }
-
   return (
     <DefaultTemplate>
       <Meta title="Upload Problems" />
       {/* TODO: add target action and method */}
-      <Form className={`${baseClass}__form`}>
+      <Form className={`${baseClass}__form`} method="post" action="/api/upload-problems">
         <Eyebrow />
         <Gutter>
           <h1>Upload Problems in Bulk</h1>
-          <strong>Supported input types</strong>
-          <ul>
-            <li>problem-list</li>
-            <li>source</li>
-          </ul>
           <div className={`${baseClass}__main`}>
             <RenderFields
               filter={(field) => !field?.admin?.position || field?.admin?.position !== 'sidebar'}
