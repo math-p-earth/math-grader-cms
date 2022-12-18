@@ -20,7 +20,7 @@ export const customRouteLinks: React.FC = () => {
       <span className="nav__label">Custom Routes</span>
       <nav>
         {customRoutes.map((route, index) => (
-          <NavLink className="nav__link" activeClassName="active" to={route.href}>
+          <NavLink key={index} className="nav__link" activeClassName="active" to={route.href}>
             <Chevron />
             {route.label}
           </NavLink>
