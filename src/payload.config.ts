@@ -8,6 +8,7 @@ import { Sources } from './collections/Sources'
 import { Tags } from './collections/Tags'
 import { Users } from './collections/Users'
 import { afterNavLinks } from './admin/components/afterNavLinks'
+import UploadProblemsView from './admin/views/UploadProblems'
 
 export default buildConfig({
   // Disabled until we have a static IP or domain name
@@ -15,13 +16,19 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
-    components: { afterNavLinks },
+    components: {
+      afterNavLinks: afterNavLinks,
+      routes: [
+        {
+          Component: UploadProblemsView,
+          path: "/upload-problems"
+        }
+      ]
+    },
+    // custom webpack config for latex packages
     webpack: (config) => {
       return {
         ...config,
-        resolveLoader: {
-          symlinks: true
-        },
         module: {
           ...config.module,
           rules: [

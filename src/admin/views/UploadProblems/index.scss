@@ -1,0 +1,16 @@
+@import '~payload/scss';
+
+.upload-problems {
+  &__form {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__main {
+    width: calc(100% - #{base(5)});
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+}
