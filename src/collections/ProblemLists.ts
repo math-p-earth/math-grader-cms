@@ -12,6 +12,7 @@ export const ProblemLists: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      required: true,
     },
     {
       name: 'description',

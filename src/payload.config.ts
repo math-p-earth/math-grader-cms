@@ -9,6 +9,7 @@ import { Tags } from './collections/Tags'
 import { Users } from './collections/Users'
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import UploadProblemsView from './admin/views/UploadProblems'
+import { uploadProblemsHandler } from './routes/upload-problems'
 
 export default buildConfig({
   // Disabled until we have a static IP or domain name
@@ -44,6 +45,13 @@ export default buildConfig({
       }
     },
   },
+  endpoints: [
+    {
+      method: 'post',
+      path: '/upload-problems',
+      handler: uploadProblemsHandler,
+    }
+  ],
   collections: [Users, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),

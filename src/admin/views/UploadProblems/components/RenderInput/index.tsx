@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Label, useField } from 'payload/components/forms'
 
-import { isInputType, isProblemListInput } from '../../parser'
+import { isInputType, isProblemListInput } from '../../../../../routes/upload-problems/parser'
 
 interface RenderInputProps {
   inputPath: string
