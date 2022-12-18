@@ -5,6 +5,7 @@ import { useField } from 'payload/components/forms'
 import z from 'zod'
 
 import { uploadProblemInputSchema } from '../../../../../routes/upload-problems/schema'
+import { LatexMarkdown } from '../../../../components/latex/LatexMarkdown'
 
 interface RenderInputProps {
   inputPath: string
@@ -85,7 +86,16 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
       {parsedInput.problems.map((problem, index) => (
         <div key={index}>
           <h3>Problem {index + 1}</h3>
-          <p>{problem.content}</p>
+          <LatexMarkdown>{problem.content}</LatexMarkdown>
+          {problem.choices && (
+            <ol>
+              {problem.choices.map((choice, index) => (
+                <li key={index}>
+                  <LatexMarkdown>{choice}</LatexMarkdown>
+                </li>
+              ))}
+            </ol>
+          )}
         </div>
       ))}
     </div>
