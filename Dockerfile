@@ -2,29 +2,26 @@ FROM node:19-alpine as build
 
 WORKDIR /app
 
-RUN yarn global add pnpm
+COPY ["package.json", "yarn.lock", "./"]
 
-COPY ["package.json", "pnpm-lock.yaml", "./"]
-
-RUN pnpm install --frozen-lockfile
+RUN yarn --frozen-lockfile
 
 COPY . .
 
-RUN pnpm build
+RUN yarn build
 
 
 FROM node:19-alpine
 
 WORKDIR /app
 
-RUN yarn global add pnpm
 ENV NODE_ENV=production
 
-COPY ["package.json", "pnpm-lock.yaml", "./"]
+COPY ["package.json", "yarn.lock", "./"]
 
-RUN pnpm install --frozen-lockfile --prod
+RUN yarn --frozen-lockfile --prod
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/build ./build
 
-CMD ["pnpm", "serve"]
+CMD ["yarn", "serve"]
