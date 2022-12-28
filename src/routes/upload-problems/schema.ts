@@ -20,11 +20,11 @@ export const uploadProblemInputSchema = z.object({
     book: z.object({
       author: z.string(),
       isbn: z.string()
-    }).optional(), // TODO: make this required for BOOK
+    }).optional(),
     paper: z.object({
       timeLimit: z.number(),
       datePublished: z.string().optional()
-    }).optional(), // TODO: make this required for PAPER
+    }).optional(),
   }).optional(),
   problems: z.array(createProblemSchema)
 })

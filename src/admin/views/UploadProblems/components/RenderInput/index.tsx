@@ -20,7 +20,7 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
     return null
   }
 
-  let input
+  let input: any
   try {
     input = JSON.parse(value)
   } catch (err) {
@@ -53,6 +53,8 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
     )
   }
 
+  const datePublished = new Date(parsedInput.source.paper.datePublished)
+
   return (
     <div>
       {parsedInput.source && (
@@ -67,6 +69,34 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
           <p>
             <strong>Type:</strong> {parsedInput.source.type}
           </p>
+          {parsedInput.source.type === 'BOOK' && parsedInput.source.book && (
+            <ul>
+              {parsedInput.source.book.author && (
+                <li>
+                  <strong>Author:</strong> {parsedInput.source.book.author}
+                </li>
+              )}
+              {parsedInput.source.book.isbn && (
+                <li>
+                  <strong>ISBN:</strong> {parsedInput.source.book.isbn}
+                </li>
+              )}
+            </ul>
+          )}
+          {parsedInput.source.type === 'PAPER' && parsedInput.source.paper && (
+            <ul>
+              {parsedInput.source.paper.timeLimit && (
+                <li>
+                  <strong>Time Limit:</strong> {parsedInput.source.paper.timeLimit} minutes
+                </li>
+              )}
+              {parsedInput.source.paper.datePublished && (
+                <li>
+                  <strong>Date Published:</strong> {datePublished.toLocaleDateString()}
+                </li>
+              )}
+            </ul>
+          )}
         </div>
       )}
       {parsedInput.problemList && (

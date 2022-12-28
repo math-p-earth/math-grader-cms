@@ -9,13 +9,11 @@ const bookFields: Field[] = [
       {
         name: 'author',
         type: 'text',
-        required: true,
       },
       {
         name: 'isbn',
         type: 'text',
         label: 'ISBN',
-        required: true,
       },
     ],
   },
@@ -28,7 +26,6 @@ const paperFields: Field[] = [
       {
         name: 'timeLimit',
         type: 'number',
-        required: true,
         admin: {
           placeholder: 'Time limit in minutes',
         },

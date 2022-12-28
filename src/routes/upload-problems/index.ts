@@ -23,6 +23,8 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
           name: input.source.name,
           description: input.source.description,
           type: input.source.type,
+          book: input.source.book,
+          paper: input.source.paper,
         },
       })
     }
