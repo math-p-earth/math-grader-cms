@@ -2,8 +2,8 @@ name: Deploy to Cloud Run
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - v*
 
 env:
   REGION: asia-southeast1
