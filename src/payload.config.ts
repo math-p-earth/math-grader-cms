@@ -14,6 +14,9 @@ import { uploadProblemsHandler } from './routes/upload-problems'
 export default buildConfig({
   // Disabled until we have a static IP or domain name
   // serverURL: 'http://localhost:3000',
+
+  // TODO: Change this to real domain
+  cors: '*',
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
