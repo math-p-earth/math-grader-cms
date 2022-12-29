@@ -82,6 +82,12 @@ export const Sources: CollectionConfig = {
       required: true,
     },
     {
+      name: 'problems',
+      type: 'relationship',
+      relationTo: 'problems',
+      hasMany: true,
+    },
+    {
       name: 'book',
       label: 'Book Details',
       type: 'group',
