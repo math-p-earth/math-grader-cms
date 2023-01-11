@@ -6,6 +6,7 @@ import z from 'zod'
 
 import { uploadProblemInputSchema } from '../../../../../routes/upload-problems/schema'
 import { LatexMarkdown } from '../../../../components/latex/LatexMarkdown'
+import './index.scss'
 
 interface RenderInputProps {
   inputPath: string
@@ -55,9 +56,9 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
 
   return (
     <div>
-      {parsedInput.source && (
+      {parsedInput.source ? (
         <div>
-          <h3>Source</h3>
+          <h3 className="success">Source</h3>
           <p>
             <strong>Name:</strong> {parsedInput.source.name}
           </p>
@@ -97,10 +98,12 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
             </ul>
           )}
         </div>
+      ) : (
+        <h3 className="warning">Source not found</h3>
       )}
-      {parsedInput.problemList && (
+      {parsedInput.problemList ? (
         <div>
-          <h3>Problem List</h3>
+          <h3 className="success">Problem List</h3>
           <p>
             <strong>Name:</strong> {parsedInput.problemList.name}
           </p>
@@ -111,6 +114,8 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
             <strong>Type:</strong> {parsedInput.problemList.type}
           </p>
         </div>
+      ) : (
+        <h3 className="warning">Problem list not found</h3>
       )}
       {parsedInput.problems.map((problem, index) => (
         <div key={index}>
