@@ -53,8 +53,6 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
     )
   }
 
-  const datePublished = new Date(parsedInput.source.paper.datePublished)
-
   return (
     <div>
       {parsedInput.source && (
@@ -92,7 +90,8 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
               )}
               {parsedInput.source.paper.datePublished && (
                 <li>
-                  <strong>Date Published:</strong> {datePublished.toLocaleDateString()}
+                  <strong>Date Published:</strong>{' '}
+                  {new Date(parsedInput.source.paper.datePublished).toLocaleDateString()}
                 </li>
               )}
             </ul>
