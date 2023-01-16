@@ -1,7 +1,6 @@
 import payload from 'payload'
 
 import express from 'express'
-import cors from 'cors'
 
 import { MONGODB_URI, PAYLOAD_SECRET, PORT } from './config'
 
@@ -11,10 +10,6 @@ const app = express()
 app.get('/', (_, res) => {
   res.redirect('/admin')
 })
-
-app.use(cors({
-  origin: '*', // TODO: Change this to real domain
-}))
 
 // Initialize Payload
 payload.init({
