@@ -11,12 +11,13 @@ import { afterNavLinks } from './admin/components/afterNavLinks'
 import UploadProblemsView from './admin/views/UploadProblems'
 import { uploadProblemsHandler } from './routes/upload-problems'
 
+// TODO: validate environment variables
 export default buildConfig({
   // Disabled until we have a static IP or domain name
   // serverURL: 'http://localhost:3000',
 
   // TODO: Change this to real domain
-  cors: '*',
+  cors: process.env.CORS_ORIGINS?.split(','),
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
