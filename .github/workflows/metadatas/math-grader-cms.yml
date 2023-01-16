@@ -22,6 +22,8 @@ spec:
                 secretKeyRef:
                   key: latest
                   name: CMS_PAYLOAD_SECRET
+            - name: CORS_ORIGINS
+              value: https://math-grader-frontend.pages.dev
           image: ${IMAGE}
           ports:
             - containerPort: 8080
