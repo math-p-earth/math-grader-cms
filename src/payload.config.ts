@@ -16,7 +16,6 @@ export default buildConfig({
   // serverURL: 'http://localhost:3000',
 
   // TODO: Change this to real domain
-  cors: '*',
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
