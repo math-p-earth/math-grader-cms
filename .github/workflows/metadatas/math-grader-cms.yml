@@ -23,7 +23,7 @@ spec:
                   key: latest
                   name: CMS_PAYLOAD_SECRET
             - name: CORS_ORIGINS
-              value: https://math-grader-frontend.pages.dev,http://localhost:3000,http://localhost:3001
+              value: https://math-p-earth.netlify.app,http://localhost:3000,http://localhost:3001
           image: ${IMAGE}
           ports:
             - containerPort: 8080
