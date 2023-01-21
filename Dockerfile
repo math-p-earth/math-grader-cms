@@ -1,4 +1,4 @@
-FROM node:19-alpine as build
+FROM node:19-alpine as builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY . .
 RUN yarn build
 
 
-FROM node:19-alpine
+FROM node:19-alpine as runtime
 
 WORKDIR /app
 

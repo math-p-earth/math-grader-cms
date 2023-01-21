@@ -41,14 +41,25 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: Build and Push 
+      - name: Build builder stage for cache
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          tags: ${{ needs.prepare.outputs.image }}
+          target: builder
+          cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
+          cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder,mode=max
+
+      - name: Build and Push runtime stage 
         uses: docker/build-push-action@v3
         with:
           push: true
           context: .
           tags: ${{ needs.prepare.outputs.image }}
-          cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache
-          cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache,mode=max
+          cache-from: |
+            type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
+            type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-runtime
+          cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-runtime,mode=max
   
   deploy:
     runs-on: ubuntu-latest
