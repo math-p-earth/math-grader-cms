@@ -50,38 +50,38 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache
           cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache,mode=max
   
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - prepare
-  #     - build-push
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare
+      - build-push
 
-  #   steps:
-  #     - name: Deploy
-  #       uses: appleboy/ssh-action@master
-  #       env:
-  #         IMAGE_TAG: ${{ needs.prepare.outputs.tag }}
-  #       with:
-  #         host: ${{ secrets.SSH_HOST }}
-  #         username: ${{ secrets.SSH_USERNAME }}
-  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
-  #         envs: IMAGE_TAG
-  #         script: |
-  #           cd math-grader-cms
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        env:
+          IMAGE_TAG: ${{ needs.prepare.outputs.tag }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: IMAGE_TAG
+          script: |
+            cd math-grader-cms
 
-  #           # Copy template compose file
-  #           cp docker-compose.yml.tmpl docker-compose.yml
+            # Copy template compose file
+            cp docker-compose.yml.tmpl docker-compose.yml
 
-  #           # Replace placeholder variables
-  #           sed -i "s|{{IMAGE_TAG}}|$IMAGE_TAG|g" docker-compose.yml
-  #           sed -i "s|{{ENV_FILE}}|env/production.env|g" docker-compose.yml
+            # Replace placeholder variables
+            sed -i "s|{{IMAGE_TAG}}|$IMAGE_TAG|g" docker-compose.yml
+            sed -i "s|{{ENV_FILE}}|env/production.env|g" docker-compose.yml
 
-  #           # Up compose file
-  #           docker compose pull
-  #           docker compose up -d
+            # Up compose file
+            docker compose pull
+            docker compose up -d --remove-orphans
 
-  #           # Remove compose file
-  #           rm docker-compose.yml
+            # Remove compose file
+            rm docker-compose.yml
 
-  #           # Remove all old images
-  #           docker image prune -af
+            # Remove all old images
+            docker image prune -af
