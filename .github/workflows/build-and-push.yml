@@ -5,6 +5,9 @@ on:
     tags:
       - v*
 
+env:
+  DOCKER_BUILDKIT: 1
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -44,8 +47,11 @@ jobs:
       - name: Build builder stage for cache
         uses: docker/build-push-action@v3
         with:
+          load: true
           context: .
-          tags: ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
+          tags: math-grader-cms:buildcache-builder
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
           target: builder
           cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
           cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder,mode=max
@@ -56,8 +62,11 @@ jobs:
           push: true
           context: .
           tags: ${{ needs.prepare.outputs.image }}
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+          target: runtime
           cache-from: |
-            type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
+            math-grader-cms:buildcache-builder
             type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-runtime
           cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-runtime,mode=max
   
