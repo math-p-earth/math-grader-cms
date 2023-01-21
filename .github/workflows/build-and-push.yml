@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          tags: ${{ needs.prepare.outputs.image }}
+          tags: ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
           target: builder
           cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder
           cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache-builder,mode=max
