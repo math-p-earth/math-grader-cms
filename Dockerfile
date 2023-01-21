@@ -4,24 +4,11 @@ WORKDIR /app
 
 COPY ["package.json", "yarn.lock", "./"]
 
-RUN yarn --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY src ./src
+COPY tsconfig.json ./
 
 RUN yarn build
-
-
-FROM node:19-alpine as runtime
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-COPY ["package.json", "yarn.lock", "./"]
-
-RUN yarn --frozen-lockfile --prod
-
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/build ./build
 
 CMD ["yarn", "serve"]
