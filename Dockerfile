@@ -21,7 +21,7 @@ COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn --frozen-lockfile --prod
 
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/build ./build
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/build ./build
 
 CMD ["yarn", "serve"]
