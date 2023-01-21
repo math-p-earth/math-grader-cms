@@ -24,7 +24,8 @@ jobs:
 
   build-push:
     runs-on: ubuntu-latest
-    needs: prepare
+    needs:
+    - prepare
     if: ${{ needs.prepare.outputs.tag }}
 
     steps:
@@ -46,10 +47,14 @@ jobs:
           push: true
           context: .
           tags: ${{ needs.prepare.outputs.image }}
+          cache-from: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache
+          cache-to: type=registry,ref=ghcr.io/math-p-earth/math-grader-cms:buildcache,mode=max
   
   deploy:
     runs-on: ubuntu-latest
-    needs: build-push
+    needs:
+      - prepare
+      - build-push
 
     steps:
       - name: Deploy
