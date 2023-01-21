@@ -46,8 +46,6 @@ jobs:
           push: true
           context: .
           tags: ${{ needs.prepare.outputs.image }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
   
   deploy:
     runs-on: ubuntu-latest
@@ -74,8 +72,8 @@ jobs:
             sed -i "s|{{ENV_FILE}}|env/production.env|g" docker-compose.yml
 
             # Up compose file
-            docker-compose pull
-            docker-compose up -d
+            docker compose pull
+            docker compose up -d
 
             # Remove compose file
             rm docker-compose.yml
