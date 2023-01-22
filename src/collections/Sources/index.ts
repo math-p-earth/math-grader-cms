@@ -1,6 +1,6 @@
 import { CollectionConfig, Field } from 'payload/types'
 
-import { Source } from '../payload-types'
+import { Source } from '../../payload-types'
 
 const bookFields: Field[] = [
   {

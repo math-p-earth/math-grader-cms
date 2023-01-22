@@ -2,7 +2,7 @@ import { Field } from 'payload/types'
 
 import { z } from 'zod'
 
-import { uploadProblemInputSchema } from '../../../routes/upload-problems/schema'
+import { uploadProblemInputSchema } from '../../../collections/Problems/endpoints/upload/schema'
 
 export const fields: Field[] = [
   {

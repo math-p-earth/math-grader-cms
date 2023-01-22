@@ -10,7 +10,6 @@ import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Students } from './collections/Students'
 import { Tags } from './collections/Tags'
-import { uploadProblemsHandler } from './routes/upload-problems'
 
 // TODO: validate environment variables
 export default buildConfig({
@@ -46,13 +45,6 @@ export default buildConfig({
       }
     },
   },
-  endpoints: [
-    {
-      method: 'post',
-      path: '/upload-problems',
-      handler: uploadProblemsHandler,
-    },
-  ],
   collections: [Admins, Students, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),

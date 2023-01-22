@@ -4,7 +4,7 @@ import { useField } from 'payload/components/forms'
 
 import z from 'zod'
 
-import { uploadProblemInputSchema } from '../../../../../routes/upload-problems/schema'
+import { uploadProblemInputSchema } from '../../../../../collections/Problems/endpoints/upload/schema'
 import { LatexMarkdown } from '../../../../components/latex/LatexMarkdown'
 import './index.scss'
 

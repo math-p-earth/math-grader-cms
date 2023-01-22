@@ -3,7 +3,7 @@ import { PayloadRequest } from 'payload/types'
 import { NextFunction, Response } from 'express'
 import z from 'zod'
 
-import { Problem, Source } from '../../payload-types'
+import { Problem, Source } from '../../../../payload-types'
 import { uploadProblemInputSchema } from './schema'
 
 const zodSchema = z.object({

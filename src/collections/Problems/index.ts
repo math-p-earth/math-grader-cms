@@ -1,7 +1,8 @@
 import { CollectionConfig } from 'payload/types'
 
-import { generateLatexField } from '../admin/components/latex/LatexField'
-import { Problem } from '../payload-types'
+import { generateLatexField } from '../../admin/components/latex/LatexField'
+import { Problem } from '../../payload-types'
+import { uploadProblemsHandler } from './endpoints/upload'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -11,6 +12,13 @@ export const Problems: CollectionConfig = {
   access: {
     read: () => true,
   },
+  endpoints: [
+    {
+      method: 'post',
+      path: '/upload',
+      handler: uploadProblemsHandler,
+    },
+  ],
   fields: [
     {
       name: 'content',

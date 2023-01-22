@@ -46,7 +46,7 @@ const UploadProblemsView: AdminView = ({ user, canAccessAdmin }) => {
     <DefaultTemplate>
       <Meta title="Upload Problems" />
       {/* TODO: add target action and method */}
-      <Form className={`${baseClass}__form`} method="post" action="/api/upload-problems">
+      <Form className={`${baseClass}__form`} method="post" action="/api/problems/upload">
         <Eyebrow />
         <Gutter>
           <h1>Upload Problems in Bulk</h1>
