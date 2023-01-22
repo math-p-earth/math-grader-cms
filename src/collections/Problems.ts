@@ -82,14 +82,6 @@ export const Problems: CollectionConfig = {
       type: 'textarea',
     },
     {
-      name: 'source',
-      type: 'relationship',
-      relationTo: 'sources',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'tags',
       type: 'relationship',
       relationTo: 'tags',

@@ -14,21 +14,6 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
     const { input: rawInput } = zodSchema.parse(req.body)
     const input = uploadProblemInputSchema.parse(JSON.parse(rawInput))
 
-    // create source
-    let source: Source = null
-    if (input.source) {
-      source = await payload.create<Source>({
-        collection: 'sources',
-        data: {
-          name: input.source.name,
-          description: input.source.description,
-          type: input.source.type,
-          book: input.source.book,
-          paper: input.source.paper,
-        },
-      })
-    }
-
     // create problems
     // TODO: add support for tags
     const problems = await Promise.all(
@@ -40,11 +25,26 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
             content: problemInput.content,
             choices: problemInput.choices?.map((choice) => ({ choice })),
             answer: problemInput.answer,
-            source: source ? source.id : null,
           },
         })
       })
     )
+
+    // create source
+    let source: Source = null
+    if (input.source) {
+      source = await payload.create<Source>({
+        collection: 'sources',
+        data: {
+          name: input.source.name,
+          description: input.source.description,
+          type: input.source.type,
+          book: input.source.book,
+          paper: input.source.paper,
+          problems: problems.map((problem) => problem.id),
+        },
+      })
+    }
 
     // create problem list
     if (input.problemList) {
