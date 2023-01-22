@@ -1,14 +1,20 @@
+import { PayloadRequest } from 'payload/types'
+
 import { NextFunction, Response } from 'express'
 import z from 'zod'
-import { PayloadRequest } from 'payload/types'
+
 import { Problem, Source } from '../../payload-types'
 import { uploadProblemInputSchema } from './schema'
 
 const zodSchema = z.object({
-  input: z.string()
+  input: z.string(),
 })
 
-export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, next: NextFunction) => {
+export const uploadProblemsHandler = async (
+  req: PayloadRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { payload } = req
     const { input: rawInput } = zodSchema.parse(req.body)
@@ -58,7 +64,9 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
         },
       })
     }
-    let message = (input.problemList) ? `Created problem list "${input.problemList.name}" with ${problems.length} problems` : `Created ${problems.length} problems`
+    let message = input.problemList
+      ? `Created problem list "${input.problemList.name}" with ${problems.length} problems`
+      : `Created ${problems.length} problems`
     if (source) {
       message += ` and source "${source.name}"`
     }
@@ -68,7 +76,7 @@ export const uploadProblemsHandler = async (req: PayloadRequest, res: Response, 
     // TODO: extract zod error handler to separate file
     if (err instanceof z.ZodError) {
       next({
-        message: err.issues
+        message: err.issues,
       })
     }
     next(err)

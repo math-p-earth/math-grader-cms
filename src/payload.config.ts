@@ -2,13 +2,13 @@ import { buildConfig } from 'payload/config'
 
 import path from 'path'
 
+import { afterNavLinks } from './admin/components/afterNavLinks'
+import UploadProblemsView from './admin/views/UploadProblems'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Tags } from './collections/Tags'
 import { Users } from './collections/Users'
-import { afterNavLinks } from './admin/components/afterNavLinks'
-import UploadProblemsView from './admin/views/UploadProblems'
 import { uploadProblemsHandler } from './routes/upload-problems'
 
 // TODO: validate environment variables
@@ -26,9 +26,9 @@ export default buildConfig({
       routes: [
         {
           Component: UploadProblemsView,
-          path: "/upload-problems"
-        }
-      ]
+          path: '/upload-problems',
+        },
+      ],
     },
     // custom webpack config for latex packages
     webpack: (config) => {
@@ -54,7 +54,7 @@ export default buildConfig({
       method: 'post',
       path: '/upload-problems',
       handler: uploadProblemsHandler,
-    }
+    },
   ],
   collections: [Users, Problems, ProblemLists, Sources, Tags],
   typescript: {
