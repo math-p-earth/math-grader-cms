@@ -8,15 +8,12 @@ import { Admins } from './collections/Admins'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
+import { Students } from './collections/Students'
 import { Tags } from './collections/Tags'
 import { uploadProblemsHandler } from './routes/upload-problems'
 
 // TODO: validate environment variables
 export default buildConfig({
-  // Disabled until we have a static IP or domain name
-  // serverURL: 'http://localhost:3000',
-
-  // TODO: Change this to real domain
   cors: process.env.CORS_ORIGINS?.split(','),
   admin: {
     user: Admins.slug,
@@ -56,7 +53,7 @@ export default buildConfig({
       handler: uploadProblemsHandler,
     },
   ],
-  collections: [Admins, Problems, ProblemLists, Sources, Tags],
+  collections: [Admins, Students, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

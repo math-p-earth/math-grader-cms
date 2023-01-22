@@ -8,10 +8,36 @@
 export interface Config {}
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "admins".
  */
-export interface User {
+export interface Admin {
   id: string
+  email?: string
+  resetPasswordToken?: string
+  resetPasswordExpiration?: string
+  loginAttempts?: number
+  lockUntil?: string
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "students".
+ */
+export interface Student {
+  id: string
+  nickname: string
+  gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER NOT SAY'
+  firstName: string
+  lastName: string
+  grade: 'M4' | 'M5' | 'M6'
+  school: string
+  contact: {
+    phone?: string
+    discord?: string
+    line?: string
+  }
+  status: 'PENDING' | 'APPROVED'
   email?: string
   resetPasswordToken?: string
   resetPasswordExpiration?: string
