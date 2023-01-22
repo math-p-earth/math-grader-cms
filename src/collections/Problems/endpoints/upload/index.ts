@@ -7,7 +7,7 @@ import { Problem, Source } from '../../../../payload-types'
 import { uploadProblemInputSchema } from './schema'
 
 const zodSchema = z.object({
-  input: z.string(),
+  input: uploadProblemInputSchema,
 })
 
 export const uploadProblemsHandler = async (
@@ -17,8 +17,7 @@ export const uploadProblemsHandler = async (
 ) => {
   try {
     const { payload } = req
-    const { input: rawInput } = zodSchema.parse(req.body)
-    const input = uploadProblemInputSchema.parse(JSON.parse(rawInput))
+    const { input } = zodSchema.parse(req.body)
 
     // create problems
     // TODO: add support for tags

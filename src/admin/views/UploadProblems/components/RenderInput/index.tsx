@@ -13,24 +13,17 @@ interface RenderInputProps {
 }
 
 const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
-  const { value } = useField<string>({
+  const { value } = useField<any>({
     path: inputPath,
   })
 
-  if (!value) {
+  if (typeof value === 'undefined') {
     return null
   }
 
-  let input: any
+  let input: z.infer<typeof uploadProblemInputSchema>
   try {
-    input = JSON.parse(value)
-  } catch (err) {
-    return <h3>Invalid JSON</h3>
-  }
-
-  let parsedInput: z.infer<typeof uploadProblemInputSchema>
-  try {
-    parsedInput = uploadProblemInputSchema.parse(input)
+    input = uploadProblemInputSchema.parse(value)
   } catch (err) {
     if (err instanceof z.ZodError) {
       return (
@@ -56,43 +49,43 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
 
   return (
     <div>
-      {parsedInput.source ? (
+      {input.source ? (
         <div>
           <h3 className="success">Source</h3>
           <p>
-            <strong>Name:</strong> {parsedInput.source.name}
+            <strong>Name:</strong> {input.source.name}
           </p>
           <p>
-            <strong>Description:</strong> {parsedInput.source.description}
+            <strong>Description:</strong> {input.source.description}
           </p>
           <p>
-            <strong>Type:</strong> {parsedInput.source.type}
+            <strong>Type:</strong> {input.source.type}
           </p>
-          {parsedInput.source.type === 'BOOK' && parsedInput.source.book && (
+          {input.source.type === 'BOOK' && input.source.book && (
             <ul>
-              {parsedInput.source.book.author && (
+              {input.source.book.author && (
                 <li>
-                  <strong>Author:</strong> {parsedInput.source.book.author}
+                  <strong>Author:</strong> {input.source.book.author}
                 </li>
               )}
-              {parsedInput.source.book.isbn && (
+              {input.source.book.isbn && (
                 <li>
-                  <strong>ISBN:</strong> {parsedInput.source.book.isbn}
+                  <strong>ISBN:</strong> {input.source.book.isbn}
                 </li>
               )}
             </ul>
           )}
-          {parsedInput.source.type === 'PAPER' && parsedInput.source.paper && (
+          {input.source.type === 'PAPER' && input.source.paper && (
             <ul>
-              {parsedInput.source.paper.timeLimit && (
+              {input.source.paper.timeLimit && (
                 <li>
-                  <strong>Time Limit:</strong> {parsedInput.source.paper.timeLimit} minutes
+                  <strong>Time Limit:</strong> {input.source.paper.timeLimit} minutes
                 </li>
               )}
-              {parsedInput.source.paper.datePublished && (
+              {input.source.paper.datePublished && (
                 <li>
                   <strong>Date Published:</strong>{' '}
-                  {new Date(parsedInput.source.paper.datePublished).toLocaleDateString()}
+                  {new Date(input.source.paper.datePublished).toLocaleDateString()}
                 </li>
               )}
             </ul>
@@ -101,23 +94,23 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
       ) : (
         <h3 className="warning">Source not found</h3>
       )}
-      {parsedInput.problemList ? (
+      {input.problemList ? (
         <div>
           <h3 className="success">Problem List</h3>
           <p>
-            <strong>Name:</strong> {parsedInput.problemList.name}
+            <strong>Name:</strong> {input.problemList.name}
           </p>
           <p>
-            <strong>Description:</strong> {parsedInput.problemList.description}
+            <strong>Description:</strong> {input.problemList.description}
           </p>
           <p>
-            <strong>Type:</strong> {parsedInput.problemList.type}
+            <strong>Type:</strong> {input.problemList.type}
           </p>
         </div>
       ) : (
         <h3 className="warning">Problem list not found</h3>
       )}
-      {parsedInput.problems.map((problem, index) => (
+      {input.problems.map((problem, index) => (
         <div key={index}>
           <h3>Problem {index + 1}</h3>
           <LatexMarkdown>{problem.content}</LatexMarkdown>
