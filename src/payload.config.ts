@@ -4,11 +4,11 @@ import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import UploadProblemsView from './admin/views/UploadProblems'
+import { Admins } from './collections/Admins'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Tags } from './collections/Tags'
-import { Users } from './collections/Users'
 import { uploadProblemsHandler } from './routes/upload-problems'
 
 // TODO: validate environment variables
@@ -19,7 +19,7 @@ export default buildConfig({
   // TODO: Change this to real domain
   cors: process.env.CORS_ORIGINS?.split(','),
   admin: {
-    user: Users.slug,
+    user: Admins.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
     components: {
       afterNavLinks: afterNavLinks,
@@ -56,7 +56,7 @@ export default buildConfig({
       handler: uploadProblemsHandler,
     },
   ],
-  collections: [Users, Problems, ProblemLists, Sources, Tags],
+  collections: [Admins, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

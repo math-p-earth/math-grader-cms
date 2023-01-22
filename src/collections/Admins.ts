@@ -1,10 +1,11 @@
 import { CollectionConfig } from 'payload/types'
 
-export const Users: CollectionConfig = {
-  slug: 'users',
+export const Admins: CollectionConfig = {
+  slug: 'admins',
   auth: true,
   admin: {
     useAsTitle: 'email',
+    group: 'Users',
   },
   fields: [
     // Email added by default
