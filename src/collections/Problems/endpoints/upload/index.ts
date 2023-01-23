@@ -3,7 +3,7 @@ import { PayloadRequest } from 'payload/types'
 import { NextFunction, Response } from 'express'
 import z from 'zod'
 
-import { Problem, Source } from '../../../../payload-types'
+import { Problem, ProblemList, Source } from '../../../../payload-types'
 import { problemsUploadSchema } from './schema'
 
 const zodSchema = z.object({
@@ -36,7 +36,7 @@ export const problemsUploadHandler = async (
     )
 
     // create source
-    let source: Source = null
+    let source: Source
     if (input.source) {
       source = await payload.create<Source>({
         collection: 'sources',
@@ -52,8 +52,9 @@ export const problemsUploadHandler = async (
     }
 
     // create problem list
+    let problemList: ProblemList
     if (input.problemList) {
-      await payload.create({
+      problemList = await payload.create<ProblemList>({
         collection: 'problem-lists',
         data: {
           name: input.problemList.name,
@@ -63,14 +64,14 @@ export const problemsUploadHandler = async (
         },
       })
     }
-    let message = input.problemList
-      ? `Created problem list "${input.problemList.name}" with ${problems.length} problems`
+    let message = problemList
+      ? `Created problem list "${problemList.name}" with ${problems.length} problems`
       : `Created ${problems.length} problems`
     if (source) {
       message += ` and source "${source.name}"`
     }
     message += '.'
-    res.json({ message })
+    res.json({ message, problemList, source, problems })
   } catch (err) {
     // TODO: extract zod error handler to separate file
     if (err instanceof z.ZodError) {
