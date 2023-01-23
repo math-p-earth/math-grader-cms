@@ -20,7 +20,7 @@ export const LatexField = ({ targetFieldName, path }: LatexFieldProps) => {
   if (targetFieldName.startsWith(PATH_PREFIX) && path) {
     targetFieldName = targetFieldName.replace(PATH_PREFIX, path)
   }
-  const source = useFormFields(([fields, dispatch]) => fields[targetFieldName])
+  const source = useFormFields(([fields, _dispatch]) => fields[targetFieldName])
 
   if (typeof source?.value !== 'undefined') {
     return <LatexMarkdown>{source?.value as string}</LatexMarkdown>
@@ -33,5 +33,5 @@ interface generateLatexFieldOptions {
 }
 
 export const generateLatexField = ({ targetFieldName }: generateLatexFieldOptions) => {
-  return (props: any) => <LatexField {...props} targetFieldName={targetFieldName} />
+  return (props: LatexFieldProps) => <LatexField {...props} targetFieldName={targetFieldName} />
 }

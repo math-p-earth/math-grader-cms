@@ -13,7 +13,7 @@ interface RenderInputProps {
 }
 
 const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
-  const { value } = useField<any>({
+  const { value } = useField<unknown>({
     path: inputPath,
   })
 

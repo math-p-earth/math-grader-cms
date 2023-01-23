@@ -2,10 +2,10 @@ import React from 'react'
 
 const ReactMarkdown = React.lazy(() => import('react-markdown'))
 
-let rehypeKatex: any
-let remarkFrontmatter: any
-let remarkGfm: any
-let remarkMath: any
+let rehypeKatex: typeof import('rehype-katex')['default']
+let remarkFrontmatter: typeof import('remark-frontmatter')['default']
+let remarkGfm: typeof import('remark-gfm')['default']
+let remarkMath: typeof import('remark-math')['default']
 ;(async () => {
   if (typeof window !== 'undefined') {
     rehypeKatex = (await import('rehype-katex')).default

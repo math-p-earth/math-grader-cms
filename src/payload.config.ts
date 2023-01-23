@@ -36,7 +36,7 @@ export default buildConfig({
         module: {
           ...config.module,
           rules: [
-            ...config.module?.rules,
+            ...(config.module?.rules ?? []),
             {
               test: /\.m?js$/,
               resolve: {
