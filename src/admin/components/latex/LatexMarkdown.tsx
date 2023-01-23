@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const ReactMarkdown = React.lazy(() => import('react-markdown'))
 
@@ -19,7 +19,7 @@ interface LatexMarkdownProps {
   children: string
 }
 
-export const LatexMarkdown = ({ children }: LatexMarkdownProps) => {
+export const LatexMarkdown = memo(({ children }: LatexMarkdownProps) => {
   return (
     <ReactMarkdown
       children={children}
@@ -27,4 +27,4 @@ export const LatexMarkdown = ({ children }: LatexMarkdownProps) => {
       rehypePlugins={[rehypeKatex]}
     />
   )
-}
+})
