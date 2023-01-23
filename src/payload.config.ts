@@ -17,6 +17,9 @@ export default buildConfig({
   admin: {
     user: Admins.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
+    meta: {
+      titleSuffix: "Math P'Earth",
+    },
     components: {
       afterNavLinks: afterNavLinks,
       routes: [
