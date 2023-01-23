@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types'
 
 import { generateLatexField } from '../../admin/components/latex/LatexField'
 import { Problem } from '../../payload-types'
-import { uploadProblemsHandler } from './endpoints/upload'
+import { problemsUploadHandler } from './endpoints/upload'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -16,7 +16,7 @@ export const Problems: CollectionConfig = {
     {
       method: 'post',
       path: '/upload',
-      handler: uploadProblemsHandler,
+      handler: problemsUploadHandler,
     },
   ],
   fields: [

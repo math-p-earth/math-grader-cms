@@ -4,7 +4,7 @@ import { useField } from 'payload/components/forms'
 
 import z from 'zod'
 
-import { uploadProblemInputSchema } from '../../../../../collections/Problems/endpoints/upload/schema'
+import { problemsUploadSchema } from '../../../../../collections/Problems/endpoints/upload/schema'
 import { LatexMarkdown } from '../../../../components/latex/LatexMarkdown'
 import './index.scss'
 
@@ -21,9 +21,9 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
     return null
   }
 
-  let input: z.infer<typeof uploadProblemInputSchema>
+  let input: z.infer<typeof problemsUploadSchema>
   try {
-    input = uploadProblemInputSchema.parse(value)
+    input = problemsUploadSchema.parse(value)
   } catch (err) {
     if (err instanceof z.ZodError) {
       return (

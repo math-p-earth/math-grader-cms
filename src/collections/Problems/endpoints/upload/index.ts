@@ -4,13 +4,13 @@ import { NextFunction, Response } from 'express'
 import z from 'zod'
 
 import { Problem, Source } from '../../../../payload-types'
-import { uploadProblemInputSchema } from './schema'
+import { problemsUploadSchema } from './schema'
 
 const zodSchema = z.object({
-  input: uploadProblemInputSchema,
+  input: problemsUploadSchema,
 })
 
-export const uploadProblemsHandler = async (
+export const problemsUploadHandler = async (
   req: PayloadRequest,
   res: Response,
   next: NextFunction

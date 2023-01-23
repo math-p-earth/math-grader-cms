@@ -1,13 +1,13 @@
 import z from 'zod'
 
-export const createProblemSchema = z.object({
+const problemSchema = z.object({
   type: z.enum(['MCQ', 'SHORT', 'TF', 'PROOF']),
   content: z.string(),
   choices: z.array(z.string()).optional(), // TODO: make this required for MCQ
   answer: z.string(),
 })
 
-export const uploadProblemInputSchema = z.object({
+export const problemsUploadSchema = z.object({
   problemList: z
     .object({
       name: z.string(),
@@ -34,5 +34,5 @@ export const uploadProblemInputSchema = z.object({
         .optional(),
     })
     .optional(),
-  problems: z.array(createProblemSchema),
+  problems: z.array(problemSchema),
 })

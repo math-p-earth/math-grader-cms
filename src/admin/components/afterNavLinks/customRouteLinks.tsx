@@ -6,9 +6,9 @@ import { NavLink } from 'react-router-dom'
 
 const customRoutes = [
   {
-    id: 'upload-problems',
+    id: 'problems/upload',
     label: 'Upload Problems',
-    href: '/admin/upload-problems',
+    href: '/admin/problems/upload',
   },
 ]
 

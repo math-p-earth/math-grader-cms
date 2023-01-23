@@ -17,9 +17,9 @@ import RenderInput from './components/RenderInput'
 import { fields } from './fields'
 import './index.scss'
 
-const baseClass = 'upload-problems'
+const baseClass = 'problems-upload'
 
-const UploadProblemsView: AdminView = ({ user, canAccessAdmin }) => {
+const ProblemsUploadView: AdminView = ({ user, canAccessAdmin }) => {
   const {
     routes: { admin: adminRoute },
   } = useConfig()
@@ -65,4 +65,4 @@ const UploadProblemsView: AdminView = ({ user, canAccessAdmin }) => {
   )
 }
 
-export default UploadProblemsView
+export default ProblemsUploadView

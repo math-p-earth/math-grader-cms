@@ -3,7 +3,7 @@ import { buildConfig } from 'payload/config'
 import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
-import UploadProblemsView from './admin/views/UploadProblems'
+import ProblemsUploadView from './admin/views/ProblemsUpload'
 import { Admins } from './collections/Admins'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
@@ -24,8 +24,8 @@ export default buildConfig({
       afterNavLinks: afterNavLinks,
       routes: [
         {
-          Component: UploadProblemsView,
-          path: '/upload-problems',
+          Component: ProblemsUploadView,
+          path: '/problems/upload',
         },
       ],
     },
