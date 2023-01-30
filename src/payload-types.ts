@@ -111,7 +111,7 @@ export interface Student {
 export interface Submission {
   id: string
   problem: string | Problem
-  user: string | Student
+  student: string | Student
   status: 'COMPLETED' | 'PENDING'
   content?: string
   file?: string | Upload
@@ -126,7 +126,7 @@ export interface Submission {
  */
 export interface Upload {
   id: string
-  name?: string
+  user?: string | Student
   url?: string
   filename?: string
   mimeType?: string

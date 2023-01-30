@@ -26,7 +26,7 @@ export const Submissions: CollectionConfig = {
       required: true,
     },
     {
-      name: 'user',
+      name: 'student',
       relationTo: 'students',
       type: 'relationship',
       hasMany: false,
