@@ -1,5 +1,7 @@
 import { CollectionConfig } from 'payload/types'
 
+import { hasRoles } from '../../access/hasRoles'
+import { isLoggedIn } from '../../access/isLoggedIn'
 import { generateLatexField } from '../../admin/components/latex/LatexField'
 import { Problem } from '../../payload-types'
 import { problemsUploadHandler } from './endpoints/upload'
@@ -10,7 +12,10 @@ export const Problems: CollectionConfig = {
     useAsTitle: 'content',
   },
   access: {
-    read: () => true,
+    read: isLoggedIn, // TODO: allow reading only if student is enrolled in course
+    create: hasRoles(['EDITOR']),
+    update: hasRoles(['EDITOR']),
+    delete: hasRoles(['EDITOR']),
   },
   endpoints: [
     {

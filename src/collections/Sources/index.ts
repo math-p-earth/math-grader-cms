@@ -1,5 +1,7 @@
 import { CollectionConfig, Field } from 'payload/types'
 
+import { hasRoles } from '../../access/hasRoles'
+import { isLoggedIn } from '../../access/isLoggedIn'
 import { Source } from '../../payload-types'
 
 const bookFields: Field[] = [
@@ -49,7 +51,10 @@ export const Sources: CollectionConfig = {
     useAsTitle: 'name',
   },
   access: {
-    read: () => true,
+    read: isLoggedIn, // TODO: allow reading only if student is enrolled in course
+    create: hasRoles(['EDITOR']),
+    update: hasRoles(['EDITOR']),
+    delete: hasRoles(['EDITOR']),
   },
   fields: [
     {

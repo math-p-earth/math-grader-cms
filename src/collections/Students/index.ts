@@ -1,6 +1,9 @@
 import { phoneField } from 'payload-plugin-phone-field'
 import { CollectionConfig, Validate } from 'payload/types'
 
+import { isAdmin } from '../../access/isAdmin'
+import { isSelf } from '../../access/isSelf'
+
 const validateDiscordUsername: Validate<string> = (value) => {
   if (/^(.+?)#\d{4}$/.test(value)) {
     return true
@@ -15,6 +18,12 @@ export const Students: CollectionConfig = {
     useAsTitle: 'nickname',
     group: 'Users',
     defaultColumns: ['nickname', 'firstName', 'lastName', 'grade', 'email'],
+  },
+  access: {
+    read: isSelf('id'),
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

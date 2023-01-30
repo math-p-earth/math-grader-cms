@@ -1,5 +1,8 @@
 import { CollectionConfig } from 'payload/types'
 
+import { isAdmin } from '../../access/isAdmin'
+import { isLoggedIn } from '../../access/isLoggedIn'
+import { isSelf } from '../../access/isSelf'
 import { generateLatexField } from '../../admin/components/latex/LatexField'
 import { setUserOnCreate } from '../../hooks/field/setUserOnCreate'
 
@@ -9,9 +12,10 @@ export const Submissions: CollectionConfig = {
     useAsTitle: 'name',
   },
   access: {
-    create: ({ req }) => {
-      return !!req.user // TODO: refactor into an access function in src directory
-    },
+    read: isSelf('user'),
+    create: isLoggedIn,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

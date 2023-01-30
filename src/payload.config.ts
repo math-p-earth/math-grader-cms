@@ -4,7 +4,6 @@ import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import ProblemsUploadView from './admin/views/ProblemsUpload'
-import { Admins } from './collections/Admins'
 import { Courses } from './collections/Courses'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
@@ -13,12 +12,14 @@ import { Students } from './collections/Students'
 import { Submissions } from './collections/Submissions'
 import { Tags } from './collections/Tags'
 import { Uploads } from './collections/Uploads'
+import { Users } from './collections/Users'
+import { CORS_ORIGINS } from './config'
 
 // TODO: validate environment variables
 export default buildConfig({
-  cors: process.env.CORS_ORIGINS?.split(','),
+  cors: CORS_ORIGINS,
   admin: {
-    user: Admins.slug,
+    user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
     meta: {
       titleSuffix: "- Math P'Earth",
@@ -52,7 +53,6 @@ export default buildConfig({
     },
   },
   collections: [
-    Admins,
     Courses,
     Problems,
     ProblemLists,
@@ -61,6 +61,7 @@ export default buildConfig({
     Submissions,
     Tags,
     Uploads,
+    Users,
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),

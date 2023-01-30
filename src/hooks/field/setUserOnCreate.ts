@@ -1,8 +1,7 @@
 import { FieldHook } from 'payload/types'
 
-export const setUserOnCreate: FieldHook = ({ req, operation }) => {
-  // TODO: use access functions
-  if (req.user.collection == 'student' && operation === 'create') {
-    return req.user?.id
+export const setUserOnCreate: FieldHook = ({ req: { user }, operation }) => {
+  if (operation === 'create') {
+    return user?.id
   }
 }
