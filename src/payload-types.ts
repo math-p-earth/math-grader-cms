@@ -22,33 +22,6 @@ export interface Admin {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "students".
- */
-export interface Student {
-  id: string
-  nickname: string
-  gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER NOT SAY'
-  firstName: string
-  lastName: string
-  grade: 'M4' | 'M5' | 'M6'
-  school: string
-  contact: {
-    phone?: string
-    discord?: string
-    line?: string
-  }
-  status: 'PENDING' | 'APPROVED'
-  courses?: string[] | Course[]
-  email?: string
-  resetPasswordToken?: string
-  resetPasswordExpiration?: string
-  loginAttempts?: number
-  lockUntil?: string
-  createdAt: string
-  updatedAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "courses".
  */
 export interface Course {
@@ -115,6 +88,65 @@ export interface Source {
     timeLimit?: number
     datePublished?: string
   }
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "students".
+ */
+export interface Student {
+  id: string
+  nickname: string
+  gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER NOT SAY'
+  firstName: string
+  lastName: string
+  grade: 'M4' | 'M5' | 'M6'
+  school: string
+  contact: {
+    phone?: string
+    discord?: string
+    line?: string
+  }
+  status: 'PENDING' | 'APPROVED'
+  courses?: string[] | Course[]
+  email?: string
+  resetPasswordToken?: string
+  resetPasswordExpiration?: string
+  loginAttempts?: number
+  lockUntil?: string
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions".
+ */
+export interface Submission {
+  id: string
+  problem: string | Problem
+  user: string | Student
+  status: 'COMPLETED' | 'PENDING'
+  content?: string
+  file?: string | Upload
+  score?: number
+  comment?: string
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "uploads".
+ */
+export interface Upload {
+  id: string
+  name?: string
+  url?: string
+  filename?: string
+  mimeType?: string
+  filesize?: number
+  width?: number
+  height?: number
   createdAt: string
   updatedAt: string
 }

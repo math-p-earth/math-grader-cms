@@ -10,7 +10,9 @@ import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
 import { Students } from './collections/Students'
+import { Submissions } from './collections/Submissions'
 import { Tags } from './collections/Tags'
+import { Uploads } from './collections/Uploads'
 
 // TODO: validate environment variables
 export default buildConfig({
@@ -49,7 +51,17 @@ export default buildConfig({
       }
     },
   },
-  collections: [Admins, Students, Courses, Problems, ProblemLists, Sources, Tags],
+  collections: [
+    Admins,
+    Courses,
+    Problems,
+    ProblemLists,
+    Sources,
+    Students,
+    Submissions,
+    Tags,
+    Uploads,
+  ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
