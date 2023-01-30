@@ -38,11 +38,22 @@ export interface Student {
     line?: string
   }
   status: 'PENDING' | 'APPROVED'
+  courses?: string[] | Course[]
   email?: string
   resetPasswordToken?: string
   resetPasswordExpiration?: string
   loginAttempts?: number
   lockUntil?: string
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: string
+  name?: string
   createdAt: string
   updatedAt: string
 }

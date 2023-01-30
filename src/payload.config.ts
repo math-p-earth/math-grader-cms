@@ -5,6 +5,7 @@ import path from 'path'
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import ProblemsUploadView from './admin/views/ProblemsUpload'
 import { Admins } from './collections/Admins'
+import { Courses } from './collections/Courses'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
 import { Sources } from './collections/Sources'
@@ -18,7 +19,7 @@ export default buildConfig({
     user: Admins.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
     meta: {
-      titleSuffix: "Math P'Earth",
+      titleSuffix: "- Math P'Earth",
     },
     components: {
       afterNavLinks: afterNavLinks,
@@ -48,7 +49,7 @@ export default buildConfig({
       }
     },
   },
-  collections: [Admins, Students, Problems, ProblemLists, Sources, Tags],
+  collections: [Admins, Students, Courses, Problems, ProblemLists, Sources, Tags],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

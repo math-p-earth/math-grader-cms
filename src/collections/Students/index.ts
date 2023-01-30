@@ -16,7 +16,6 @@ export const Students: CollectionConfig = {
     group: 'Users',
     defaultColumns: ['nickname', 'firstName', 'lastName', 'grade', 'email'],
   },
-
   fields: [
     {
       type: 'row',
@@ -151,6 +150,15 @@ export const Students: CollectionConfig = {
           value: 'APPROVED',
         },
       ],
+    },
+    {
+      name: 'courses',
+      type: 'relationship',
+      relationTo: 'courses',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
 }
