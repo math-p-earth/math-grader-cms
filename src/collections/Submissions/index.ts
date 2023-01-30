@@ -47,6 +47,10 @@ export const Submissions: CollectionConfig = {
           value: 'COMPLETED',
         },
         {
+          label: 'INCORRECT',
+          value: 'INCORRECT',
+        },
+        {
           label: 'PENDING',
           value: 'PENDING',
         },
