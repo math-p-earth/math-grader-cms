@@ -21,9 +21,10 @@ export const Students: CollectionConfig = {
   },
   access: {
     read: isSelf('id'),
-    create: isAdmin,
-    update: isAdmin,
+    create: () => true,
+    update: isSelf('id'),
     delete: isAdmin,
+    admin: () => false,
   },
   fields: [
     {
@@ -53,7 +54,7 @@ export const Students: CollectionConfig = {
             },
             {
               label: 'Rather not say',
-              value: 'RATHER NOT SAY',
+              value: 'RATHER_NOT_SAY',
             },
           ],
         },
@@ -142,6 +143,7 @@ export const Students: CollectionConfig = {
       ],
     },
     {
+      // TODO: force pending status
       name: 'status',
       type: 'select',
       required: true,

@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types'
 
-import { isAdmin } from '../../access/isAdmin'
+import { hasRoles } from '../../access/hasRoles'
 import { isLoggedIn } from '../../access/isLoggedIn'
 
 export const Tags: CollectionConfig = {
@@ -10,9 +10,9 @@ export const Tags: CollectionConfig = {
   },
   access: {
     read: isLoggedIn,
-    create: isAdmin,
-    update: isAdmin,
-    delete: isAdmin,
+    create: hasRoles(['EDITOR']),
+    update: hasRoles(['EDITOR']),
+    delete: hasRoles(['EDITOR']),
   },
   fields: [
     {

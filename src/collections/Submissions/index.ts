@@ -9,10 +9,11 @@ import { setUserOnCreate } from '../../hooks/field/setUserOnCreate'
 export const Submissions: CollectionConfig = {
   slug: 'submissions',
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: 'id',
+    defaultColumns: ['id', 'student', 'problem', 'status'],
   },
   access: {
-    read: isSelf('user'),
+    read: isSelf('student'),
     create: isLoggedIn,
     update: isAdmin,
     delete: isAdmin,
@@ -30,28 +31,35 @@ export const Submissions: CollectionConfig = {
       relationTo: 'students',
       type: 'relationship',
       hasMany: false,
-      required: true,
       hooks: {
         beforeValidate: [setUserOnCreate],
       },
     },
     {
+      // TODO: make this render more nicely in the dashboard
       name: 'status',
-      type: 'select',
+      type: 'radio',
       required: true,
       defaultValue: 'PENDING',
       options: [
-        // TODO: add more statuses
         {
-          label: 'COMPLETED',
-          value: 'COMPLETED',
+          label: 'Correct (Approved)',
+          value: 'CORRECT_APPROVED',
         },
         {
-          label: 'INCORRECT',
+          label: 'Correct',
+          value: 'CORRECT',
+        },
+        {
+          label: 'Incorrect (Approved)',
+          value: 'INCORRECT_APPROVED',
+        },
+        {
+          label: 'Incorrect',
           value: 'INCORRECT',
         },
         {
-          label: 'PENDING',
+          label: 'Pending',
           value: 'PENDING',
         },
       ],
