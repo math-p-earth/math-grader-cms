@@ -3,6 +3,7 @@ import { CollectionConfig, Validate } from 'payload/types'
 
 import { isAdmin } from '../../access/isAdmin'
 import { isSelf } from '../../access/isSelf'
+import { forceValueOnCreate } from '../../hooks/field/forceValueOnCreate'
 
 const validateDiscordUsername: Validate<string> = (value) => {
   if (/^(.+?)#\d{4}$/.test(value)) {
@@ -161,6 +162,9 @@ export const Students: CollectionConfig = {
           value: 'APPROVED',
         },
       ],
+      hooks: {
+        beforeChange: [forceValueOnCreate('PENDING')],
+      },
     },
     {
       name: 'courses',

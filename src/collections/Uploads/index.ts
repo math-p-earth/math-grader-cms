@@ -12,22 +12,22 @@ export const Uploads: CollectionConfig = {
     mimeTypes: ['image/*', 'application/pdf'],
   },
   access: {
-    read: isSelf('user'),
+    read: isSelf('owner'),
     create: isLoggedIn,
     update: isAdmin,
     delete: isAdmin,
   },
   fields: [
     {
-      name: 'user',
+      name: 'owner',
       type: 'relationship',
-      relationTo: 'students',
+      relationTo: ['users', 'students'],
       hasMany: false,
       admin: {
-        disabled: true,
+        description: "Leave empty to set to current user's ID",
       },
       hooks: {
-        beforeValidate: [setUserOnCreate],
+        beforeValidate: [setUserOnCreate(['users', 'students'])],
       },
     },
   ],

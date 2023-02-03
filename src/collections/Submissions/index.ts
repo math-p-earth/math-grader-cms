@@ -32,7 +32,7 @@ export const Submissions: CollectionConfig = {
       type: 'relationship',
       hasMany: false,
       hooks: {
-        beforeValidate: [setUserOnCreate],
+        beforeValidate: [setUserOnCreate(['students'])],
       },
     },
     {
