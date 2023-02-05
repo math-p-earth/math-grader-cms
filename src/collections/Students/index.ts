@@ -144,7 +144,6 @@ export const Students: CollectionConfig = {
       ],
     },
     {
-      // TODO: force pending status
       name: 'status',
       type: 'select',
       required: true,
@@ -173,6 +172,13 @@ export const Students: CollectionConfig = {
       hasMany: true,
       admin: {
         position: 'sidebar',
+      },
+    },
+    {
+      name: 'googleId',
+      type: 'text',
+      admin: {
+        disabled: true,
       },
     },
   ],

@@ -4,6 +4,7 @@ import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import ProblemsUploadView from './admin/views/ProblemsUpload'
+import endpoints from './api/routes'
 import { Courses } from './collections/Courses'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
@@ -14,6 +15,9 @@ import { Tags } from './collections/Tags'
 import { Uploads } from './collections/Uploads'
 import { Users } from './collections/Users'
 import { CORS_ORIGINS } from './config'
+
+const routesPath = path.join(__dirname, 'api/routes')
+const mockPath = path.join(__dirname, 'util/mockObject.ts')
 
 // TODO: validate environment variables
 export default buildConfig({
@@ -49,6 +53,13 @@ export default buildConfig({
             },
           ],
         },
+        resolve: {
+          ...config.resolve,
+          alias: {
+            ...config.resolve.alias,
+            [routesPath]: mockPath,
+          },
+        },
       }
     },
   },
@@ -63,6 +74,7 @@ export default buildConfig({
     Uploads,
     Users,
   ],
+  endpoints: endpoints,
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
