@@ -34,5 +34,11 @@ export const Courses: CollectionConfig = {
       name: 'name',
       type: 'text',
     },
+    {
+      name: 'problemLists',
+      type: 'relationship',
+      relationTo: 'problem-lists',
+      hasMany: true,
+    },
   ],
 }

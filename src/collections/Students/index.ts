@@ -14,7 +14,9 @@ const validateDiscordUsername: Validate<string> = (value) => {
 
 export const Students: CollectionConfig = {
   slug: 'students',
-  auth: true,
+  auth: {
+    depth: 2, // 2 levels deep, populate student -> courses -> problemLists
+  },
   admin: {
     useAsTitle: 'nickname',
     group: 'Users',

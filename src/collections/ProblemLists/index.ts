@@ -1,7 +1,25 @@
-import { CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
-import { isLoggedIn } from '../../access/isLoggedIn'
+import { UserTypes, isTypeStudent, isTypeUser } from '../../access/type'
+import { Course, ProblemList } from '../../payload-types'
+
+const ProblemListsReadAccess: Access<ProblemList, UserTypes> = ({ req: { user } }) => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN') || user.roles.includes('EDITOR')
+  }
+  if (isTypeStudent(user)) {
+    const courses = user.courses as Course[]
+    const problemLists = courses.flatMap((course) => course.problemLists as ProblemList[])
+    const problemListIds = problemLists.map((problemList) => problemList.id)
+    return {
+      id: {
+        in: problemListIds,
+      },
+    }
+  }
+  return false
+}
 
 export const ProblemLists: CollectionConfig = {
   slug: 'problem-lists',
@@ -9,7 +27,7 @@ export const ProblemLists: CollectionConfig = {
     useAsTitle: 'name',
   },
   access: {
-    read: isLoggedIn, // TODO: allow reading only if student is enrolled in course
+    read: ProblemListsReadAccess,
     create: hasRoles(['EDITOR']),
     update: hasRoles(['EDITOR']),
     delete: hasRoles(['EDITOR']),

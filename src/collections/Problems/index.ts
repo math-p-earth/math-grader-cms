@@ -1,9 +1,29 @@
-import { CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
-import { isLoggedIn } from '../../access/isLoggedIn'
+import { UserTypes, isTypeStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/components/latex/LatexField'
-import { Problem } from '../../payload-types'
+import { Course, Problem, ProblemList } from '../../payload-types'
+
+const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN') || user.roles.includes('EDITOR')
+  }
+  if (isTypeStudent(user)) {
+    const courses = user.courses as Course[]
+    const problemLists = courses.flatMap((course) => course.problemLists as ProblemList[])
+
+    // problems is string[] because of student depth = 2
+    const problemIds = problemLists.flatMap((problemList) => problemList.problems as string[])
+
+    return {
+      id: {
+        in: problemIds,
+      },
+    }
+  }
+  return false
+}
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -11,7 +31,7 @@ export const Problems: CollectionConfig = {
     useAsTitle: 'content',
   },
   access: {
-    read: isLoggedIn, // TODO: allow reading only if student is enrolled in course
+    read: ProblemsReadAccess, // TODO: allow reading only if student is enrolled in course
     create: hasRoles(['EDITOR']),
     update: hasRoles(['EDITOR']),
     delete: hasRoles(['EDITOR']),

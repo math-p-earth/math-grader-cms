@@ -13,6 +13,20 @@ export interface Config {}
 export interface Course {
   id: string
   name?: string
+  problemLists?: string[] | ProblemList[]
+  createdAt: string
+  updatedAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "problem-lists".
+ */
+export interface ProblemList {
+  id: string
+  name: string
+  description?: string
+  type?: 'DRILL' | 'LECTURE_PROBLEM' | 'COLLECTION' | 'CHALLENGE'
+  problems?: string[] | Problem[]
   createdAt: string
   updatedAt: string
 }
@@ -45,19 +59,6 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "problem-lists".
- */
-export interface ProblemList {
-  id: string
-  name: string
-  description?: string
-  type?: 'DRILL' | 'LECTURE_PROBLEM' | 'COLLECTION' | 'CHALLENGE'
-  problems?: string[] | Problem[]
-  createdAt: string
-  updatedAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sources".
  */
 export interface Source {
@@ -84,7 +85,7 @@ export interface Source {
 export interface Student {
   id: string
   nickname: string
-  gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER NOT SAY'
+  gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER_NOT_SAY'
   firstName: string
   lastName: string
   grade: 'M4' | 'M5' | 'M6'
@@ -96,6 +97,7 @@ export interface Student {
   }
   status: 'PENDING' | 'APPROVED'
   courses?: string[] | Course[]
+  googleId?: string
   email?: string
   resetPasswordToken?: string
   resetPasswordExpiration?: string
@@ -111,8 +113,8 @@ export interface Student {
 export interface Submission {
   id: string
   problem: string | Problem
-  student: string | Student
-  status: 'COMPLETED' | 'PENDING'
+  student?: string | Student
+  status: 'CORRECT_APPROVED' | 'CORRECT' | 'INCORRECT_APPROVED' | 'INCORRECT' | 'PENDING'
   content?: string
   file?: string | Upload
   score?: number
@@ -126,7 +128,15 @@ export interface Submission {
  */
 export interface Upload {
   id: string
-  user?: string | Student
+  owner?:
+    | {
+        value: string | User
+        relationTo: 'users'
+      }
+    | {
+        value: string | Student
+        relationTo: 'students'
+      }
   url?: string
   filename?: string
   mimeType?: string
