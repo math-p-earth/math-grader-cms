@@ -4,7 +4,6 @@ import { hasRoles } from '../../access/hasRoles'
 import { isLoggedIn } from '../../access/isLoggedIn'
 import { generateLatexField } from '../../admin/components/latex/LatexField'
 import { Problem } from '../../payload-types'
-import { problemsUploadHandler } from './endpoints/upload'
 
 export const Problems: CollectionConfig = {
   slug: 'problems',
@@ -17,13 +16,6 @@ export const Problems: CollectionConfig = {
     update: hasRoles(['EDITOR']),
     delete: hasRoles(['EDITOR']),
   },
-  endpoints: [
-    {
-      method: 'post',
-      path: '/upload',
-      handler: problemsUploadHandler,
-    },
-  ],
   fields: [
     {
       name: 'content',

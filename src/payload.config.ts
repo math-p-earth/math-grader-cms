@@ -16,8 +16,14 @@ import { Uploads } from './collections/Uploads'
 import { Users } from './collections/Users'
 import { CORS_ORIGINS } from './config'
 
-const routesPath = path.join(__dirname, 'api/routes')
+const ignorePaths = [path.join(__dirname, 'api/routes/auth/google/verify.ts')]
 const mockPath = path.join(__dirname, 'util/mockObject.ts')
+const aliases = ignorePaths.reduce((acc, path) => {
+  return {
+    ...acc,
+    [path]: mockPath,
+  }
+}, {})
 
 // TODO: validate environment variables
 export default buildConfig({
@@ -57,7 +63,7 @@ export default buildConfig({
           ...config.resolve,
           alias: {
             ...config.resolve.alias,
-            [routesPath]: mockPath,
+            ...aliases,
           },
         },
       }

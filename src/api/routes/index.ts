@@ -1,6 +1,7 @@
 import { Endpoint } from 'payload/config'
 
 import { authGoogleVerifyHandler } from './auth/google/verify'
+import { problemsUploadHandler } from './problems/upload'
 
 const authEndpoints: Endpoint[] = [
   {
@@ -10,6 +11,14 @@ const authEndpoints: Endpoint[] = [
   },
 ]
 
-const endpoints: Endpoint[] = [...authEndpoints]
+const problemEndpoints: Endpoint[] = [
+  {
+    path: '/problems/upload',
+    method: 'post',
+    handler: problemsUploadHandler,
+  },
+]
+
+const endpoints: Endpoint[] = [...authEndpoints, ...problemEndpoints]
 
 export default endpoints
