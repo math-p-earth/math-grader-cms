@@ -3,8 +3,8 @@ import { buildConfig } from 'payload/config'
 import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
-import ProblemsUploadView from './admin/views/ProblemsUpload'
-import endpoints from './api/routes'
+import { adminRoutes } from './admin/routes'
+import { endpoints } from './api/routes'
 import { Courses } from './collections/Courses'
 import { ProblemLists } from './collections/ProblemLists'
 import { Problems } from './collections/Problems'
@@ -36,12 +36,7 @@ export default buildConfig({
     },
     components: {
       afterNavLinks: afterNavLinks,
-      routes: [
-        {
-          Component: ProblemsUploadView,
-          path: '/problems/upload',
-        },
-      ],
+      routes: adminRoutes,
     },
     // custom webpack config for latex packages
     webpack: (config) => {

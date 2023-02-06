@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import { RouteHandler } from '../../routes/types'
 
 export const withErrorHandler: (handler: RouteHandler) => RouteHandler = (handler) => {
@@ -5,6 +7,11 @@ export const withErrorHandler: (handler: RouteHandler) => RouteHandler = (handle
     try {
       await handler(req, res, next)
     } catch (err) {
+      if (err instanceof z.ZodError) {
+        next({
+          message: err.issues,
+        })
+      }
       next(err)
     }
   }

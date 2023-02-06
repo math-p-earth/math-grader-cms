@@ -64,4 +64,4 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
   })
 }
 
-export const authGoogleVerifyHandler = withErrorHandler(handler)
+export default withErrorHandler(handler)
