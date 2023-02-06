@@ -6,6 +6,11 @@ import { isSelf } from '../../access/isSelf'
 import { forceValueOnCreate } from '../../hooks/field/forceValueOnCreate'
 
 const validateDiscordUsername: Validate<string> = (value) => {
+  // allow empty
+  if (!value) {
+    return true
+  }
+
   if (/^(.+?)#\d{4}$/.test(value)) {
     return true
   }
