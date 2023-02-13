@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { GOOGLE_OAUTH_CLIENT_ID } from '../../../../../config'
-import { Student } from '../../../../../payload-types'
 import { withErrorHandler } from '../../../../errors/handler/withErrorHandler'
 import { oauth2Client } from '../../../../services/google'
 
@@ -22,7 +21,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
     audience: GOOGLE_OAUTH_CLIENT_ID,
   })
   const { email } = ticket.getPayload()
-  const result = await payload.find<Student>({
+  const result = await payload.find({
     collection: 'students',
     where: {
       email: {

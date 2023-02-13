@@ -5,11 +5,20 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export interface Config {}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
+export interface Config {
+  collections: {
+    courses: Course
+    problems: Problem
+    'problem-lists': ProblemList
+    sources: Source
+    students: Student
+    submissions: Submission
+    tags: Tag
+    uploads: Upload
+    users: User
+  }
+  globals: {}
+}
 export interface Course {
   id: string
   name?: string
@@ -17,10 +26,6 @@ export interface Course {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "problem-lists".
- */
 export interface ProblemList {
   id: string
   name: string
@@ -30,10 +35,6 @@ export interface ProblemList {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "problems".
- */
 export interface Problem {
   id: string
   content: string
@@ -47,20 +48,12 @@ export interface Problem {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
 export interface Tag {
   id: string
   name?: string
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sources".
- */
 export interface Source {
   id: string
   name: string
@@ -78,12 +71,9 @@ export interface Source {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "students".
- */
 export interface Student {
   id: string
+  email: string
   nickname: string
   gender: 'MALE' | 'FEMALE' | 'OTHER' | 'RATHER_NOT_SAY'
   firstName: string
@@ -98,18 +88,9 @@ export interface Student {
   status: 'PENDING' | 'APPROVED'
   courses?: string[] | Course[]
   googleId?: string
-  email?: string
-  resetPasswordToken?: string
-  resetPasswordExpiration?: string
-  loginAttempts?: number
-  lockUntil?: string
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions".
- */
 export interface Submission {
   id: string
   problem: string | Problem
@@ -122,10 +103,6 @@ export interface Submission {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "uploads".
- */
 export interface Upload {
   id: string
   owner?:
@@ -146,10 +123,6 @@ export interface Upload {
   createdAt: string
   updatedAt: string
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
 export interface User {
   id: string
   roles: ('ADMIN' | 'EDITOR')[]
@@ -160,4 +133,5 @@ export interface User {
   lockUntil?: string
   createdAt: string
   updatedAt: string
+  password?: string
 }

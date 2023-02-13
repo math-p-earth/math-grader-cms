@@ -1,9 +1,9 @@
+import { ProblemList, Source } from 'payload/generated-types'
 import { PayloadRequest } from 'payload/types'
 
 import { Response } from 'express'
 import z from 'zod'
 
-import { Problem, ProblemList, Source } from '../../../../payload-types'
 import { withErrorHandler } from '../../../errors/handler/withErrorHandler'
 import { problemsUploadSchema } from './schema'
 
@@ -18,7 +18,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
   // TODO: add support for tags
   const problems = await Promise.all(
     input.problems.map(async (problemInput) => {
-      return payload.create<Problem>({
+      return payload.create({
         collection: 'problems',
         data: {
           type: problemInput.type,
@@ -33,7 +33,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
   // create source
   let source: Source
   if (input.source) {
-    source = await payload.create<Source>({
+    source = await payload.create({
       collection: 'sources',
       data: {
         name: input.source.name,
@@ -49,7 +49,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
   // create problem list
   let problemList: ProblemList
   if (input.problemList) {
-    problemList = await payload.create<ProblemList>({
+    problemList = await payload.create({
       collection: 'problem-lists',
       data: {
         name: input.problemList.name,
