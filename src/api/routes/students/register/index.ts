@@ -43,6 +43,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
       line: input.contact?.line,
     },
     status: 'PENDING',
+    courses: [],
   }
 
   const student = await payload.create({
