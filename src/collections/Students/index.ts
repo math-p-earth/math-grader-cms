@@ -1,11 +1,10 @@
 import { phoneField } from 'payload-plugin-phone-field'
 import { CollectionConfig, Validate } from 'payload/types'
 
-import { isAdmin } from '../../access/isAdmin'
+import { isAdmin, isAdminFieldAccess } from '../../access/isAdmin'
 import { isSelf } from '../../access/isSelf'
-import { forceValueOnCreate } from '../../hooks/field/forceValueOnCreate'
 
-const validateDiscordUsername: Validate<string> = (value) => {
+export const validateDiscordUsername: Validate<string> = (value) => {
   // allow empty
   if (!value) {
     return true
@@ -21,6 +20,7 @@ export const Students: CollectionConfig = {
   slug: 'students',
   auth: {
     depth: 2, // 2 levels deep, populate student -> courses -> problemLists
+    disableLocalStrategy: true,
   },
   admin: {
     useAsTitle: 'nickname',
@@ -158,6 +158,9 @@ export const Students: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
+      access: {
+        create: isAdminFieldAccess,
+      },
       options: [
         {
           label: 'PENDING',
@@ -168,15 +171,18 @@ export const Students: CollectionConfig = {
           value: 'APPROVED',
         },
       ],
-      hooks: {
-        beforeChange: [forceValueOnCreate('PENDING')],
-      },
+      // hooks: {
+      //   beforeChange: [forceValueOnCreate('PENDING')],
+      // },
     },
     {
       name: 'courses',
       type: 'relationship',
       relationTo: 'courses',
       hasMany: true,
+      access: {
+        create: isAdminFieldAccess,
+      },
       admin: {
         position: 'sidebar',
       },
@@ -185,7 +191,7 @@ export const Students: CollectionConfig = {
       name: 'googleId',
       type: 'text',
       admin: {
-        disabled: true,
+        readOnly: true,
       },
     },
   ],

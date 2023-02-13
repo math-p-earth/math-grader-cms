@@ -1,4 +1,4 @@
-import { Access } from 'payload/types'
+import { Access, FieldAccess } from 'payload/types'
 
 import { isTypeUser } from './type'
 
@@ -7,6 +7,13 @@ import { isTypeUser } from './type'
  * @param role Role of user
  */
 export const isAdmin: Access = ({ req: { user } }) => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN')
+  }
+  return false
+}
+
+export const isAdminFieldAccess: FieldAccess = ({ req: { user } }) => {
   if (isTypeUser(user)) {
     return user.roles.includes('ADMIN')
   }

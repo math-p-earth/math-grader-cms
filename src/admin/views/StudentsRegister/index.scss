@@ -1,0 +1,7 @@
+@import '~payload/scss';
+
+.student-register {
+  &__login-btn {
+    margin-right: base(.5);
+  }
+}
