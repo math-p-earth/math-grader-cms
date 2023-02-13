@@ -128,21 +128,4 @@ export const fields: Field[] = [
     type: 'text',
     hidden: true,
   },
-  {
-    name: 'status',
-    type: 'select',
-    options: [
-      {
-        label: 'PENDING',
-        value: 'PENDING',
-      },
-      {
-        label: 'APPROVED',
-        value: 'APPROVED',
-      },
-    ],
-    // hooks: {
-    //   beforeChange: [forceValueOnCreate('PENDING')],
-    // },
-  },
 ]

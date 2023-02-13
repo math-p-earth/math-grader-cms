@@ -29,12 +29,18 @@ export const Students: CollectionConfig = {
   },
   access: {
     read: isSelf('id'),
-    create: () => true,
+    create: isAdmin, // only admins can create students directly, students must register through /api/students/register
     update: isSelf('id'),
     delete: isAdmin,
     admin: () => false,
   },
   fields: [
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+      unique: true,
+    },
     {
       type: 'row',
       fields: [
@@ -158,9 +164,6 @@ export const Students: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      access: {
-        create: isAdminFieldAccess,
-      },
       options: [
         {
           label: 'PENDING',
@@ -171,9 +174,6 @@ export const Students: CollectionConfig = {
           value: 'APPROVED',
         },
       ],
-      // hooks: {
-      //   beforeChange: [forceValueOnCreate('PENDING')],
-      // },
     },
     {
       name: 'courses',
@@ -181,7 +181,7 @@ export const Students: CollectionConfig = {
       relationTo: 'courses',
       hasMany: true,
       access: {
-        create: isAdminFieldAccess,
+        update: isAdminFieldAccess,
       },
       admin: {
         position: 'sidebar',
