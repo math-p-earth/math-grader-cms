@@ -2,12 +2,18 @@ import { Endpoint } from 'payload/config'
 
 import authGoogleVerifyHandler from './auth/google/verify'
 import problemsUploadHandler from './problems/upload'
+import studentsRegister from './students/register'
 
 const authEndpoints: Endpoint[] = [
   {
     path: '/auth/google/verify',
     method: 'post',
     handler: authGoogleVerifyHandler,
+  },
+  {
+    path: '/students/register',
+    method: 'post',
+    handler: studentsRegister,
   },
 ]
 

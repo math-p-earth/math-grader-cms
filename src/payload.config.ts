@@ -16,7 +16,10 @@ import { Uploads } from './collections/Uploads'
 import { Users } from './collections/Users'
 import { CORS_ORIGINS } from './config'
 
-const ignorePaths = [path.join(__dirname, 'api/routes/auth/google/verify.ts')]
+const ignorePaths = [
+  path.join(__dirname, 'api/routes/auth/google/verify.ts'),
+  path.join(__dirname, 'api/routes/students/register.ts'),
+]
 const mockPath = path.join(__dirname, 'util/mockObject.ts')
 const aliases = ignorePaths.reduce((acc, path) => {
   return {

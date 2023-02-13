@@ -1,26 +1,23 @@
 import getCookieExpiration from 'payload/dist/utilities/getCookieExpiration'
+import { Student } from 'payload/generated-types'
 import { PayloadRequest } from 'payload/types'
 
 import { CookieOptions, Response } from 'express'
 import { LoginTicket } from 'google-auth-library'
 import jwt from 'jsonwebtoken'
-import { z } from 'zod'
 
-import { GOOGLE_OAUTH_CLIENT_ID } from '../../../../../config'
-import { withErrorHandler } from '../../../../errors/handler/withErrorHandler'
-import { oauth2Client } from '../../../../services/google'
-
-export const authGoogleVerifySchema = z.object({
-  idToken: z.string(),
-})
+import { GOOGLE_OAUTH_CLIENT_ID } from '../../../../config'
+import { withErrorHandler } from '../../../errors/handler/withErrorHandler'
+import { oauth2Client } from '../../../services/google'
+import { studentsRegisterSchema } from './schema'
 
 async function handler({ body, payload }: PayloadRequest, res: Response) {
-  const { idToken } = authGoogleVerifySchema.parse(body)
+  const input = studentsRegisterSchema.parse(body)
 
   let ticket: LoginTicket
   try {
     ticket = await oauth2Client.verifyIdToken({
-      idToken,
+      idToken: input.idToken,
       audience: GOOGLE_OAUTH_CLIENT_ID,
     })
   } catch {
@@ -30,24 +27,30 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
     })
     return
   }
-  const { sub } = ticket.getPayload()
-  const result = await payload.find({
-    collection: 'students',
-    where: {
-      googleId: {
-        equals: sub,
-      },
+  const { email, sub } = ticket.getPayload()
+  const data: Omit<Student, 'id' | 'updatedAt' | 'createdAt'> = {
+    email,
+    googleId: sub,
+    nickname: input.nickname,
+    firstName: input.firstName,
+    lastName: input.lastName,
+    gender: input.gender,
+    grade: input.grade,
+    school: input.school,
+    contact: {
+      phone: input.contact?.phone,
+      discord: input.contact?.discord,
+      line: input.contact?.line,
     },
-  })
-  if (result.docs.length === 0) {
-    res.status(404).json({
-      message: 'No student found with id token',
-    })
-    return
+    status: 'PENDING',
   }
 
+  const student = await payload.create({
+    collection: 'students',
+    data,
+  })
+
   const collectionConfig = payload.collections.students.config
-  const student = result.docs[0]
   const token = jwt.sign(
     {
       email: student.email,

@@ -34,6 +34,13 @@ export const Students: CollectionConfig = {
     delete: isAdmin,
     admin: () => false,
   },
+  hooks: {
+    afterMe: [
+      ({ req, response }) => {
+        console.log({ req, response })
+      },
+    ],
+  },
   fields: [
     {
       name: 'email',

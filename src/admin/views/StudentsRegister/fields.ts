@@ -5,14 +5,15 @@ import { validateDiscordUsername } from '../../../collections/Students'
 
 export const fields: Field[] = [
   {
+    name: 'email',
+    type: 'email',
+    admin: {
+      readOnly: true,
+    },
+  },
+  {
     type: 'row',
     fields: [
-      {
-        name: 'nickname',
-        type: 'text',
-        label: 'Nickname',
-        required: true,
-      },
       {
         name: 'firstName',
         type: 'text',
@@ -23,6 +24,12 @@ export const fields: Field[] = [
         name: 'lastName',
         type: 'text',
         label: 'Last Name',
+        required: true,
+      },
+      {
+        name: 'nickname',
+        type: 'text',
+        label: 'Nickname',
         required: true,
       },
       {
