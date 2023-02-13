@@ -25,18 +25,30 @@ interface IDTokenPayload {
 const StudentsRegister: AdminView = () => {
   const idToken = useQueryParams('idToken')
   const redirectUrl = useQueryParams('redirectUrl')
-  const decodedToken = jwtDecode<IDTokenPayload>(idToken)
   const initialData = {
     idToken: idToken,
   }
-  if ('email' in decodedToken) {
-    initialData['email'] = decodedToken['email']
-  }
-  if ('given_name' in decodedToken) {
-    initialData['firstName'] = decodedToken['given_name']
-  }
-  if ('family_name' in decodedToken) {
-    initialData['lastName'] = decodedToken['family_name']
+  try {
+    const decodedToken = jwtDecode<IDTokenPayload>(idToken)
+    if ('email' in decodedToken) {
+      initialData['email'] = decodedToken['email']
+    }
+    if ('given_name' in decodedToken) {
+      initialData['firstName'] = decodedToken['given_name']
+    }
+    if ('family_name' in decodedToken) {
+      initialData['lastName'] = decodedToken['family_name']
+    }
+  } catch (err) {
+    return (
+      <MinimalTemplate className={baseClass} width="normal">
+        <h1>Register</h1>
+        <p>
+          Invalid id token. Id token is required to complete new user registration. Please initate
+          registration flow through Google OAuth.
+        </p>
+      </MinimalTemplate>
+    )
   }
   return (
     <MinimalTemplate className={baseClass} width="normal">
