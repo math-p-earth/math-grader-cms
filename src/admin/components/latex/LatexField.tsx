@@ -16,7 +16,7 @@ const PATH_PREFIX = '__PATH__'
  * @param props UI Props for this component. Automatically set by Payload.
  * @returns JSX.Element
  */
-export const LatexField = ({ targetFieldName, path }: LatexFieldProps) => {
+export const LatexField: React.FC<LatexFieldProps> = ({ targetFieldName, path }) => {
   if (targetFieldName.startsWith(PATH_PREFIX) && path) {
     targetFieldName = targetFieldName.replace(PATH_PREFIX, path)
   }
