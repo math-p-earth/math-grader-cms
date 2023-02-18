@@ -1,9 +1,11 @@
+import { Forbidden } from 'payload/errors'
 import { ProblemList, Source } from 'payload/generated-types'
 import { PayloadRequest } from 'payload/types'
 
 import { Response } from 'express'
 import z from 'zod'
 
+import { AuthUser, isTypeUser } from '../../../../access/type'
 import { withErrorHandler } from '../../../errors/handler/withErrorHandler'
 import { problemsUploadSchema } from './schema'
 
@@ -11,7 +13,17 @@ const zodSchema = z.object({
   input: problemsUploadSchema,
 })
 
-async function handler({ body, payload }: PayloadRequest, res: Response) {
+const canAccess = (user: AuthUser): boolean => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN') || user.roles.includes('EDITOR')
+  }
+  return false
+}
+
+async function handler({ body, payload, user }: PayloadRequest, res: Response) {
+  if (!canAccess(user)) {
+    throw new Forbidden()
+  }
   const { input } = zodSchema.parse(body)
 
   // create problems

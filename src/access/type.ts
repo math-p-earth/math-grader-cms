@@ -5,6 +5,7 @@ import { Users } from '../collections/Users'
 import { Student, User } from '../payload-types'
 
 export type UserTypes = User | Student
+export type AuthUser = UserTypes & PayloadUser
 export type Role = User['roles'][number]
 
 export const isTypeUser = <U extends PayloadUser>(user: U): user is User & U => {
