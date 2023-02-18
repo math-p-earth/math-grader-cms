@@ -28,7 +28,7 @@ const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
 export const Problems: CollectionConfig = {
   slug: 'problems',
   admin: {
-    useAsTitle: 'content',
+    useAsTitle: 'id',
   },
   access: {
     read: ProblemsReadAccess, // TODO: allow reading only if student is enrolled in course
