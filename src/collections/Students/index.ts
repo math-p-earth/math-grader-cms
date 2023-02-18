@@ -1,8 +1,10 @@
 import { phoneField } from 'payload-plugin-phone-field'
-import { CollectionConfig, Validate } from 'payload/types'
+import { Student } from 'payload/generated-types'
+import { Access, CollectionConfig, Validate } from 'payload/types'
 
 import { isAdmin, isAdminFieldAccess } from '../../access/isAdmin'
 import { isSelf } from '../../access/isSelf'
+import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 
 export const validateDiscordUsername: Validate<string> = (value) => {
   // allow empty
@@ -14,6 +16,20 @@ export const validateDiscordUsername: Validate<string> = (value) => {
     return true
   }
   return 'Discord username should match the format: username#1234'
+}
+
+const StudentsReadAccess: Access<Student, UserTypes> = ({ req: { user } }) => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN')
+  }
+  if (isTypeApprovedStudent(user)) {
+    return {
+      id: {
+        equals: user.id,
+      },
+    }
+  }
+  return false
 }
 
 export const Students: CollectionConfig = {
@@ -28,7 +44,7 @@ export const Students: CollectionConfig = {
     defaultColumns: ['nickname', 'firstName', 'lastName', 'grade', 'email'],
   },
   access: {
-    read: isSelf('id'),
+    read: StudentsReadAccess,
     create: isAdmin, // only admins can create students directly, students must register through /api/students/register
     update: isSelf('id'),
     delete: isAdmin,

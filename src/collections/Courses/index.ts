@@ -1,14 +1,14 @@
 import { Access, CollectionConfig } from 'payload/types'
 
 import { isAdmin } from '../../access/isAdmin'
-import { UserTypes, isTypeStudent, isTypeUser } from '../../access/type'
+import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { Course } from '../../payload-types'
 
 const CoursesReadAccess: Access<Course, UserTypes> = ({ req: { user } }) => {
   if (isTypeUser(user)) {
     return user.roles.includes('ADMIN')
   }
-  if (isTypeStudent(user)) {
+  if (isTypeApprovedStudent(user)) {
     return {
       id: {
         in: user.courses.map((course) => course.id),

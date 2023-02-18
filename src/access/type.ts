@@ -14,3 +14,7 @@ export const isTypeUser = <U extends PayloadUser>(user: U): user is User & U => 
 export const isTypeStudent = <U extends PayloadUser>(user: U): user is Student & U => {
   return Boolean(user?.collection === Students.slug)
 }
+
+export const isTypeApprovedStudent = <U extends PayloadUser>(user: U): user is Student & U => {
+  return Boolean(user?.collection === Students.slug && user?.status === 'APPROVED')
+}

@@ -1,7 +1,7 @@
 import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
-import { UserTypes, isTypeStudent, isTypeUser } from '../../access/type'
+import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/components/latex/LatexField'
 import { Course, Problem, ProblemList } from '../../payload-types'
 
@@ -9,7 +9,7 @@ const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   if (isTypeUser(user)) {
     return user.roles.includes('ADMIN') || user.roles.includes('EDITOR')
   }
-  if (isTypeStudent(user)) {
+  if (isTypeApprovedStudent(user)) {
     const courses = user.courses as Course[]
     const problemLists = courses.flatMap((course) => course.problemLists as ProblemList[])
 

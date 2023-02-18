@@ -1,6 +1,6 @@
 import { Access } from 'payload/config'
 
-import { UserTypes, isTypeUser } from './type'
+import { UserTypes, isTypeApprovedStudent, isTypeUser } from './type'
 
 /**
  * Returns an access function which returns true if current user is either:
@@ -10,11 +10,11 @@ import { UserTypes, isTypeUser } from './type'
  */
 export const isSelf: <T>(field: keyof T) => Access<T, UserTypes> = (field) => {
   return ({ req: { user } }) => {
-    if (user) {
-      // If user is admin, grant access
-      if (isTypeUser(user) && user.roles.includes('ADMIN')) {
-        return true
-      }
+    // If user is admin, grant access
+    if (isTypeUser(user) && user.roles.includes('ADMIN')) {
+      return true
+    }
+    if (isTypeApprovedStudent(user)) {
       // Otherwise, only provide access to themselves based on the given relationship field
       return {
         or: [
