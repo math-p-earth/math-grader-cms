@@ -5,6 +5,7 @@ import { Access, CollectionConfig, Validate } from 'payload/types'
 import { isAdmin, isAdminFieldAccess } from '../../access/isAdmin'
 import { isSelf } from '../../access/isSelf'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
+import { NODE_ENV } from '../../config'
 
 export const validateDiscordUsername: Validate<string> = (value) => {
   // allow empty
@@ -37,6 +38,10 @@ export const Students: CollectionConfig = {
   auth: {
     depth: 2, // 2 levels deep, populate student -> courses -> problemLists
     disableLocalStrategy: true,
+    cookies: {
+      secure: NODE_ENV === 'production',
+      sameSite: 'none',
+    },
   },
   admin: {
     useAsTitle: 'nickname',
