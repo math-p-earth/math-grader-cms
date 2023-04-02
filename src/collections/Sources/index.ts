@@ -1,8 +1,8 @@
-import { CollectionConfig, Field } from 'payload/types'
+import { Access, CollectionConfig, Field } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
-import { isLoggedIn } from '../../access/isLoggedIn'
-import { Source } from '../../payload-types'
+import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
+import { Course, Source } from '../../payload-types'
 
 const bookFields: Field[] = [
   {
@@ -45,13 +45,30 @@ const paperFields: Field[] = [
   },
 ]
 
+const SourcesReadAccess: Access<Source, UserTypes> = ({ req: { user } }) => {
+  if (isTypeUser(user)) {
+    return user.roles.includes('ADMIN') || user.roles.includes('EDITOR')
+  }
+  if (isTypeApprovedStudent(user)) {
+    const courses = user.courses as Course[]
+    const sources = courses.flatMap((course) => course.sources as Source[])
+    const sourceIds = sources.map((source) => source.id)
+    return {
+      id: {
+        in: sourceIds,
+      },
+    }
+  }
+  return false
+}
+
 export const Sources: CollectionConfig = {
   slug: 'sources',
   admin: {
     useAsTitle: 'name',
   },
   access: {
-    read: isLoggedIn, // TODO: allow reading only if student is enrolled in course
+    read: SourcesReadAccess,
     create: hasRoles(['EDITOR']),
     update: hasRoles(['EDITOR']),
     delete: hasRoles(['EDITOR']),

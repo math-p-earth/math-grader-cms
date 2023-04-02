@@ -23,6 +23,7 @@ export interface Course {
   id: string
   name?: string
   problemLists?: string[] | ProblemList[]
+  sources?: string[] | Source[]
   createdAt: string
   updatedAt: string
 }
