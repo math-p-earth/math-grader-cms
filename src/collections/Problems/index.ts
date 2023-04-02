@@ -33,6 +33,7 @@ export const Problems: CollectionConfig = {
   slug: 'problems',
   admin: {
     useAsTitle: 'id',
+    defaultColumns: ['content', 'type', 'tags'],
   },
   access: {
     read: ProblemsReadAccess, // TODO: allow reading only if student is enrolled in course

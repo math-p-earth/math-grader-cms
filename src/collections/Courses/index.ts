@@ -22,6 +22,7 @@ export const Courses: CollectionConfig = {
   slug: 'courses',
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'problemLists', 'sources'],
   },
   access: {
     read: CoursesReadAccess,

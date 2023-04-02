@@ -66,6 +66,7 @@ export const Sources: CollectionConfig = {
   slug: 'sources',
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'type', 'description'],
   },
   access: {
     read: SourcesReadAccess,

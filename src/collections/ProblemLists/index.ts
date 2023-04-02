@@ -25,6 +25,7 @@ export const ProblemLists: CollectionConfig = {
   slug: 'problem-lists',
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'type', 'description'],
   },
   access: {
     read: ProblemListsReadAccess,
