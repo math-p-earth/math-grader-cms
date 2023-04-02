@@ -38,10 +38,16 @@ export const Students: CollectionConfig = {
   auth: {
     depth: 2, // 2 levels deep, populate student -> courses -> problemLists
     disableLocalStrategy: true,
-    cookies: {
-      secure: NODE_ENV === 'production',
-      sameSite: 'none',
-    },
+    cookies:
+      NODE_ENV === 'production'
+        ? {
+            secure: true,
+            sameSite: 'none',
+          }
+        : {
+            secure: false,
+            sameSite: 'lax',
+          },
   },
   admin: {
     useAsTitle: 'nickname',
