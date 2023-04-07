@@ -11,8 +11,10 @@ const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   }
   if (isTypeApprovedStudent(user)) {
     const courses = user.courses as Course[]
-    const problemLists = courses.flatMap((course) => course.problemLists as ProblemList[])
-    const sources = courses.flatMap((course) => course.sources as Source[])
+    const problemLists = courses.flatMap(
+      (course) => (course.problemLists ? course.problemLists : []) as ProblemList[]
+    )
+    const sources = courses.flatMap((course) => (course.sources ? course.sources : []) as Source[])
 
     // problems is string[] because of student depth = 2
     const problemIds = [

@@ -10,7 +10,9 @@ const ProblemListsReadAccess: Access<ProblemList, UserTypes> = ({ req: { user } 
   }
   if (isTypeApprovedStudent(user)) {
     const courses = user.courses as Course[]
-    const problemLists = courses.flatMap((course) => course.problemLists as ProblemList[])
+    const problemLists = courses.flatMap(
+      (course) => (course.problemLists ? course.problemLists : []) as ProblemList[]
+    )
     const problemListIds = problemLists.map((problemList) => problemList.id)
     return {
       id: {

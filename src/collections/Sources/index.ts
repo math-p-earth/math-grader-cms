@@ -51,7 +51,7 @@ const SourcesReadAccess: Access<Source, UserTypes> = ({ req: { user } }) => {
   }
   if (isTypeApprovedStudent(user)) {
     const courses = user.courses as Course[]
-    const sources = courses.flatMap((course) => course.sources as Source[])
+    const sources = courses.flatMap((course) => (course.sources ? course.sources : []) as Source[])
     const sourceIds = sources.map((source) => source.id)
     return {
       id: {
