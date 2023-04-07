@@ -72,6 +72,7 @@ export const ProblemLists: CollectionConfig = {
       type: 'relationship',
       relationTo: 'problems',
       hasMany: true,
+      defaultValue: [],
     },
   ],
 }
