@@ -109,7 +109,7 @@ export const Sources: CollectionConfig = {
       type: 'relationship',
       relationTo: 'problems',
       hasMany: true,
-      defaultValue: [],
+      defaultValue: () => [],
     },
     {
       name: 'book',

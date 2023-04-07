@@ -213,7 +213,7 @@ export const Students: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      defaultValue: [],
+      defaultValue: () => [],
     },
     {
       name: 'googleId',

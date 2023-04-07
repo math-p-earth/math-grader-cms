@@ -121,7 +121,7 @@ export const Problems: CollectionConfig = {
       admin: {
         position: 'sidebar',
       },
-      defaultValue: [],
+      defaultValue: () => [],
     },
   ],
 }
