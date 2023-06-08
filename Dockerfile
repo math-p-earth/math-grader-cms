@@ -6,21 +6,29 @@ ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 RUN npm install -g pnpm
 
-FROM pnpm as builder
+# ----------------------------
 
+FROM pnpm as builder
 WORKDIR /app
 
-COPY ["package.json", "pnpm-lock.yaml", "./"]
-
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY src ./src
 COPY tsconfig.json ./
-
 RUN pnpm build
 
-EXPOSE 3000
+# ----------------------------
 
-ENV NODE_ENV=production
+FROM pnpm as runtime
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --production
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/build ./build
+
+EXPOSE 3000
 
 CMD ["pnpm", "serve"]
