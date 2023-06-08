@@ -1,18 +1,26 @@
-FROM node:19-alpine as builder
+FROM node:19-alpine AS pnpm
+RUN apk add --no-cache libc6-compat
+RUN apk update
+
+ENV PNPM_HOME="/root/.local/share/pnpm"
+ENV PATH="${PATH}:${PNPM_HOME}"
+RUN npm install -g pnpm
+
+FROM pnpm as builder
 
 WORKDIR /app
 
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "pnpm-lock.yaml", "./"]
 
-RUN yarn install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 COPY src ./src
 COPY tsconfig.json ./
 
-RUN yarn build
+RUN pnpm build
 
 EXPOSE 3000
 
 ENV NODE_ENV=production
 
-CMD ["yarn", "serve"]
+CMD ["pnpm", "serve"]
