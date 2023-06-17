@@ -18,6 +18,7 @@ interface ProblemTransferDrawerProps {
 
 const baseClass = 'problem-transfer-drawer'
 
+// TODO: implement reordering
 export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
   path,
   toggleLabel,
@@ -43,7 +44,12 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
   // get left-side problems
   const {
     query: { data: problemsData },
-  } = useFilterProblems({ searchInput: problemSearchInput, sourceId, tagId, limit: 100 })
+  } = useFilterProblems({
+    searchInput: problemSearchInput,
+    sourceId,
+    tagId,
+    limit: 100,
+  })
 
   // get right-side problems
   const {

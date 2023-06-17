@@ -17,6 +17,7 @@ export interface ProblemFilter {
   tagId?: string
   limit?: number
   page?: number
+  resultOnNoFilter?: 'empty' | 'all'
 }
 
 export const useFilterProblems = ({
@@ -26,6 +27,7 @@ export const useFilterProblems = ({
   tagId,
   limit,
   page = 1,
+  resultOnNoFilter = 'empty',
 }: ProblemFilter) => {
   const {
     serverURL,
@@ -43,13 +45,12 @@ export const useFilterProblems = ({
     },
     depth: 0,
   }
-
   const problemQueryParams: {
     [key: string]: unknown
     where: Where
   } = {
     where: {
-      ...(ids && ids.length > 0 && { id: { in: ids } }),
+      ...(ids && { id: { in: ids } }),
       ...(tagId && { tags: { contains: tagId } }),
       ...(searchInput && {
         or: [
@@ -70,7 +71,18 @@ export const useFilterProblems = ({
   }
 
   const query = useQuery<PaginatedDocs<Problem>, ErrorResponse>({
-    queryKey: ['problems', problemQueryParams, sourceId, serverURL, api],
+    queryKey: [
+      'problems',
+      problemQueryParams,
+      sourceId,
+      serverURL,
+      api,
+      ids,
+      ids?.length,
+      tagId,
+      searchInput,
+      resultOnNoFilter,
+    ],
     keepPreviousData: true,
     queryFn: async () => {
       if (sourceId) {
@@ -93,6 +105,15 @@ export const useFilterProblems = ({
           in: problemIds,
         }
       }
+      if (
+        resultOnNoFilter === 'empty' &&
+        (!ids || ids.length === 0) &&
+        !sourceId &&
+        !tagId &&
+        !searchInput
+      ) {
+        return emptyPaginatedDocs
+      }
 
       const problemResponse = await fetch(
         `${serverURL}${api}/${Problems.slug}?${qs.stringify(problemQueryParams)}`,
@@ -110,4 +131,17 @@ export const useFilterProblems = ({
   })
 
   return { query }
+}
+
+const emptyPaginatedDocs: PaginatedDocs = {
+  docs: [],
+  totalDocs: 0,
+  limit: 1,
+  totalPages: 1,
+  page: 1,
+  pagingCounter: 1,
+  hasPrevPage: false,
+  hasNextPage: false,
+  prevPage: null,
+  nextPage: null,
 }
