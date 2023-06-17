@@ -13,8 +13,8 @@ import { Sources } from '../../collections/Sources'
 export interface ProblemFilter {
   searchInput?: string
   ids?: string[]
-  sourceIds?: string[]
-  tags?: string[]
+  sourceId?: string
+  tagId?: string
   limit?: number
   page?: number
 }
@@ -22,8 +22,8 @@ export interface ProblemFilter {
 export const useFilterProblems = ({
   searchInput,
   ids,
-  sourceIds,
-  tags,
+  sourceId,
+  tagId,
   limit,
   page = 1,
 }: ProblemFilter) => {
@@ -38,7 +38,7 @@ export const useFilterProblems = ({
   } = {
     where: {
       id: {
-        in: sourceIds,
+        equals: sourceId,
       },
     },
     depth: 0,
@@ -49,8 +49,8 @@ export const useFilterProblems = ({
     where: Where
   } = {
     where: {
-      ...(ids && { id: { in: ids } }),
-      ...(tags && { tags: { contains: tags } }),
+      ...(ids && ids.length > 0 && { id: { in: ids } }),
+      ...(tagId && { tags: { contains: tagId } }),
       ...(searchInput && {
         or: [
           {
@@ -70,10 +70,10 @@ export const useFilterProblems = ({
   }
 
   const query = useQuery<PaginatedDocs<Problem>, ErrorResponse>({
-    queryKey: ['problems', problemQueryParams, sourceIds, serverURL, api],
+    queryKey: ['problems', problemQueryParams, sourceId, serverURL, api],
     keepPreviousData: true,
     queryFn: async () => {
-      if (sourceIds) {
+      if (sourceId) {
         const sourceResponse = await fetch(
           `${serverURL}${api}/${Sources.slug}?${qs.stringify(sourceQueryParams)}`,
           {

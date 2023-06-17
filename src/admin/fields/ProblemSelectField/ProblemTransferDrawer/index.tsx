@@ -3,10 +3,12 @@ import React, { useState } from 'react'
 import { useField } from 'payload/components/forms'
 import { Drawer, DrawerToggler } from 'payload/dist/admin/components/elements/Drawer'
 
-import { Transfer } from 'antd'
+import { Select, Transfer } from 'antd'
 
 import { ProblemCard } from '../../../components/ProblemCard'
 import { useFilterProblems } from '../../../hooks/useFilterProblems'
+import { useFilterSources } from '../../../hooks/useFilterSources'
+import { useFilterTags } from '../../../hooks/useFilterTags'
 import './index.scss'
 
 interface ProblemTransferDrawerProps {
@@ -21,11 +23,29 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
   toggleLabel,
 }) => {
   const { value: problemIds, setValue } = useField<string[]>({ path })
-  const [searchInput, setSearchInput] = useState('')
+  const [sourceSearchInput, setSourceSearchInput] = useState('')
+  const [tagSearchInput, setTagSearchInput] = useState('')
+  const [problemSearchInput, setProblemSearchInput] = useState('')
 
+  const [sourceId, setSourceId] = useState<string | undefined>()
+  const [tagId, setTagId] = useState<string | undefined>()
+
+  // get sources
+  const {
+    query: { data: sourcesData },
+  } = useFilterSources({ searchInput: sourceSearchInput, limit: 10 })
+
+  // get tags
+  const {
+    query: { data: tagsData },
+  } = useFilterTags({ searchInput: tagSearchInput, limit: 10 })
+
+  // get left-side problems
   const {
     query: { data: problemsData },
-  } = useFilterProblems({ searchInput, limit: 50 })
+  } = useFilterProblems({ searchInput: problemSearchInput, sourceId, tagId, limit: 100 })
+
+  // get right-side problems
   const {
     query: { data: selectedProblemsData },
   } = useFilterProblems({ ids: problemIds })
@@ -34,9 +54,17 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
     (value, index, arr) => arr.indexOf(value) === index
   )
 
-  const drawerSlug = `problem-transfer-${path}`
-
-  const onChange = (_targetKeys: string[], direction: 'left' | 'right', moveKeys: string[]) => {
+  const onChangeTag = (value: string) => {
+    setTagId(value)
+  }
+  const onChangeSource = (value: string) => {
+    setSourceId(value)
+  }
+  const onChangeProblem = (
+    _targetKeys: string[],
+    direction: 'left' | 'right',
+    moveKeys: string[]
+  ) => {
     if (direction === 'left') {
       setValue(problemIds.filter((id) => !moveKeys.includes(id)))
       return
@@ -45,6 +73,8 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
     setValue([...problemIds, ...moveKeys])
   }
 
+  const drawerSlug = `problem-transfer-${path}`
+
   return (
     <div className={baseClass}>
       <DrawerToggler slug={drawerSlug} className={`${baseClass}__toggle`}>
@@ -52,6 +82,33 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
       </DrawerToggler>
       <Drawer slug={drawerSlug} title="Select Problems">
         <div className={`${baseClass}__content`}>
+          <Select
+            options={sourcesData?.docs.map((source) => ({
+              label: source.name,
+              value: source.id,
+            }))}
+            allowClear
+            showSearch
+            placeholder="Filter by sources"
+            filterOption={false}
+            onSearch={setSourceSearchInput}
+            onChange={onChangeSource}
+          />
+          <Select
+            options={tagsData?.docs.map((tag) => ({
+              label: tag.name,
+              value: tag.id,
+            }))}
+            allowClear
+            showSearch
+            placeholder="Filter by tag"
+            filterOption={false}
+            onSearch={setTagSearchInput}
+            onChange={onChangeTag}
+            style={{
+              marginLeft: '1rem',
+            }}
+          />
           <Transfer
             dataSource={problems.map((problem) => ({
               ...problem,
@@ -59,12 +116,12 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
             }))}
             render={(problem) => <ProblemCard problem={problem} />}
             targetKeys={problemIds}
-            onChange={onChange}
+            onChange={onChangeProblem}
             filterOption={() => true} // to bypass filter option
             showSearch
             onSearch={(direction, value) => {
               if (direction === 'left') {
-                setSearchInput(value)
+                setProblemSearchInput(value)
               }
             }}
           />

@@ -1,3 +1,5 @@
+@import '~payload/scss';
+
 .problem-transfer-drawer {
   &__toggle {
     font-size: 1rem;
@@ -36,6 +38,9 @@
   }
 
   &__content {
+    > div {
+      margin-bottom: $baseline;
+    }
     .ant-transfer-list {
       flex-grow: 1;
       height: 700px;
