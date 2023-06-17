@@ -5,6 +5,8 @@ import { RelationshipField } from 'payload/types'
 
 import { Problems } from '../../../collections/Problems'
 import { useFilterProblems } from '../../hooks/useFilterProblems'
+import { ProblemCardList } from './components/ProblemCardList'
+import './index.scss'
 
 export type ProblemSelectProps = Omit<RelationshipField, 'type'> & {
   path?: string
@@ -24,13 +26,13 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
   }
 
   const { value: problemIds } = useField<string[]>({ path })
-  const { data } = useFilterProblems({
+  const { data, isLoading } = useFilterProblems({
     ids: problemIds,
   })
   return (
     <div className="problem-select">
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
-      {JSON.stringify(data?.docs)}
+      {!isLoading && <ProblemCardList problems={data.docs} />}
     </div>
   )
 }
