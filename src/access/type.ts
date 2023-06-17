@@ -8,14 +8,16 @@ export type UserTypes = User | Student
 export type AuthUser = UserTypes & PayloadUser
 export type Role = User['roles'][number]
 
-export const isTypeUser = <U extends PayloadUser>(user: U): user is User & U => {
+export const isTypeUser = <U extends PayloadUser>(user: U | null): user is User & U => {
   return Boolean(user?.collection === Users.slug)
 }
 
-export const isTypeStudent = <U extends PayloadUser>(user: U): user is Student & U => {
+export const isTypeStudent = <U extends PayloadUser>(user: U | null): user is Student & U => {
   return Boolean(user?.collection === Students.slug)
 }
 
-export const isTypeApprovedStudent = <U extends PayloadUser>(user: U): user is Student & U => {
+export const isTypeApprovedStudent = <U extends PayloadUser>(
+  user: U | null
+): user is Student & U => {
   return Boolean(user?.collection === Students.slug && user?.status === 'APPROVED')
 }

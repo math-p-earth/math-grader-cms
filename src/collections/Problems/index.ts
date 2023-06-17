@@ -123,6 +123,7 @@ export const Problems: CollectionConfig = {
         position: 'sidebar',
       },
       defaultValue: () => [],
+      required: true,
     },
   ],
 }

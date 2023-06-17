@@ -49,6 +49,7 @@ export const ProblemLists: CollectionConfig = {
     {
       name: 'type',
       type: 'select',
+      required: true,
       options: [
         {
           label: 'Drill',
@@ -74,6 +75,7 @@ export const ProblemLists: CollectionConfig = {
       relationTo: 'problems',
       hasMany: true,
       defaultValue: () => [],
+      required: true,
       admin: {
         components: {
           Field: ProblemSelect,

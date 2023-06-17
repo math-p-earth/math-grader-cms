@@ -31,6 +31,7 @@ export const Submissions: CollectionConfig = {
       relationTo: 'students',
       type: 'relationship',
       hasMany: false,
+      required: true,
       hooks: {
         beforeValidate: [setUserOnCreate(['students'])],
       },
@@ -67,6 +68,7 @@ export const Submissions: CollectionConfig = {
     {
       name: 'content',
       type: 'textarea',
+      required: true,
     },
     {
       name: 'contentLatex',

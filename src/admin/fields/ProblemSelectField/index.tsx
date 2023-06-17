@@ -9,7 +9,7 @@ import { useFilterProblems } from '../../hooks/useFilterProblems'
 import './index.scss'
 
 export type ProblemSelectProps = Omit<RelationshipField, 'type'> & {
-  path?: string
+  path: string
 }
 
 export const ProblemSelect: React.FC<ProblemSelectProps> = ({
@@ -26,13 +26,14 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
   }
 
   const { value: problemIds } = useField<string[]>({ path })
-  const { data, isLoading } = useFilterProblems({
+  const { data, status } = useFilterProblems({
     ids: problemIds,
   })
+
   return (
     <div className="problem-select">
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
-      {!isLoading && <ProblemCardList problems={data.docs} />}
+      {status == 'success' && <ProblemCardList problems={data.docs} />}
     </div>
   )
 }

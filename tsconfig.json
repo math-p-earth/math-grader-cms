@@ -12,7 +12,8 @@
     "experimentalDecorators": true,
     "paths": {
       "payload/generated-types": ["./src/payload-types.ts"]
-    }
+    },
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "build"],

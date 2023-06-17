@@ -37,13 +37,14 @@ async function handler({ body, payload, user }: PayloadRequest, res: Response) {
           content: problemInput.content,
           choices: problemInput.choices?.map((choice) => ({ choice })),
           answer: problemInput.answer,
+          tags: [],
         },
       })
     })
   )
 
   // create source
-  let source: Source
+  let source: Source | null = null
   if (input.source) {
     source = await payload.create({
       collection: 'sources',
@@ -59,7 +60,7 @@ async function handler({ body, payload, user }: PayloadRequest, res: Response) {
   }
 
   // create problem list
-  let problemList: ProblemList
+  let problemList: ProblemList | null = null
   if (input.problemList) {
     problemList = await payload.create({
       collection: 'problem-lists',

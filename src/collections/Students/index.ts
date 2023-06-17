@@ -214,6 +214,7 @@ export const Students: CollectionConfig = {
         position: 'sidebar',
       },
       defaultValue: () => [],
+      required: true,
     },
     {
       name: 'googleId',
@@ -221,6 +222,7 @@ export const Students: CollectionConfig = {
       admin: {
         readOnly: true,
       },
+      required: true,
     },
   ],
 }

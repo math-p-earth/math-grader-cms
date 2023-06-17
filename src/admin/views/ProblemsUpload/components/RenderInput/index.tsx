@@ -110,7 +110,12 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
       ) : (
         <h3 className="warning">Problem list not found</h3>
       )}
-      <ProblemCardList problems={input.problems} />
+      <ProblemCardList
+        problems={input.problems.map((problem) => ({
+          ...problem,
+          choices: problem.choices?.map((choice) => ({ choice })),
+        }))}
+      />
     </div>
   )
 }
