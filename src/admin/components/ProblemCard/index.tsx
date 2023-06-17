@@ -10,20 +10,20 @@ export type ProblemCardProblemItem = Pick<Problem, 'content' | 'choices'>
 
 interface ProblemCardProps {
   problem: ProblemCardProblemItem
-  order: number
+  number?: number
 }
 
 const baseClass = 'problem-card'
 
-export const ProblemCard: React.FC<ProblemCardProps> = ({ problem, order }) => {
+export const ProblemCard: React.FC<ProblemCardProps> = ({ problem, number: order }) => {
   return (
     <div className={baseClass}>
-      <ProblemNumberIcon>{order}</ProblemNumberIcon>
+      {typeof order !== 'undefined' && <ProblemNumberIcon>{order}</ProblemNumberIcon>}
       <LatexMarkdown>{problem.content}</LatexMarkdown>
-      {problem.choices && (
+      {problem.choices && problem.choices.length > 0 && (
         <ol>
-          {problem.choices.map(({ choice }) => (
-            <li>
+          {problem.choices.map(({ choice, id }) => (
+            <li key={id}>
               <LatexMarkdown>{choice}</LatexMarkdown>
             </li>
           ))}

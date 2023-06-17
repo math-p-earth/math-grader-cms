@@ -13,7 +13,7 @@ export const ProblemCardList: React.FC<ProblemCardListProps> = ({ problems }) =>
   return (
     <div className={baseClass}>
       {problems.map((problem, i) => (
-        <ProblemCard key={i} problem={problem} order={i} />
+        <ProblemCard key={i} problem={problem} number={i + 1} />
       ))}
     </div>
   )

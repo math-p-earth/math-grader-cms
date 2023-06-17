@@ -24,7 +24,7 @@ export const useFilterProblems = ({
   ids,
   sourceIds,
   tags,
-  limit = 20,
+  limit,
   page = 1,
 }: ProblemFilter) => {
   const {
@@ -55,23 +55,23 @@ export const useFilterProblems = ({
         or: [
           {
             content: {
-              like: searchInput,
+              contains: searchInput,
             },
           },
           {
             'choices.choice': {
-              like: searchInput,
+              contains: searchInput,
             },
           },
         ],
       }),
     },
-    limit: limit,
-    page: page,
+    ...(limit && { limit: limit, page: page }),
   }
 
   const query = useQuery<PaginatedDocs<Problem>, ErrorResponse>({
     queryKey: ['problems', problemQueryParams, sourceIds, serverURL, api],
+    keepPreviousData: true,
     queryFn: async () => {
       if (sourceIds) {
         const sourceResponse = await fetch(
@@ -109,5 +109,5 @@ export const useFilterProblems = ({
     },
   })
 
-  return query
+  return { query }
 }

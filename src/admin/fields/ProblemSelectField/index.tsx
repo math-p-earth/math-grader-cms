@@ -1,13 +1,12 @@
 import React from 'react'
 
-import { Pill } from 'payload/components'
 import { Label, useField } from 'payload/components/forms'
-import Plus from 'payload/dist/admin/components/icons/Plus'
 import { RelationshipField } from 'payload/types'
 
 import { Problems } from '../../../collections/Problems'
 import { ProblemCardList } from '../../components/ProblemCardList'
 import { useFilterProblems } from '../../hooks/useFilterProblems'
+import { ProblemTransferDrawer } from './ProblemTransferDrawer'
 import './index.scss'
 
 export type ProblemSelectProps = Omit<RelationshipField, 'type'> & {
@@ -28,16 +27,16 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
   }
 
   const { value: problemIds } = useField<string[]>({ path })
-  const { data, status } = useFilterProblems({
+  const { query } = useFilterProblems({
     ids: problemIds,
   })
+  const { status, data } = query
 
   return (
     <div className="problem-select">
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
-      <Pill onClick={() => alert('test')} pillStyle="light" icon={<Plus />} alignIcon="left">
-        Create new
-      </Pill>
+      <ProblemTransferDrawer toggleLabel="+ Create New" path={path} />
+
       {status == 'success' && <ProblemCardList problems={data.docs} />}
     </div>
   )
