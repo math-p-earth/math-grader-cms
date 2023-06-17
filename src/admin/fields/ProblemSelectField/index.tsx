@@ -1,6 +1,8 @@
 import React from 'react'
 
+import { Pill } from 'payload/components'
 import { Label, useField } from 'payload/components/forms'
+import Plus from 'payload/dist/admin/components/icons/Plus'
 import { RelationshipField } from 'payload/types'
 
 import { Problems } from '../../../collections/Problems'
@@ -33,6 +35,9 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
   return (
     <div className="problem-select">
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
+      <Pill onClick={() => alert('test')} pillStyle="light" icon={<Plus />} alignIcon="left">
+        Create new
+      </Pill>
       {status == 'success' && <ProblemCardList problems={data.docs} />}
     </div>
   )

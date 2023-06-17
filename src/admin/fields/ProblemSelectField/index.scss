@@ -3,4 +3,8 @@
 .problem-select {
   position: relative;
   margin-bottom: $baseline;
+
+  .pill {
+    margin-bottom: 16px;
+  }
 }
