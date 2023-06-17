@@ -2,12 +2,14 @@ import React from 'react'
 
 import { Problem } from 'payload/generated-types'
 
-import { LatexMarkdown } from '../../../LatexField/LatexMarkdown'
-import { ProblemNumberIcon } from '../ProblemNumberIcon'
+import { LatexMarkdown } from '../../fields/LatexField/LatexMarkdown'
+import { ProblemNumberIcon } from './ProblemNumberIcon'
 import './index.scss'
 
+export type ProblemCardProblemItem = Pick<Problem, 'content' | 'choices'>
+
 interface ProblemCardProps {
-  problem: Problem
+  problem: ProblemCardProblemItem
   order: number
 }
 

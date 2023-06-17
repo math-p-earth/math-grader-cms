@@ -4,8 +4,8 @@ import { Label, useField } from 'payload/components/forms'
 import { RelationshipField } from 'payload/types'
 
 import { Problems } from '../../../collections/Problems'
+import { ProblemCardList } from '../../components/ProblemCardList'
 import { useFilterProblems } from '../../hooks/useFilterProblems'
-import { ProblemCardList } from './components/ProblemCardList'
 import './index.scss'
 
 export type ProblemSelectProps = Omit<RelationshipField, 'type'> & {
