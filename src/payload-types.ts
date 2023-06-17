@@ -41,7 +41,7 @@ export interface Problem {
   content: string;
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
   choices?: {
-    choice?: string;
+    choice: string;
     id?: string;
   }[];
   answer?: string;

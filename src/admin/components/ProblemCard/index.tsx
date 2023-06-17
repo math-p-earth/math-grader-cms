@@ -20,6 +20,15 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({ problem, order }) => {
     <div className={baseClass}>
       <ProblemNumberIcon>{order}</ProblemNumberIcon>
       <LatexMarkdown>{problem.content}</LatexMarkdown>
+      {problem.choices && (
+        <ol>
+          {problem.choices.map(({ choice }) => (
+            <li>
+              <LatexMarkdown>{choice}</LatexMarkdown>
+            </li>
+          ))}
+        </ol>
+      )}
     </div>
   )
 }

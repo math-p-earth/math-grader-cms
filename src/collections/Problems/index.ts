@@ -95,6 +95,7 @@ export const Problems: CollectionConfig = {
         {
           name: 'choice',
           type: 'textarea',
+          required: true,
           admin: {
             description: 'Content of the problem in markdown. Supports LaTeX.',
           },

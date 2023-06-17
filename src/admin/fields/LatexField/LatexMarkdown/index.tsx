@@ -1,5 +1,7 @@
 import React, { memo } from 'react'
 
+import './index.scss'
+
 const ReactMarkdown = React.lazy(() => import('react-markdown'))
 
 let rehypeKatex: typeof import('rehype-katex')['default']
@@ -19,12 +21,16 @@ interface LatexMarkdownProps {
   children: string
 }
 
+const baseClass = 'latex-markdown'
+
 export const LatexMarkdown = memo(({ children }: LatexMarkdownProps) => {
   return (
-    <ReactMarkdown
-      children={children}
-      remarkPlugins={[remarkMath, remarkGfm, remarkFrontmatter]}
-      rehypePlugins={[rehypeKatex]}
-    />
+    <div className={baseClass}>
+      <ReactMarkdown
+        children={children}
+        remarkPlugins={[remarkMath, remarkGfm, remarkFrontmatter]}
+        rehypePlugins={[rehypeKatex]}
+      />
+    </div>
   )
 })
