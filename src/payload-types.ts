@@ -45,7 +45,7 @@ export interface Problem {
     id?: string;
   }[];
   answer?: string;
-  tags: string[] | Tag[];
+  tags?: string[] | Tag[];
   updatedAt: string;
   createdAt: string;
 }
@@ -60,7 +60,7 @@ export interface Source {
   name: string;
   description?: string;
   type: 'GENERIC' | 'BOOK' | 'PAPER';
-  problems: string[] | Problem[];
+  problems?: string[] | Problem[];
   book?: {
     author?: string;
     isbn?: string;
@@ -97,7 +97,7 @@ export interface Submission {
   problem: string | Problem;
   student: string | Student;
   status: 'CORRECT_APPROVED' | 'CORRECT' | 'INCORRECT_APPROVED' | 'INCORRECT' | 'PENDING';
-  content: string;
+  content?: string;
   file?: string | Upload;
   score?: number;
   comment?: string;

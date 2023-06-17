@@ -68,7 +68,6 @@ export const Submissions: CollectionConfig = {
     {
       name: 'content',
       type: 'textarea',
-      required: true,
     },
     {
       name: 'contentLatex',
