@@ -2,6 +2,7 @@ import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
+import { ProblemSelect } from '../../admin/fields/ProblemSelectField'
 import { Course, ProblemList } from '../../payload-types'
 
 const ProblemListsReadAccess: Access<ProblemList, UserTypes> = ({ req: { user } }) => {
@@ -73,6 +74,11 @@ export const ProblemLists: CollectionConfig = {
       relationTo: 'problems',
       hasMany: true,
       defaultValue: () => [],
+      admin: {
+        components: {
+          Field: ProblemSelect,
+        },
+      },
     },
   ],
 }

@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload/types'
 import { isAdmin } from '../../access/isAdmin'
 import { isLoggedIn } from '../../access/isLoggedIn'
 import { isSelf } from '../../access/isSelf'
-import { generateLatexField } from '../../admin/components/latex/LatexField'
+import { generateLatexField } from '../../admin/fields/LatexField'
 import { setUserOnCreate } from '../../hooks/field/setUserOnCreate'
 
 export const Submissions: CollectionConfig = {

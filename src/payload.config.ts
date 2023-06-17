@@ -3,6 +3,7 @@ import { buildConfig } from 'payload/config'
 import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
+import { Providers } from './admin/providers'
 import { adminRoutes } from './admin/routes'
 import { endpoints } from './api/routes'
 import { Courses } from './collections/Courses'
@@ -40,6 +41,7 @@ export default buildConfig({
     components: {
       afterNavLinks: afterNavLinks,
       routes: adminRoutes,
+      providers: [Providers],
     },
     // custom webpack config for latex packages
     webpack: (config) => {
