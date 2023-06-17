@@ -30,12 +30,18 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
     })
     return
   }
-  const { sub } = ticket.getPayload()
+  const tokenPayload = ticket.getPayload()
+  if (!tokenPayload) {
+    res.status(401).json({
+      message: 'Invalid id token',
+    })
+    return
+  }
   const result = await payload.find({
     collection: 'students',
     where: {
       googleId: {
-        equals: sub,
+        equals: tokenPayload.sub,
       },
     },
   })

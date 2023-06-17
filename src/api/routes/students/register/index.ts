@@ -27,10 +27,17 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
     })
     return
   }
-  const { email, sub } = ticket.getPayload()
+  const tokenPayload = ticket.getPayload()
+  if (!tokenPayload) {
+    res.status(401).json({
+      message: 'Invalid id token',
+    })
+    return
+  }
+
   const data: Omit<Student, 'id' | 'updatedAt' | 'createdAt'> = {
-    email,
-    googleId: sub,
+    email: tokenPayload.email as string,
+    googleId: tokenPayload.sub,
     nickname: input.nickname,
     firstName: input.firstName,
     lastName: input.lastName,
