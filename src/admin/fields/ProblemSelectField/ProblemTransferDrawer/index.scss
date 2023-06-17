@@ -1,0 +1,53 @@
+@import '~payload/scss';
+
+.problem-transfer-drawer {
+  &__toggle {
+    font-size: 1rem;
+    line-height: base(1);
+    display: inline-flex;
+    background: var(--theme-elevation-150);
+    color: var(--theme-elevation-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 0;
+    margin-bottom: 16px;
+    padding: 4px 8px;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background: var(--theme-elevation-100);
+    }
+
+    &:active {
+      background: var(--theme-elevation-100);
+    }
+  }
+
+  &__main {
+    width: 100%;
+    // height: 100vh;
+    max-height: 100vh;
+  }
+
+  &__content {
+    > div {
+      margin-bottom: $baseline;
+    }
+    .ant-transfer-list {
+      flex-grow: 1;
+      height: 700px;
+    }
+
+    .ant-transfer-list-content-item-text {
+      overflow: auto;
+    }
+  }
+}

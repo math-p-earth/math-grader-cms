@@ -23,6 +23,7 @@ export const Uploads: CollectionConfig = {
       type: 'relationship',
       relationTo: ['users', 'students'],
       hasMany: false,
+      required: true,
       admin: {
         description: "Leave empty to set to current user's ID",
       },

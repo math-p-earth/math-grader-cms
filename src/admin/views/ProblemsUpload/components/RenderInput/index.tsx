@@ -5,7 +5,7 @@ import { useField } from 'payload/components/forms'
 import z from 'zod'
 
 import { problemsUploadSchema } from '../../../../../api/routes/problems/upload/schema'
-import { LatexMarkdown } from '../../../../components/latex/LatexMarkdown'
+import { ProblemCardList } from '../../../../components/ProblemCardList'
 import './index.scss'
 
 interface RenderInputProps {
@@ -110,21 +110,12 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
       ) : (
         <h3 className="warning">Problem list not found</h3>
       )}
-      {input.problems.map((problem, index) => (
-        <div key={index}>
-          <h3>Problem {index + 1}</h3>
-          <LatexMarkdown>{problem.content}</LatexMarkdown>
-          {problem.choices && (
-            <ol>
-              {problem.choices.map((choice, index) => (
-                <li key={index}>
-                  <LatexMarkdown>{choice}</LatexMarkdown>
-                </li>
-              ))}
-            </ol>
-          )}
-        </div>
-      ))}
+      <ProblemCardList
+        problems={input.problems.map((problem) => ({
+          ...problem,
+          choices: problem.choices?.map((choice) => ({ choice })),
+        }))}
+      />
     </div>
   )
 }

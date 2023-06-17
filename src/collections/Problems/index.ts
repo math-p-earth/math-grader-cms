@@ -2,7 +2,7 @@ import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
-import { generateLatexField } from '../../admin/components/latex/LatexField'
+import { generateLatexField } from '../../admin/fields/LatexField'
 import { Course, Problem, ProblemList, Source } from '../../payload-types'
 
 const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
@@ -31,6 +31,7 @@ const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   return false
 }
 
+// TODO: add index for searching problems
 export const Problems: CollectionConfig = {
   slug: 'problems',
   admin: {
@@ -94,6 +95,7 @@ export const Problems: CollectionConfig = {
         {
           name: 'choice',
           type: 'textarea',
+          required: true,
           admin: {
             description: 'Content of the problem in markdown. Supports LaTeX.',
           },

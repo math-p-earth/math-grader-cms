@@ -25,6 +25,18 @@ interface IDTokenPayload {
 const StudentsRegister: AdminView = () => {
   const idToken = useQueryParams('idToken')
   const redirectUrl = useQueryParams('redirectUrl')
+  if (!idToken || !redirectUrl) {
+    return (
+      <MinimalTemplate className={baseClass} width="normal">
+        <h1>Register</h1>
+        <p>
+          Google ID token is required to complete new user registration. Please initate registration
+          flow through https://math-p-earth.com.
+        </p>
+      </MinimalTemplate>
+    )
+  }
+
   const initialData = {
     idToken: idToken,
   }
