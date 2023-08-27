@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query'
 import qs from 'qs'
 
 import { Problems } from '../../collections/Problems'
-import { Sources } from '../../collections/Sources'
 
 export interface ProblemFilter {
   searchInput?: string
@@ -87,7 +86,7 @@ export const useFilterProblems = ({
     queryFn: async () => {
       if (sourceId) {
         const sourceResponse = await fetch(
-          `${serverURL}${api}/${Sources.slug}?${qs.stringify(sourceQueryParams)}`,
+          `${serverURL}${api}/sources?${qs.stringify(sourceQueryParams)}`,
           {
             credentials: 'include',
           }

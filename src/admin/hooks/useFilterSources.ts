@@ -7,8 +7,6 @@ import { Where } from 'payload/types'
 import { useQuery } from '@tanstack/react-query'
 import qs from 'qs'
 
-import { Sources } from '../../collections/Sources'
-
 export interface SourceFilter {
   searchInput?: string
   ids?: string[]
@@ -42,7 +40,7 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
     keepPreviousData: true,
     queryFn: async () => {
       const response = await fetch(
-        `${serverURL}${api}/${Sources.slug}?${qs.stringify(sourceQueryParams)}`,
+        `${serverURL}${api}/sources?${qs.stringify(sourceQueryParams)}`,
         {
           credentials: 'include',
         }
