@@ -44,6 +44,24 @@ export const useFilterProblems = ({
     },
     depth: 0,
   }
+
+  let limitQuery: {
+    limit?: number
+    page?: number
+  } = {}
+  if (limit) {
+    limitQuery = {
+      limit: limit,
+      page: page,
+    }
+  }
+  if (ids) {
+    limitQuery = {
+      limit: ids.length,
+      page: 1,
+    }
+  }
+
   const problemQueryParams: {
     [key: string]: unknown
     where: Where
@@ -66,7 +84,7 @@ export const useFilterProblems = ({
         ],
       }),
     },
-    ...(limit && { limit: limit, page: page }),
+    ...limitQuery,
   }
 
   const query = useQuery<PaginatedDocs<Problem>, ErrorResponse>({
@@ -125,6 +143,12 @@ export const useFilterProblems = ({
       }
 
       const problems: PaginatedDocs<Problem> = await problemResponse.json()
+      if (ids) {
+        // sort by position in ids
+        problems.docs = problems.docs.sort((a, b) => {
+          return ids.indexOf(a.id) - ids.indexOf(b.id)
+        })
+      }
       return problems
     },
   })

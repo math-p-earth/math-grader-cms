@@ -20,6 +20,23 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
     routes: { api },
   } = useConfig()
 
+  let limitQuery: {
+    limit?: number
+    page?: number
+  } = {}
+  if (limit) {
+    limitQuery = {
+      limit: limit,
+      page: page,
+    }
+  }
+  if (ids) {
+    limitQuery = {
+      limit: ids.length,
+      page: 1,
+    }
+  }
+
   const sourceQueryParams: {
     [key: string]: unknown
     where: Where
@@ -32,7 +49,7 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
         },
       }),
     },
-    ...(limit && { limit: limit, page: page }),
+    ...limitQuery,
   }
 
   const query = useQuery<PaginatedDocs<Source>, ErrorResponse>({
@@ -50,6 +67,12 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
       }
 
       const sources: PaginatedDocs<Source> = await response.json()
+      if (ids) {
+        // sort by position in ids
+        sources.docs = sources.docs.sort((a, b) => {
+          return ids.indexOf(a.id) - ids.indexOf(b.id)
+        })
+      }
       return sources
     },
   })
