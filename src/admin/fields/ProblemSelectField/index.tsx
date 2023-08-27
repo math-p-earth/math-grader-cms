@@ -30,14 +30,14 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
   const { query } = useFilterProblems({
     ids: problemIds,
   })
-  const { status, data } = query
+  const { status, data, refetch } = query
 
   return (
     <div className="problem-select">
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
       <ProblemTransferDrawer toggleLabel="+ Create New" path={path} />
 
-      {status == 'success' && <ProblemCardList problems={data.docs} />}
+      {status == 'success' && <ProblemCardList problems={data.docs} refreshData={refetch} />}
     </div>
   )
 }
