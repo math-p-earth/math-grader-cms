@@ -65,7 +65,6 @@ export const Students: CollectionConfig = {
     {
       name: 'email',
       type: 'email',
-      saveToJWT: true,
       required: true,
       unique: true,
     },
@@ -76,7 +75,6 @@ export const Students: CollectionConfig = {
           name: 'nickname',
           type: 'text',
           required: true,
-          saveToJWT: true,
         },
         {
           name: 'gender',
@@ -110,13 +108,11 @@ export const Students: CollectionConfig = {
           name: 'firstName',
           type: 'text',
           required: true,
-          saveToJWT: true,
         },
         {
           name: 'lastName',
           type: 'text',
           required: true,
-          saveToJWT: true,
         },
       ],
     },
@@ -191,7 +187,6 @@ export const Students: CollectionConfig = {
       name: 'status',
       type: 'select',
       required: true,
-      saveToJWT: true,
       defaultValue: 'PENDING',
       admin: {
         position: 'sidebar',

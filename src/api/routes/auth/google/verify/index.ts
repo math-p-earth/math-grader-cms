@@ -58,6 +58,10 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
     {
       email: student.email,
       id: student.id,
+      status: student.status,
+      nickname: student.nickname,
+      firstName: student.firstName,
+      lastName: student.lastName,
       collection: collectionConfig.slug,
     },
     payload.secret,
