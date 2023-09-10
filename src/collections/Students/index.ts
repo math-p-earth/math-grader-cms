@@ -214,7 +214,6 @@ export const Students: CollectionConfig = {
         position: 'sidebar',
       },
       defaultValue: () => [],
-      required: true,
     },
     {
       name: 'googleId',
