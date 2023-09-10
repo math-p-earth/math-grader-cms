@@ -3,12 +3,12 @@ import { PayloadRequest } from 'payload/types'
 
 import { CookieOptions, Response } from 'express'
 import { LoginTicket } from 'google-auth-library'
-import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { GOOGLE_OAUTH_CLIENT_ID } from '../../../../../config'
 import { withErrorHandler } from '../../../../errors/handler/withErrorHandler'
 import { oauth2Client } from '../../../../services/google'
+import { generateAccessToken } from '../../../../services/jwt'
 
 export const authGoogleVerifySchema = z.object({
   idToken: z.string(),
@@ -54,21 +54,7 @@ async function handler({ body, payload }: PayloadRequest, res: Response) {
 
   const collectionConfig = payload.collections.students.config
   const student = result.docs[0]
-  const token = jwt.sign(
-    {
-      email: student.email,
-      id: student.id,
-      status: student.status,
-      nickname: student.nickname,
-      firstName: student.firstName,
-      lastName: student.lastName,
-      collection: collectionConfig.slug,
-    },
-    payload.secret,
-    {
-      expiresIn: collectionConfig.auth.tokenExpiration,
-    }
-  )
+  const token = generateAccessToken(student, collectionConfig)
   const cookieOptions: CookieOptions = {
     path: '/',
     httpOnly: true,
