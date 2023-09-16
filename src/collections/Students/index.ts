@@ -38,6 +38,7 @@ export const Students: CollectionConfig = {
   auth: {
     depth: 2, // 2 levels deep, populate student -> courses -> problemLists
     disableLocalStrategy: true,
+    tokenExpiration: 604800, // 7d worth of seconds
     cookies:
       NODE_ENV === 'production'
         ? {
