@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { Eyebrow, Gutter } from 'payload/components/elements'
+import { Gutter } from 'payload/components/elements'
 import { Form } from 'payload/components/forms'
 import { useStepNav } from 'payload/components/hooks'
 import { DefaultTemplate } from 'payload/components/templates'
@@ -68,7 +68,6 @@ const ProblemsUploadView: AdminViewComponent = ({ user, canAccessAdmin }) => {
         action="/api/problems/upload"
         onSuccess={onSuccess}
       >
-        <Eyebrow />
         <Gutter>
           <h1>Upload Problems in Bulk</h1>
           <div className={`${baseClass}__main`}>
