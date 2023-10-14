@@ -6,10 +6,10 @@ import { useStepNav } from 'payload/components/hooks'
 import { DefaultTemplate } from 'payload/components/templates'
 import { useConfig } from 'payload/components/utilities'
 import { Meta } from 'payload/components/utilities'
-import { AdminView } from 'payload/config'
+import { AdminViewComponent } from 'payload/config'
 import RenderFields from 'payload/dist/admin/components/forms/RenderFields'
 import FormSubmit from 'payload/dist/admin/components/forms/Submit'
-import fieldTypes from 'payload/dist/admin/components/forms/field-types'
+import { fieldTypes } from 'payload/dist/admin/components/forms/field-types'
 
 import { Redirect, useHistory } from 'react-router-dom'
 
@@ -26,7 +26,7 @@ type UploadProblemResponse = {
   problemList?: ProblemList
 }
 
-const ProblemsUploadView: AdminView = ({ user, canAccessAdmin }) => {
+const ProblemsUploadView: AdminViewComponent = ({ user, canAccessAdmin }) => {
   const {
     routes: { admin: adminRoute },
   } = useConfig()

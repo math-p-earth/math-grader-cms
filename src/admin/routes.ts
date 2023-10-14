@@ -1,9 +1,9 @@
-import { AdminRoute } from 'payload/config'
+import { AdminViewConfig } from 'payload/config'
 
 import ProblemsUploadView from './views/ProblemsUpload'
 import StudentsRegister from './views/StudentsRegister'
 
-export const adminRoutes: AdminRoute[] = [
+export const adminViewConfigs: AdminViewConfig[] = [
   {
     Component: ProblemsUploadView,
     path: '/problems/upload',
