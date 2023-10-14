@@ -53,7 +53,7 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
   }
 
   const query = useQuery<PaginatedDocs<Source>, ErrorResponse>({
-    queryKey: ['sources', sourceQueryParams, serverURL, api],
+    queryKey: ['sources', sourceQueryParams, serverURL, api, ids],
     keepPreviousData: true,
     queryFn: async () => {
       const response = await fetch(
