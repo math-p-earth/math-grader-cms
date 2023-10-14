@@ -9,9 +9,10 @@ const CoursesReadAccess: Access<Course, UserTypes> = ({ req: { user } }) => {
     return user.roles.includes('ADMIN')
   }
   if (isTypeApprovedStudent(user)) {
+    const courses = (user.courses ?? []) as Course[]
     return {
       id: {
-        in: user.courses.map((course) => course.id),
+        in: courses.map((course) => course.id),
       },
     }
   }

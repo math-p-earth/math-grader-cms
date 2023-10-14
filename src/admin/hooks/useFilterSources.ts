@@ -1,6 +1,6 @@
 import { useConfig } from 'payload/components/utilities'
+import { PaginatedDocs } from 'payload/database'
 import { ErrorResponse } from 'payload/dist/express/responses/formatError'
-import { PaginatedDocs } from 'payload/dist/mongoose/types'
 import { Source } from 'payload/generated-types'
 import { Where } from 'payload/types'
 
