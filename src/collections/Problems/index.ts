@@ -4,7 +4,7 @@ import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/fields/LatexField'
 import { Course, Problem, ProblemList, Source } from '../../payload-types'
-import { ImageBlock } from './diagram-blocks/Image'
+import { DiagramImageBlock } from './diagram-blocks/Image'
 
 const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   if (isTypeUser(user)) {
@@ -82,14 +82,14 @@ export const Problems: CollectionConfig = {
       type: 'ui',
       admin: {
         components: {
-          Field: generateLatexField({ targetFieldName: 'content' }),
+          Field: generateLatexField({ targetFieldName: 'content', diagramsFieldName: 'diagrams' }),
         },
       },
     },
     {
       name: 'diagrams',
       type: 'blocks',
-      blocks: [ImageBlock],
+      blocks: [DiagramImageBlock],
     },
     {
       name: 'choices',
@@ -111,9 +111,17 @@ export const Problems: CollectionConfig = {
           type: 'ui',
           admin: {
             components: {
-              Field: generateLatexField({ targetFieldName: '__PATH__.choice' }),
+              Field: generateLatexField({
+                targetFieldName: '__PATH__.choice',
+                diagramsFieldName: '__PATH__.diagrams',
+              }),
             },
           },
+        },
+        {
+          name: 'diagrams',
+          type: 'blocks',
+          blocks: [DiagramImageBlock],
         },
       ],
     },

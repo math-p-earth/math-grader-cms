@@ -1,0 +1,14 @@
+.diagram-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.diagram-image__img {
+  object-fit: contain;
+}
+
+.diagram-image__caption {
+  font-size: small;
+  font-style: italic;
+}

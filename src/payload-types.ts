@@ -44,18 +44,10 @@ export interface Problem {
   id: string;
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
   content: string;
-  diagrams?: {
-    image: string | Media;
-    alt: string;
-    caption?: string;
-    width?: number;
-    height?: number;
-    id?: string;
-    blockName?: string;
-    blockType: 'image';
-  }[];
+  diagrams?: DiagramImageBlock[];
   choices?: {
     choice: string;
+    diagrams?: DiagramImageBlock[];
     id?: string;
   }[];
   answer?: string;
@@ -63,8 +55,18 @@ export interface Problem {
   updatedAt: string;
   createdAt: string;
 }
+export interface DiagramImageBlock {
+  image: string | Media;
+  caption?: string;
+  width?: number;
+  height?: number;
+  id?: string;
+  blockName?: string;
+  blockType: 'diagram-image';
+}
 export interface Media {
   id: string;
+  prefix?: string;
   updatedAt: string;
   createdAt: string;
   url?: string;
