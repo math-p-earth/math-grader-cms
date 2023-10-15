@@ -3,7 +3,6 @@ import { CollectionConfig } from 'payload/types'
 import { isAdmin } from '../../access/isAdmin'
 import { isLoggedIn } from '../../access/isLoggedIn'
 import { isSelf } from '../../access/isSelf'
-import { generateLatexField } from '../../admin/fields/LatexField'
 import { setUserOnCreate } from '../../hooks/field/setUserOnCreate'
 
 export const Submissions: CollectionConfig = {
@@ -64,19 +63,6 @@ export const Submissions: CollectionConfig = {
           value: 'PENDING',
         },
       ],
-    },
-    {
-      name: 'content',
-      type: 'textarea',
-    },
-    {
-      name: 'contentLatex',
-      type: 'ui',
-      admin: {
-        components: {
-          Field: generateLatexField({ targetFieldName: 'content' }),
-        },
-      },
     },
     {
       name: 'file',

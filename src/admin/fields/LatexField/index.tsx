@@ -7,7 +7,7 @@ import { isDiagramBlockArray, renderDiagram } from './diagrams'
 
 interface LatexFieldProps {
   targetFieldName: string
-  diagramsFieldName: string
+  diagramsFieldName?: string
   path?: string
 }
 
@@ -28,7 +28,7 @@ export const LatexField: React.FC<LatexFieldProps> = ({
   }
   const [sourceField, diagramsField] = useFormFields(([fields, _dispatch]) => [
     fields[targetFieldName],
-    fields[diagramsFieldName],
+    ...(diagramsFieldName ? [fields[diagramsFieldName]] : []),
   ])
   if (typeof sourceField?.value === 'undefined') {
     return <span>Source field is undefined!</span>
@@ -37,7 +37,7 @@ export const LatexField: React.FC<LatexFieldProps> = ({
 
   const components: ReactNode[] = []
   const afterContentDiagrams: ReactNode[] = []
-  const diagrams = diagramsField?.value
+  const diagrams = diagramsFieldName ? diagramsField?.value : null
   if (isDiagramBlockArray(diagrams)) {
     diagrams.forEach((diagram, index) => {
       if (new RegExp(`<${index + 1}>`).test(source)) {
@@ -66,7 +66,7 @@ export const LatexField: React.FC<LatexFieldProps> = ({
 
 interface generateLatexFieldOptions {
   targetFieldName: string
-  diagramsFieldName: string
+  diagramsFieldName?: string
 }
 
 export const generateLatexField = ({
