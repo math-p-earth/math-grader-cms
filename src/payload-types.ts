@@ -9,6 +9,7 @@
 export interface Config {
   collections: {
     courses: Course;
+    media: Media;
     problems: Problem;
     'problem-lists': ProblemList;
     sources: Source;
@@ -41,8 +42,18 @@ export interface ProblemList {
 }
 export interface Problem {
   id: string;
-  content: string;
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
+  content: string;
+  diagrams?: {
+    image: string | Media;
+    alt: string;
+    caption?: string;
+    width?: number;
+    height?: number;
+    id?: string;
+    blockName?: string;
+    blockType: 'image';
+  }[];
   choices?: {
     choice: string;
     id?: string;
@@ -51,6 +62,17 @@ export interface Problem {
   tags?: string[] | Tag[];
   updatedAt: string;
   createdAt: string;
+}
+export interface Media {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string;
+  filename?: string;
+  mimeType?: string;
+  filesize?: number;
+  width?: number;
+  height?: number;
 }
 export interface Tag {
   id: string;
@@ -178,6 +200,7 @@ declare module 'payload' {
   export interface GeneratedTypes {
     collections: {
       'courses': Course
+      'media': Media
       'problems': Problem
       'problem-lists': ProblemList
       'sources': Source

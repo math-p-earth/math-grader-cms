@@ -4,6 +4,7 @@ import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/fields/LatexField'
 import { Course, Problem, ProblemList, Source } from '../../payload-types'
+import { ImageBlock } from './diagram-blocks/Image'
 
 const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   if (isTypeUser(user)) {
@@ -46,23 +47,6 @@ export const Problems: CollectionConfig = {
   },
   fields: [
     {
-      name: 'content',
-      type: 'textarea',
-      admin: {
-        description: 'Content of the problem in markdown. Supports LaTeX.',
-      },
-      required: true,
-    },
-    {
-      name: 'contentLatex',
-      type: 'ui',
-      admin: {
-        components: {
-          Field: generateLatexField({ targetFieldName: 'content' }),
-        },
-      },
-    },
-    {
       name: 'type',
       type: 'select',
       required: true,
@@ -84,6 +68,28 @@ export const Problems: CollectionConfig = {
           value: 'PROOF',
         },
       ],
+    },
+    {
+      name: 'content',
+      type: 'textarea',
+      admin: {
+        description: 'Content of the problem in markdown. Supports LaTeX.',
+      },
+      required: true,
+    },
+    {
+      name: 'contentLatex',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: generateLatexField({ targetFieldName: 'content' }),
+        },
+      },
+    },
+    {
+      name: 'diagrams',
+      type: 'blocks',
+      blocks: [ImageBlock],
     },
     {
       name: 'choices',
@@ -120,9 +126,6 @@ export const Problems: CollectionConfig = {
       type: 'relationship',
       relationTo: 'tags',
       hasMany: true,
-      admin: {
-        position: 'sidebar',
-      },
       defaultValue: () => [],
     },
   ],
