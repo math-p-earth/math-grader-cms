@@ -1,6 +1,6 @@
 import { useConfig } from 'payload/components/utilities'
+import { PaginatedDocs } from 'payload/database'
 import { ErrorResponse } from 'payload/dist/express/responses/formatError'
-import { PaginatedDocs } from 'payload/dist/mongoose/types'
 import { Source } from 'payload/generated-types'
 import { Where } from 'payload/types'
 
@@ -53,7 +53,7 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
   }
 
   const query = useQuery<PaginatedDocs<Source>, ErrorResponse>({
-    queryKey: ['sources', sourceQueryParams, serverURL, api],
+    queryKey: ['sources', sourceQueryParams, serverURL, api, ids],
     keepPreviousData: true,
     queryFn: async () => {
       const response = await fetch(

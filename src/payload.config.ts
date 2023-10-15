@@ -1,10 +1,13 @@
 import { buildConfig } from 'payload/config'
 
+import { webpackBundler } from '@payloadcms/bundler-webpack'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { slateEditor } from '@payloadcms/richtext-slate'
 import path from 'path'
 
 import { afterNavLinks } from './admin/components/afterNavLinks'
 import { Providers } from './admin/providers'
-import { adminRoutes } from './admin/routes'
+import { adminViewConfigs } from './admin/routes'
 import { endpoints } from './api/routes'
 import { Courses } from './collections/Courses'
 import { ProblemLists } from './collections/ProblemLists'
@@ -15,7 +18,7 @@ import { Submissions } from './collections/Submissions'
 import { Tags } from './collections/Tags'
 import { Uploads } from './collections/Uploads'
 import { Users } from './collections/Users'
-import { CORS_ORIGINS } from './config'
+import { CORS_ORIGINS, MONGODB_URI } from './config'
 
 const ignorePaths = [
   path.join(__dirname, 'api/routes/auth/google/verify.ts'),
@@ -32,6 +35,10 @@ const aliases = ignorePaths.reduce((acc, path) => {
 // TODO: validate environment variables
 export default buildConfig({
   cors: CORS_ORIGINS,
+  editor: slateEditor({}),
+  db: mongooseAdapter({
+    url: MONGODB_URI,
+  }),
   admin: {
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
@@ -40,9 +47,16 @@ export default buildConfig({
     },
     components: {
       afterNavLinks: afterNavLinks,
-      routes: adminRoutes,
+      views: adminViewConfigs.reduce(
+        (acc, viewConfig) => ({
+          ...acc,
+          [viewConfig.path]: viewConfig,
+        }),
+        {}
+      ),
       providers: [Providers],
     },
+    bundler: webpackBundler(),
     // custom webpack config for latex packages
     webpack: (config) => {
       return {

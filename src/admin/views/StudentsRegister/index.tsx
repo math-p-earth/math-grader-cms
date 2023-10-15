@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Form } from 'payload/components/forms'
 import { MinimalTemplate } from 'payload/components/templates'
-import { AdminView } from 'payload/config'
+import { AdminViewComponent } from 'payload/config'
 import RenderFields from 'payload/dist/admin/components/forms/RenderFields'
 import FormSubmit from 'payload/dist/admin/components/forms/Submit'
-import fieldTypes from 'payload/dist/admin/components/forms/field-types'
+import { fieldTypes } from 'payload/dist/admin/components/forms/field-types'
 
 import jwtDecode from 'jwt-decode'
 
@@ -22,7 +22,7 @@ interface IDTokenPayload {
   family_name: string
 }
 
-const StudentsRegister: AdminView = () => {
+const StudentsRegister: AdminViewComponent = () => {
   const idToken = useQueryParams('idToken')
   const redirectUrl = useQueryParams('redirectUrl')
   if (!idToken || !redirectUrl) {

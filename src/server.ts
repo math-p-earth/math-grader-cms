@@ -2,7 +2,7 @@ import payload from 'payload'
 
 import express from 'express'
 
-import { MONGODB_URI, PAYLOAD_SECRET, PORT } from './config'
+import { PAYLOAD_SECRET, PORT } from './config'
 
 const app = express()
 
@@ -15,7 +15,6 @@ async function start() {
   // Initialize Payload
   await payload.init({
     secret: PAYLOAD_SECRET,
-    mongoURL: MONGODB_URI,
     express: app,
     onInit: () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
