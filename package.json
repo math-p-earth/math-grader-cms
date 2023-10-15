@@ -16,10 +16,13 @@
     "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.428.0",
+    "@aws-sdk/lib-storage": "^3.428.0",
     "@babel/runtime": "^7.19.4",
     "@payloadcms/bundler-vite": "^0.1.2",
     "@payloadcms/bundler-webpack": "^1.0.3",
     "@payloadcms/db-mongodb": "^1.0.3",
+    "@payloadcms/plugin-cloud-storage": "^1.1.1",
     "@payloadcms/richtext-slate": "^1.0.3",
     "@tanstack/react-query": "^4.29.14",
     "antd": "^5.6.1",

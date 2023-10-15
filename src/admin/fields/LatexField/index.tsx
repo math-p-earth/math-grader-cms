@@ -11,6 +11,7 @@ interface LatexFieldProps {
 
 const PATH_PREFIX = '__PATH__'
 
+// TODO: render diagram components
 /**
  * Renders the field immediately before this field as LaTeX.
  * @param props UI Props for this component. Automatically set by Payload.
