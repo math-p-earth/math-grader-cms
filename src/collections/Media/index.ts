@@ -6,8 +6,6 @@ import { isLoggedIn } from '../../access/isLoggedIn'
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    staticURL: '/media',
-    staticDir: '../media',
     mimeTypes: ['image/*'],
   },
   access: {

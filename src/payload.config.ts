@@ -2,6 +2,8 @@ import { buildConfig } from 'payload/config'
 
 import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import path from 'path'
 
@@ -19,7 +21,15 @@ import { Submissions } from './collections/Submissions'
 import { Tags } from './collections/Tags'
 import { Uploads } from './collections/Uploads'
 import { Users } from './collections/Users'
-import { CORS_ORIGINS, MONGODB_URI } from './config'
+import {
+  CORS_ORIGINS,
+  MONGODB_URI,
+  S3_ACCESS_KEY_ID,
+  S3_BUCKET,
+  S3_PREFIX,
+  S3_REGION,
+  S3_SECRET_ACCESS_KEY,
+} from './config'
 
 const ignorePaths = [
   path.join(__dirname, 'api/routes/auth/google/verify.ts'),
@@ -32,6 +42,17 @@ const aliases = ignorePaths.reduce((acc, path) => {
     [path]: mockPath,
   }
 }, {})
+
+const adapter = s3Adapter({
+  config: {
+    credentials: {
+      accessKeyId: S3_ACCESS_KEY_ID,
+      secretAccessKey: S3_SECRET_ACCESS_KEY,
+    },
+    region: S3_REGION,
+  },
+  bucket: S3_BUCKET,
+})
 
 // TODO: validate environment variables
 export default buildConfig({
@@ -103,4 +124,15 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
+  plugins: [
+    cloudStorage({
+      collections: {
+        [Media.slug]: {
+          adapter: adapter,
+          prefix: `${S3_PREFIX}/${Media.slug}`,
+          disableLocalStorage: true,
+        },
+      },
+    }),
+  ],
 })
