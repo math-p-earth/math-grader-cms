@@ -90,6 +90,10 @@ export const Problems: CollectionConfig = {
       name: 'diagrams',
       type: 'blocks',
       blocks: [DiagramImageBlock],
+      admin: {
+        description:
+          "Diagrams are added after the problem's content. Placeholders (<1>, <2>, etc.) can be used to inject diagrams in the middle of the content.",
+      },
     },
     {
       name: 'choices',
@@ -122,6 +126,10 @@ export const Problems: CollectionConfig = {
           name: 'diagrams',
           type: 'blocks',
           blocks: [DiagramImageBlock],
+          admin: {
+            description:
+              "Diagrams are added after the problem's content. Placeholders (<1>, <2>, etc.) can be used to inject diagrams in the middle of the content.",
+          },
         },
       ],
     },

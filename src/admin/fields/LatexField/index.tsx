@@ -26,6 +26,9 @@ export const LatexField: React.FC<LatexFieldProps> = ({
   if (targetFieldName.startsWith(PATH_PREFIX) && path) {
     targetFieldName = targetFieldName.replace(PATH_PREFIX, path)
   }
+  if (diagramsFieldName && diagramsFieldName.startsWith(PATH_PREFIX) && path) {
+    diagramsFieldName = diagramsFieldName.replace(PATH_PREFIX, path)
+  }
   const [sourceField, diagramsField] = useFormFields(([fields, _dispatch]) => [
     fields[targetFieldName],
     ...(diagramsFieldName ? [fields[diagramsFieldName]] : []),
