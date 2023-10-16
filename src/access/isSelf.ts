@@ -14,7 +14,7 @@ export const isSelf: <T>(field: keyof T) => Access<T, UserTypes> = (field) => {
     if (isTypeUser(user) && user.roles.includes('ADMIN')) {
       return true
     }
-    if (isTypeApprovedStudent(user)) {
+    if (isTypeUser(user) || isTypeApprovedStudent(user)) {
       // Otherwise, only provide access to themselves based on the given relationship field
       return {
         or: [
@@ -23,14 +23,15 @@ export const isSelf: <T>(field: keyof T) => Access<T, UserTypes> = (field) => {
               equals: user.id,
             },
           },
-          {
-            [`${String(field)}.relationTo`]: {
-              equals: user.collection,
-            },
-            [`${String(field)}.value`]: {
-              equals: user.id,
-            },
-          },
+          // TODO: investigate why polymorphic relationships query don't work
+          // {
+          //   [`${String(field)}.relationTo`]: {
+          //     equals: user.collection,
+          //   },
+          //   [`${String(field)}.value`]: {
+          //     equals: user.id,
+          //   },
+          // },
         ],
       }
     }
