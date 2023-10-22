@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 import { DiagramImageBlock } from 'payload/generated-types'
 
@@ -34,9 +34,21 @@ export const isDiagramBlockArray = (value: unknown): value is DiagramBlock[] => 
   return true
 }
 
-export const renderDiagram = (diagram: DiagramBlock, key: string): ReactNode => {
+export function isDiagramPlaceholderExist(source: string, index: number): boolean {
+  return new RegExp(getDiagramPlaceholder(index)).test(source)
+}
+
+export function getDiagramPlaceholder(index: number): string {
+  return `<${index + 1}>`
+}
+
+interface ProblemDiagramProps {
+  diagram: DiagramBlock
+}
+
+export const ProblemDiagram: React.FC<ProblemDiagramProps> = ({ diagram }) => {
   switch (diagram.blockType) {
     case 'diagram-image':
-      return <DiagramImage key={key} diagram={diagram as unknown as DiagramImageBlock} />
+      return <DiagramImage diagram={diagram as unknown as DiagramImageBlock} />
   }
 }
