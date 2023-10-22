@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 import { useFormFields } from 'payload/components/forms'
 
-import { LatexMarkdown } from './LatexMarkdown'
-import { isDiagramBlockArray, renderDiagram } from './diagrams'
+import { ProblemMarkdown } from '../../components/ProblemMarkdown'
+import { DiagramBlock, isDiagramBlockArray } from '../../components/ProblemMarkdown/diagrams'
 
 interface LatexFieldProps {
   targetFieldName: string
@@ -36,35 +36,15 @@ export const LatexField: React.FC<LatexFieldProps> = ({
   if (typeof sourceField?.value === 'undefined') {
     return <span>Source field is undefined!</span>
   }
-  let source = sourceField?.value as string
+  const source = sourceField?.value as string
+  const diagramsValue = diagramsFieldName ? diagramsField?.value : null
 
-  const components: ReactNode[] = []
-  const afterContentDiagrams: ReactNode[] = []
-  const diagrams = diagramsFieldName ? diagramsField?.value : null
-  if (isDiagramBlockArray(diagrams)) {
-    diagrams.forEach((diagram, index) => {
-      if (new RegExp(`<${index + 1}>`).test(source)) {
-        // if placeholder is found, replace it with the diagram
-        const [left, right] = source.split(`<${index + 1}>`)
-        components.push(
-          <LatexMarkdown key={`content-${index}`}>{left}</LatexMarkdown>,
-          renderDiagram(diagram, `diagram-${index}`)
-        )
-        source = right
-      } else {
-        // otherwise, add it to the end
-        afterContentDiagrams.push(renderDiagram(diagram, `after-content-diagram-${index}`))
-      }
-    })
-  } else {
-    return <LatexMarkdown key="content-end">{sourceField?.value as string}</LatexMarkdown>
+  let diagrams: DiagramBlock[] = []
+  if (isDiagramBlockArray(diagramsValue)) {
+    diagrams = diagramsValue
   }
-  components.push(
-    <LatexMarkdown key={`content-end`}>{source}</LatexMarkdown>,
-    ...afterContentDiagrams
-  )
 
-  return <>{components}</>
+  return <ProblemMarkdown diagrams={diagrams}>{source}</ProblemMarkdown>
 }
 
 interface generateLatexFieldOptions {

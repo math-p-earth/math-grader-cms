@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 import { DiagramImageBlock } from 'payload/generated-types'
 
-import { DiagramImage } from '../../components/diagrams/DiagramImage'
+import { DiagramImage } from './diagrams/DiagramImage'
 
 // add future block types here
 const blockTypes = ['diagram-image'] as const

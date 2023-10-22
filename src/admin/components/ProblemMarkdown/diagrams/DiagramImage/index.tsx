@@ -2,7 +2,7 @@ import React from 'react'
 
 import { DiagramImageBlock, Media } from 'payload/generated-types'
 
-import { useQueryMedia } from '../../../hooks/useQueryMedia'
+import { useQueryMedia } from '../../../../hooks/useQueryMedia'
 import './index.scss'
 
 interface DiagramImageProps {
