@@ -27,8 +27,9 @@ export const DiagramImageBlock: Block = {
       label: 'Width (px)',
       type: 'number',
       admin: {
-        description: "Leave blank to use image's width",
+        description: "Defaults to 400px. Leave blank to use image's width",
       },
+      defaultValue: 400,
     },
     {
       name: 'height',
