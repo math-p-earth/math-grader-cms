@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { DiagramImageBlock, Media } from 'payload/generated-types'
+import { DiagramImageBlock } from 'payload/generated-types'
 
-import { useQueryMedia } from '../../../hooks/useQueryMedia'
+import { useQueryMedia } from '../../../../hooks/useQueryMedia'
 import './index.scss'
 
 interface DiagramImageProps {
@@ -12,14 +12,11 @@ interface DiagramImageProps {
 const baseClass = 'diagram-image'
 
 export const DiagramImage: React.FC<DiagramImageProps> = ({ diagram }) => {
-  const {
-    query: { data, status },
-  } = useQueryMedia({ id: diagram.image as string })
-  if (status !== 'success') {
+  const { query } = useQueryMedia({ image: diagram.image })
+  if (!query.isSuccess) {
     return null
   }
-  // TODO: enable ts strict mode so we don't need to cast here
-  const image = data as Media
+  const image = query.data
 
   const width = diagram.width ?? image.width ?? 200
   const height = diagram.height ?? image.height ?? 200

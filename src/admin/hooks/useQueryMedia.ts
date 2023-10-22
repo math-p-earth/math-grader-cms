@@ -7,20 +7,25 @@ import { useQuery } from '@tanstack/react-query'
 import { Media as MediaConfig } from '../../collections/Media'
 
 export interface useQueryMediaOptions {
-  id: string
+  image: string | Media
 }
 
-export const useQueryMedia = ({ id }: useQueryMediaOptions) => {
+export const useQueryMedia = ({ image }: useQueryMediaOptions) => {
   const {
     serverURL,
     routes: { api },
   } = useConfig()
 
   const query = useQuery<Media, ErrorResponse>({
-    queryKey: ['media', id, serverURL, api],
+    queryKey: ['media', image, serverURL, api],
     keepPreviousData: true,
     queryFn: async () => {
-      const response = await fetch(`${serverURL}${api}/${MediaConfig.slug}/${id}`, {
+      // if image is not string, treat as Media, no need to query
+      if (typeof image !== 'string') {
+        return image
+      }
+      // if image is string, treat as id
+      const response = await fetch(`${serverURL}${api}/${MediaConfig.slug}/${image}`, {
         credentials: 'include',
       })
       if (!response.ok) {
