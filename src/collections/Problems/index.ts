@@ -47,25 +47,37 @@ export const Problems: CollectionConfig = {
   },
   fields: [
     {
-      name: 'type',
-      type: 'select',
-      required: true,
-      options: [
+      type: 'row',
+      fields: [
         {
-          label: 'MCQ',
-          value: 'MCQ',
+          name: 'type',
+          type: 'select',
+          required: true,
+          options: [
+            {
+              label: 'MCQ',
+              value: 'MCQ',
+            },
+            {
+              label: 'SHORT',
+              value: 'SHORT',
+            },
+            {
+              label: 'TF',
+              value: 'TF',
+            },
+            {
+              label: 'PROOF',
+              value: 'PROOF',
+            },
+          ],
         },
         {
-          label: 'SHORT',
-          value: 'SHORT',
-        },
-        {
-          label: 'TF',
-          value: 'TF',
-        },
-        {
-          label: 'PROOF',
-          value: 'PROOF',
+          name: 'tags',
+          type: 'relationship',
+          relationTo: 'tags',
+          hasMany: true,
+          defaultValue: () => [],
         },
       ],
     },
@@ -136,13 +148,6 @@ export const Problems: CollectionConfig = {
     {
       name: 'answer',
       type: 'textarea',
-    },
-    {
-      name: 'tags',
-      type: 'relationship',
-      relationTo: 'tags',
-      hasMany: true,
-      defaultValue: () => [],
     },
   ],
 }
