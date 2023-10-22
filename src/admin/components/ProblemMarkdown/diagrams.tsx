@@ -10,7 +10,6 @@ type BlockType = typeof blockTypes[number]
 
 export interface DiagramBlock {
   blockType: BlockType
-  [key: string]: unknown
 }
 
 export const isDiagramBlock = (value: unknown): value is DiagramBlock => {

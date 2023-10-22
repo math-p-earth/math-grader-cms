@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Problem } from 'payload/generated-types'
 
-import { LatexMarkdown } from '../../fields/LatexField/LatexMarkdown'
+import { ProblemMarkdown } from '../ProblemMarkdown'
 import { EditProblemButton } from './EditProblemButton'
 import { ProblemNumberIcon } from './ProblemNumberIcon'
 import './index.scss'
 
-export type ProblemCardProblemItem = Pick<Problem, 'content' | 'choices'> &
+export type ProblemCardProblemItem = Pick<Problem, 'content' | 'choices' | 'diagrams'> &
   Partial<Pick<Problem, 'id'>>
 
 interface ProblemCardProps {
@@ -29,12 +29,12 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
         {typeof order !== 'undefined' && <ProblemNumberIcon>{order}</ProblemNumberIcon>}
         {problem.id && <EditProblemButton problemId={problem.id} refreshData={refreshData} />}
       </div>
-      <LatexMarkdown>{problem.content}</LatexMarkdown>
+      <ProblemMarkdown diagrams={problem.diagrams}>{problem.content}</ProblemMarkdown>
       {problem.choices && problem.choices.length > 0 && (
         <ol>
           {problem.choices.map(({ choice, id }) => (
             <li key={id}>
-              <LatexMarkdown>{choice}</LatexMarkdown>
+              <ProblemMarkdown>{choice}</ProblemMarkdown>
             </li>
           ))}
         </ol>

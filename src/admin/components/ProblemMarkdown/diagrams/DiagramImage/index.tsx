@@ -14,7 +14,7 @@ const baseClass = 'diagram-image'
 export const DiagramImage: React.FC<DiagramImageProps> = ({ diagram }) => {
   const {
     query: { data, status },
-  } = useQueryMedia({ id: diagram.image as string })
+  } = useQueryMedia({ image: diagram.image as string })
   if (status !== 'success') {
     return null
   }
