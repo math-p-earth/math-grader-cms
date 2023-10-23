@@ -33,12 +33,12 @@ jobs:
       - name: Set build env (develop)
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/develop')
         run: |
-          mv .env.build.develop
+          mv .env.build.develop .env
 
       - name: Set build env (production)
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
-          mv .env.build.production
+          mv .env.build.production .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

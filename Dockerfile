@@ -14,6 +14,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+COPY .env .env
 COPY src ./src
 COPY tsconfig.json ./
 RUN pnpm build
