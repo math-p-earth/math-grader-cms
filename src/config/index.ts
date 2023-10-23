@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 
 dotenv.config()
+// read from this path on production
+dotenv.config({ path: './env/.env' })
 
 // TODO: use t3-env to configure environment variables
 export const NODE_ENV = process.env.NODE_ENV

@@ -13,7 +13,7 @@ spec:
       serviceAccountName: math-grader-cms@math-p-earth.iam.gserviceaccount.com
       containers:
         - volumeMounts:
-            - mountPath: /app
+            - mountPath: /app/env
               name: envfile
           image: ${IMAGE}
           ports:
