@@ -11,6 +11,10 @@ on:
         description: Region to deploy to
         required: true
         type: string
+      metadata-path:
+        description: Path to metadata file
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -26,12 +30,12 @@ jobs:
           workload_identity_provider: projects/198474744222/locations/global/workloadIdentityPools/pool/providers/github
           service_account: github-actions@math-p-earth.iam.gserviceaccount.com
 
-      - name: Set metadata file
+      - name: Set metadata image
         run: |
-          sed -i 's|\${IMAGE}|${{ inputs.image-tag }}|g' .github/workflows/cloud-run-metadatas/math-grader-cms.yml
+          sed -i 's|\${IMAGE}|${{ inputs.image-tag }}|g' ${{ inputs.metadata-path }}
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          metadata: .github/workflows/cloud-run-metadatas/math-grader-cms.yml
+          metadata: ${{ inputs.metadata-path }}
           region: ${{ inputs.region }}

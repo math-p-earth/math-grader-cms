@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: math-grader-cms
+  name: math-grader-cms-production
 spec:
   template:
     metadata:
@@ -28,4 +28,4 @@ spec:
             items:
               - key: latest
                 path: .env
-            secretName: MATH_GRADER_CMS_ENV_DEVELOP
+            secretName: MATH_GRADER_CMS_ENV_PRODUCTION # TODO: change to MATH_GRADER_CMS_ENV_PRODUCTION

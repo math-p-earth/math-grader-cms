@@ -42,3 +42,4 @@ jobs:
     with:
       image-tag: ${{ needs.build-push.outputs.image-tag }}
       region: asia-southeast1
+      metadata-path: .github/workflows/cloud-run-metadatas/math-grader-cms.yml
