@@ -10,6 +10,7 @@ spec:
         run.googleapis.com/execution-environment: gen2
         run.googleapis.com/startup-cpu-boost: 'true'
     spec:
+      serviceAccountName: math-grader-cms@math-p-earth.iam.gserviceaccount.com
       containers:
         - volumeMounts:
             - mountPath: /app
