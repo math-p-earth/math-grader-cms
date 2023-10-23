@@ -11,55 +11,9 @@ spec:
         run.googleapis.com/startup-cpu-boost: 'true'
     spec:
       containers:
-        - env:
-            - name: MONGODB_URI
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_MONGODB_URI
-            - name: PAYLOAD_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_PAYLOAD_SECRET
-            - name: CORS_ORIGINS
-              value: https://math-p-earth.netlify.app,https://math-p-earth.com,http://localhost:3000,http://localhost:3001
-            - name: GOOGLE_OAUTH_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_GOOGLE_OAUTH_CLIENT_ID
-            - name: GOOGLE_OAUTH_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_GOOGLE_OAUTH_CLIENT_SECRET
-            - name: S3_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_S3_ACCESS_KEY_ID
-            - name: S3_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_S3_SECRET_ACCESS_KEY
-            - name: S3_REGION
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_S3_REGION
-            - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  key: latest
-                  name: CMS_S3_BUCKET
-            # TODO: find a way to set build time env
-            # - name: PAYLOAD_PUBLIC_S3_PREFIX
-            #   valueFrom:
-            #     secretKeyRef:
-            #       key: latest
-            #       name: CMS_PAYLOAD_PUBLIC_S3_PREFIX
+        - volumeMounts:
+            - mountPath: /app
+              name: envfile
           image: ${IMAGE}
           ports:
             - containerPort: 8080
@@ -67,3 +21,10 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
+      volumes:
+        - name: envfile
+          secret:
+            items:
+              - key: latest
+                path: .env
+            secretName: MATH_GRADER_CMS_ENV_DEVELOP
