@@ -1,0 +1,37 @@
+name: Deploy to Cloud Run
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        description: Image tag to deploy
+        required: true
+        type: string
+      region:
+        description: Region to deploy to
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: projects/198474744222/locations/global/workloadIdentityPools/pool/providers/github
+          service_account: github-actions@math-p-earth.iam.gserviceaccount.com
+
+      - name: Set metadata file
+        run: |
+          sed -i 's|\${IMAGE}|${{ inputs.image-tag }}|g' .github/workflows/cloud-run-metadatas/math-grader-cms.yml
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          metadata: .github/workflows/cloud-run-metadatas/math-grader-cms.yml
+          region: ${{ inputs.region }}

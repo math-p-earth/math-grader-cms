@@ -1,0 +1,41 @@
+name: Release Production
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get tag value
+        id: tag
+        run: |
+          TAG=${GITHUB_REF#refs/*/}
+          echo "Working tag: $TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+  build-push:
+    needs:
+      - prepare
+    if: ${{ needs.prepare.outputs.tag }}
+    uses: ./.github/workflows/build-and-push-github-packages.yaml
+    with:
+      docker-tag: ${{ needs.prepare.outputs.tag }}
+
+  deploy:
+    needs:
+      - prepare
+      - build-push
+    uses: ./.github/workflows/deploy-ec2.yaml
+    with:
+      image-tag: ${{ needs.build-push.outputs.image-tag }}
+    secrets:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
