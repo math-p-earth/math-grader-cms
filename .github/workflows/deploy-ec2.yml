@@ -1,0 +1,53 @@
+name: Deploy to EC2
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        description: Image tag to deploy
+        required: true
+        type: string
+    secrets:
+      SSH_HOST:
+        description: Hostname of the server hosting the app
+        required: true
+      SSH_USERNAME:
+        description: Username to login to the server
+        required: true
+      SSH_PRIVATE_KEY:
+        description: Private key to login to the server
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        env:
+          IMAGE_TAG: ${{ inputs.image-tag }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: IMAGE_TAG
+          script: |
+            cd math-grader-cms
+
+            # Copy template compose file
+            cp docker-compose.yml.tmpl docker-compose.yml
+
+            # Replace placeholder variables
+            sed -i "s|{{IMAGE_TAG}}|$IMAGE_TAG|g" docker-compose.yml
+            sed -i "s|{{ENV_FILE}}|env/production.env|g" docker-compose.yml
+
+            # Up compose file
+            docker compose pull
+            docker compose up -d --remove-orphans
+
+            # Remove compose file
+            rm docker-compose.yml
+
+            # Remove all old images
+            docker image prune -af
