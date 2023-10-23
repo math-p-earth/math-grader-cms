@@ -29,7 +29,7 @@ jobs:
     needs:
       - prepare
     if: ${{ needs.prepare.outputs.tag }}
-    uses: ./.github/workflows/build-and-push-artifact-registry.yaml
+    uses: ./.github/workflows/build-and-push-artifact-registry.yml
     with:
       docker-tag: ${{ needs.prepare.outputs.tag }}
       region: asia-southeast1
@@ -38,7 +38,7 @@ jobs:
     needs:
       - prepare
       - build-push
-    uses: ./.github/workflows/deploy-cloud-run.yaml
+    uses: ./.github/workflows/deploy-cloud-run.yml
     with:
       image-tag: ${{ needs.build-push.outputs.image-tag }}
       region: asia-southeast1
