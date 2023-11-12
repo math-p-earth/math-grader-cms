@@ -16,6 +16,7 @@ export interface ProblemFilter {
   tagId?: string
   limit?: number
   page?: number
+  depth?: number | null
   resultOnNoFilter?: 'empty' | 'all'
 }
 
@@ -26,6 +27,7 @@ export const useFilterProblems = ({
   tagId,
   limit,
   page = 1,
+  depth = 1,
   resultOnNoFilter = 'empty',
 }: ProblemFilter) => {
   const {
@@ -84,6 +86,7 @@ export const useFilterProblems = ({
         ],
       }),
     },
+    ...(depth !== null && { depth: depth }),
     ...limitQuery,
   }
 
@@ -116,8 +119,7 @@ export const useFilterProblems = ({
         const sources: PaginatedDocs<Source> = await sourceResponse.json()
         const problemIds = sources.docs.flatMap((source) => source.problems as string[])
 
-        // add source filter to problem id
-        // TODO: move problem-source relationship field from Source to Problem for simpler query. Need to migrate existing data.
+        // add source filter to problem query
         problemQueryParams.where.id = {
           in: problemIds,
         }

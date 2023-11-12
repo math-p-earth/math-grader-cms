@@ -43,6 +43,7 @@ export interface ProblemList {
 export interface Problem {
   id: string;
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
+  tags?: string[] | Tag[];
   content: string;
   diagrams?: DiagramImageBlock[];
   choices?: {
@@ -51,7 +52,13 @@ export interface Problem {
     id?: string;
   }[];
   answer?: string;
-  tags?: string[] | Tag[];
+  sources?: string[] | Source[];
+  updatedAt: string;
+  createdAt: string;
+}
+export interface Tag {
+  id: string;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -75,12 +82,6 @@ export interface Media {
   filesize?: number;
   width?: number;
   height?: number;
-}
-export interface Tag {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
 }
 export interface Source {
   id: string;
@@ -124,7 +125,6 @@ export interface Submission {
   problem: string | Problem;
   student: string | Student;
   status: 'CORRECT_APPROVED' | 'CORRECT' | 'INCORRECT_APPROVED' | 'INCORRECT' | 'PENDING';
-  content?: string;
   file?: string | Upload;
   score?: number;
   comment?: string;

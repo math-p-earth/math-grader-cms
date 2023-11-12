@@ -34,7 +34,7 @@ export const ProblemTransferDrawer: React.FC<ProblemTransferDrawerProps> = ({
   // get sources
   const {
     query: { data: sourcesData },
-  } = useFilterSources({ searchInput: sourceSearchInput, limit: 10 })
+  } = useFilterSources({ searchInput: sourceSearchInput, limit: 10, depth: 0 })
 
   // get tags
   const {

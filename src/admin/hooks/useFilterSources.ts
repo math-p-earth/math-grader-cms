@@ -12,9 +12,16 @@ export interface SourceFilter {
   ids?: string[]
   limit?: number
   page?: number
+  depth?: number | null
 }
 
-export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFilter) => {
+export const useFilterSources = ({
+  searchInput,
+  ids,
+  limit,
+  page = 1,
+  depth = 1,
+}: SourceFilter) => {
   const {
     serverURL,
     routes: { api },
@@ -49,6 +56,7 @@ export const useFilterSources = ({ searchInput, ids, limit, page = 1 }: SourceFi
         },
       }),
     },
+    ...(depth !== null && { depth: depth }),
     ...limitQuery,
   }
 

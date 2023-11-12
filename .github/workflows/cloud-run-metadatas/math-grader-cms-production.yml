@@ -1,0 +1,31 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: math-grader-cms-production
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '1'
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      serviceAccountName: math-grader-cms@math-p-earth.iam.gserviceaccount.com
+      containers:
+        - volumeMounts:
+            - mountPath: /app/env
+              name: envfile
+          image: ${IMAGE}
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      volumes:
+        - name: envfile
+          secret:
+            items:
+              - key: latest
+                path: .env
+            secretName: MATH_GRADER_CMS_ENV_PRODUCTION # TODO: change to MATH_GRADER_CMS_ENV_PRODUCTION

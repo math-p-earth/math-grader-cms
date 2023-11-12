@@ -14,6 +14,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+COPY .env .env
 COPY src ./src
 COPY tsconfig.json ./
 RUN pnpm build
@@ -28,7 +29,5 @@ RUN pnpm install --frozen-lockfile --production
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/build ./build
-
-EXPOSE 3000
 
 CMD ["pnpm", "serve"]

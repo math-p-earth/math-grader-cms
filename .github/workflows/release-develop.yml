@@ -1,0 +1,45 @@
+name: Release Develop
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  # required by google-github-actions/auth@v0
+  id-token: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get tag value
+        id: tag
+        run: |
+          TAG=develop-${{ github.sha }}
+          echo "Working tag: $TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+  build-push:
+    needs:
+      - prepare
+    if: ${{ needs.prepare.outputs.tag }}
+    uses: ./.github/workflows/build-and-push-artifact-registry.yml
+    with:
+      docker-tag: ${{ needs.prepare.outputs.tag }}
+      region: asia-southeast1
+
+  deploy:
+    needs:
+      - prepare
+      - build-push
+    uses: ./.github/workflows/deploy-cloud-run.yml
+    with:
+      image-tag: ${{ needs.build-push.outputs.image-tag }}
+      region: asia-southeast1
+      metadata-path: .github/workflows/cloud-run-metadatas/math-grader-cms-develop.yml
