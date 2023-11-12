@@ -14,7 +14,7 @@ function backpopulateFieldHook<TSlug extends keyof Config['collections']>({
   return async ({ req, data }) => {
     const { payload, collection } = req
     if (!collection || !data) {
-      throw new Error('collection or data not found in request')
+      return []
     }
 
     const fromCollection = payload.config.collections.find(
