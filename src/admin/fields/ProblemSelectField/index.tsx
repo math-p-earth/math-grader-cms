@@ -37,7 +37,8 @@ export const ProblemSelect: React.FC<ProblemSelectProps> = ({
       <Label htmlFor={`field-${path.replace(/\./gi, '__')}`} label={label} required={required} />
       <ProblemTransferDrawer toggleLabel="+ Add New" path={path} />
 
-      {status == 'success' && <ProblemCardList problems={data.docs} refreshData={refetch} />}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'success' && <ProblemCardList problems={data.docs} refreshData={refetch} />}
     </div>
   )
 }
