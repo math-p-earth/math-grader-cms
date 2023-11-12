@@ -3,6 +3,7 @@ import { Access, CollectionConfig } from 'payload/types'
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/fields/LatexField'
+import { BackpopulateField } from '../../fields/Backpopulate'
 import { Course, Problem, ProblemList, Source } from '../../payload-types'
 import { DiagramImageBlock } from './diagram-blocks/Image'
 
@@ -149,5 +150,11 @@ export const Problems: CollectionConfig = {
       name: 'answer',
       type: 'textarea',
     },
+    BackpopulateField({
+      name: 'sources',
+      label: 'Sources',
+      relationFrom: 'sources',
+      relationField: 'problems',
+    }),
   ],
 }
