@@ -4,17 +4,18 @@ import { Field, FieldHook } from 'payload/types'
 
 type BackpopulateFieldHookOptions<TSlug extends keyof Config['collections']> = Pick<
   BackpopulateFieldOptions<TSlug>,
-  'relationFrom' | 'relationField'
+  'relationFrom' | 'relationField' | 'hasMany'
 >
 
 function backpopulateFieldHook<TSlug extends keyof Config['collections']>({
   relationFrom,
   relationField,
+  hasMany = false,
 }: BackpopulateFieldHookOptions<TSlug>): FieldHook {
   return async ({ req, data }) => {
     const { payload, collection } = req
     if (!collection || !data) {
-      return []
+      return emptyValueFor(hasMany)
     }
 
     const fromCollection = payload.config.collections.find(
@@ -49,8 +50,16 @@ function backpopulateFieldHook<TSlug extends keyof Config['collections']>({
     })
     const relatedIds = relatedDocs.docs.map((doc) => doc.id)
 
+    if (!hasMany) {
+      return relatedIds.length > 0 ? relatedIds[0] : null
+    }
+
     return relatedIds
   }
+}
+
+function emptyValueFor(hasMany: boolean): string[] | null {
+  return hasMany ? [] : null
 }
 
 const clearFieldData: FieldHook = () => {
@@ -64,6 +73,16 @@ export interface BackpopulateFieldOptions<TSlug extends keyof Config['collection
   name: string
 
   /**
+   * The label to display in the admin UI
+   */
+  label: string
+
+  /**
+   * Whether the field is a one-to-many relationship
+   */
+  hasMany?: boolean
+
+  /**
    * The collection to backpopulate relation from
    */
   relationFrom: TSlug
@@ -72,11 +91,6 @@ export interface BackpopulateFieldOptions<TSlug extends keyof Config['collection
    * The field to compare id with
    */
   relationField: keyof Config['collections'][TSlug] & string
-
-  /**
-   * The label to display in the admin UI
-   */
-  label: string
 }
 
 export function BackpopulateField<TSlug extends keyof Config['collections']>({
@@ -84,6 +98,7 @@ export function BackpopulateField<TSlug extends keyof Config['collections']>({
   relationFrom,
   relationField,
   label,
+  hasMany = false,
 }: BackpopulateFieldOptions<TSlug>): Field {
   return {
     name: name,
@@ -93,12 +108,13 @@ export function BackpopulateField<TSlug extends keyof Config['collections']>({
       readOnly: true,
     },
     relationTo: relationFrom,
-    hasMany: true,
+    hasMany: hasMany,
     hooks: {
       afterRead: [
         backpopulateFieldHook({
           relationFrom,
           relationField,
+          hasMany,
         }),
       ],
       beforeChange: [clearFieldData],
