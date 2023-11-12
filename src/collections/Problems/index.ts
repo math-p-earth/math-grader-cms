@@ -151,8 +151,9 @@ export const Problems: CollectionConfig = {
       type: 'textarea',
     },
     BackpopulateField({
-      name: 'sources',
-      label: 'Sources',
+      name: 'source',
+      label: 'Source',
+      hasMany: false,
       relationFrom: 'sources',
       relationField: 'problems',
     }),

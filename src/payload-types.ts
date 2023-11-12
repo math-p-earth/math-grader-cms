@@ -52,7 +52,7 @@ export interface Problem {
     id?: string;
   }[];
   answer?: string;
-  sources?: string[] | Source[];
+  source?: string | Source;
   updatedAt: string;
   createdAt: string;
 }
