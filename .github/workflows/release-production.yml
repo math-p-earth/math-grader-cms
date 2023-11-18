@@ -34,7 +34,7 @@ jobs:
       - build-push
     uses: ./.github/workflows/deploy-ec2.yml
     with:
-      image-tag: ${{ needs.build-push.outputs.image-tag }}
+      image-tag: ${{ needs.prepare.outputs.tag }}
     secrets:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
