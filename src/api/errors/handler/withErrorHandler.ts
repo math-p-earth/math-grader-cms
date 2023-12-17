@@ -1,3 +1,4 @@
+import typia from 'typia'
 import { z } from 'zod'
 
 import { RouteHandler } from '../../routes/types'
@@ -11,6 +12,12 @@ export const withErrorHandler: (handler: RouteHandler) => RouteHandler = (handle
       if (err instanceof z.ZodError) {
         next({
           message: err.issues,
+        })
+      }
+      if (err instanceof typia.TypeGuardError) {
+        next({
+          message: err.message,
+          error: err,
         })
       }
       next(err)
