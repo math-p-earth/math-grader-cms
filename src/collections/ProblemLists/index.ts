@@ -2,7 +2,8 @@ import { Access, CollectionConfig } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
-import { ProblemSelect } from '../../admin/fields/ProblemSelectField'
+import { DownloadProblemListButtonField } from '../../admin/fields/DownloadProblemListButtonField'
+import { ProblemSelectField } from '../../admin/fields/ProblemSelectField'
 import { Course, ProblemList } from '../../payload-types'
 
 const ProblemListsReadAccess: Access<ProblemList, UserTypes> = ({ req: { user } }) => {
@@ -78,8 +79,18 @@ export const ProblemLists: CollectionConfig = {
       required: true,
       admin: {
         components: {
-          Field: ProblemSelect,
+          Field: ProblemSelectField,
         },
+      },
+    },
+    {
+      name: 'downloadButton',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: DownloadProblemListButtonField,
+        },
+        position: 'sidebar',
       },
     },
   ],

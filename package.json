@@ -44,6 +44,7 @@
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "slate": "^0.84.0",
+    "sonner": "^1.2.4",
     "zod": "^3.20.2"
   },
   "devDependencies": {

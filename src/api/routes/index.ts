@@ -28,8 +28,8 @@ const problemEndpoints: Endpoint[] = [
 
 const problemListEndpoints: Endpoint[] = [
   {
-    path: '/problem-lists/download',
-    method: 'post',
+    path: '/problem-lists/:problemListId/download',
+    method: 'get',
     handler: problemListDownloadHandler,
   },
 ]

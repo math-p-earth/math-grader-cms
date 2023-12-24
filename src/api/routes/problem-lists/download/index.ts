@@ -13,14 +13,16 @@ export const problemListDownloadSchema = z.object({
 })
 
 async function problemListDownloadHandler(
-  { body, payload, user }: PayloadRequest<AuthUser>,
+  { params, payload, user }: PayloadRequest<AuthUser>,
   res: Response
 ) {
   if (!user) {
-    console.log('user not found')
     throw new Forbidden()
   }
-  const { problemListId } = problemListDownloadSchema.parse(body)
+  if (!('problemListId' in params)) {
+    throw new APIError(`problemListId is required`, 400)
+  }
+  const problemListId = params.problemListId as string
   const problemList = await payload.findByID({
     collection: 'problem-lists',
     id: problemListId,
