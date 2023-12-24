@@ -2,19 +2,19 @@ import { APIError, Forbidden } from 'payload/errors'
 import { PayloadRequest } from 'payload/types'
 
 import { Response } from 'express'
-import typia from 'typia'
+import { z } from 'zod'
 
 import { withErrorHandler } from '../../../errors/handler/withErrorHandler'
 
-interface ProblemListDownloadRequest {
-  problemListId: string
-}
+export const problemListDownloadSchema = z.object({
+  problemListId: z.string(),
+})
 
 async function problemListDownloadHandler({ body, payload, user }: PayloadRequest, res: Response) {
   if (!user) {
     throw new Forbidden()
   }
-  const { problemListId } = typia.assert<ProblemListDownloadRequest>(body)
+  const { problemListId } = problemListDownloadSchema.parse(body)
   const problemList = await payload.findByID({
     collection: 'problem-lists',
     id: problemListId,

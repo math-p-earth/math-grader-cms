@@ -13,12 +13,7 @@
     "paths": {
       "payload/generated-types": ["./src/payload-types.ts"]
     },
-    "strictNullChecks": true,
-    "plugins": [
-      {
-        "transform": "typia/lib/transform"
-      }
-    ]
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "build"],

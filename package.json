@@ -13,8 +13,7 @@
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
-    "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
-    "prepare": "ts-patch install && typia patch"
+    "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.428.0",
@@ -44,7 +43,6 @@
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "slate": "^0.84.0",
-    "typia": "^5.3.5",
     "zod": "^3.20.2"
   },
   "devDependencies": {
@@ -66,7 +64,6 @@
     "nodemon": "^2.0.6",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.2",
-    "ts-patch": "^3.1.1",
     "typescript": "^5.3.2"
   }
 }

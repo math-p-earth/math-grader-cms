@@ -14,12 +14,6 @@ export const withErrorHandler: (handler: RouteHandler) => RouteHandler = (handle
           message: err.issues,
         })
       }
-      if (err instanceof typia.TypeGuardError) {
-        next({
-          message: err.message,
-          error: err,
-        })
-      }
       next(err)
     }
   }
