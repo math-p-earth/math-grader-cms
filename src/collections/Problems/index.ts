@@ -1,4 +1,4 @@
-import { Access, CollectionConfig } from 'payload/types'
+import { Access, CollectionConfig, Condition } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
@@ -112,7 +112,7 @@ export const Problems: CollectionConfig = {
       name: 'choices',
       type: 'array',
       admin: {
-        condition: (data: Problem) => data.type === 'MCQ',
+        condition: ((data: Partial<Problem>) => data.type === 'MCQ') as Condition<Problem>,
       },
       fields: [
         {

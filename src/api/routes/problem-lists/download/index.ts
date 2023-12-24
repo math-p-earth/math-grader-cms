@@ -4,14 +4,20 @@ import { PayloadRequest } from 'payload/types'
 import { Response } from 'express'
 import { z } from 'zod'
 
+import { AuthUser } from '../../../../access/type'
 import { withErrorHandler } from '../../../errors/handler/withErrorHandler'
+import { mathWorkerClient } from '../../../external/math-worker/client'
 
 export const problemListDownloadSchema = z.object({
   problemListId: z.string(),
 })
 
-async function problemListDownloadHandler({ body, payload, user }: PayloadRequest, res: Response) {
+async function problemListDownloadHandler(
+  { body, payload, user }: PayloadRequest<AuthUser>,
+  res: Response
+) {
   if (!user) {
+    console.log('user not found')
     throw new Forbidden()
   }
   const { problemListId } = problemListDownloadSchema.parse(body)
@@ -29,8 +35,14 @@ async function problemListDownloadHandler({ body, payload, user }: PayloadReques
       404
     )
   }
-  // TODO: call grpc service to generate pdf
-  // TODO: return response as pdf
+
+  const { buffer, headers } = await mathWorkerClient.generateProblemListFile(user.id, problemList)
+  res.setHeader('Content-Type', headers.get('Content-Type') ?? 'application/pdf')
+  res.setHeader(
+    'Content-Disposition',
+    headers.get('Content-Disposition') ?? `attachment; filename=${problemList.name}.pdf`
+  )
+  res.send(buffer)
 }
 
 export default withErrorHandler(problemListDownloadHandler)
