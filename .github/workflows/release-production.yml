@@ -32,7 +32,7 @@ jobs:
     needs:
       - prepare
       - build-push
-    uses: ./.github/workflows/deploy-ec2.yml
+    uses: ./.github/workflows/deploy-server.yml
     with:
       image-tag: ${{ needs.prepare.outputs.tag }}
     secrets:

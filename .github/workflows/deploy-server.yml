@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy to server
 
 on:
   workflow_call:
@@ -33,7 +33,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: IMAGE_TAG
           script: |
-            cd math-grader-cms
+            cd deploy-configs/math-grader-cms
 
             # Copy template compose file
             cp docker-compose.yml.tmpl docker-compose.yml
