@@ -1,3 +1,4 @@
+import typia from 'typia'
 import { z } from 'zod'
 
 import { RouteHandler } from '../../routes/types'

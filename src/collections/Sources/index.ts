@@ -1,8 +1,8 @@
-import { Access, CollectionConfig, Field } from 'payload/types'
+import { Access, CollectionConfig, Condition, Field } from 'payload/types'
 
 import { hasRoles } from '../../access/hasRoles'
 import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
-import { ProblemSelect } from '../../admin/fields/ProblemSelectField'
+import { ProblemSelectField } from '../../admin/fields/ProblemSelectField'
 import { Course, Source } from '../../payload-types'
 
 const bookFields: Field[] = [
@@ -113,7 +113,7 @@ export const Sources: CollectionConfig = {
       defaultValue: () => [],
       admin: {
         components: {
-          Field: ProblemSelect,
+          Field: ProblemSelectField,
         },
       },
     },
@@ -123,7 +123,7 @@ export const Sources: CollectionConfig = {
       type: 'group',
       fields: bookFields,
       admin: {
-        condition: (data: Source) => data.type === 'BOOK',
+        condition: ((data: Partial<Source>) => data.type === 'BOOK') as Condition<Source>,
         hideGutter: true,
       },
     },
@@ -133,7 +133,7 @@ export const Sources: CollectionConfig = {
       type: 'group',
       fields: paperFields,
       admin: {
-        condition: (data: Source) => data.type === 'PAPER',
+        condition: ((data: Partial<Source>) => data.type === 'PAPER') as Condition<Source>,
         hideGutter: false,
       },
     },

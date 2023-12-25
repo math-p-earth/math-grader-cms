@@ -1,6 +1,7 @@
 import { Endpoint } from 'payload/config'
 
 import authGoogleVerifyHandler from './auth/google/verify'
+import problemListDownloadHandler from './problem-lists/download'
 import problemsUploadHandler from './problems/upload'
 import studentsRegister from './students/register'
 
@@ -25,4 +26,16 @@ const problemEndpoints: Endpoint[] = [
   },
 ]
 
-export const endpoints: Endpoint[] = [...authEndpoints, ...problemEndpoints]
+const problemListEndpoints: Endpoint[] = [
+  {
+    path: '/problem-lists/:problemListId/download',
+    method: 'get',
+    handler: problemListDownloadHandler,
+  },
+]
+
+export const endpoints: Endpoint[] = [
+  ...authEndpoints,
+  ...problemEndpoints,
+  ...problemListEndpoints,
+]

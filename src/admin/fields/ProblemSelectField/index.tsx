@@ -13,7 +13,7 @@ export type ProblemSelectProps = Omit<RelationshipField, 'type'> & {
   path: string
 }
 
-export const ProblemSelect: React.FC<ProblemSelectProps> = ({
+export const ProblemSelectField: React.FC<ProblemSelectProps> = ({
   path,
   label,
   required,
