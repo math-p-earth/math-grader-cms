@@ -33,7 +33,13 @@ const RenderInput: React.FC<RenderInputProps> = ({ inputPath }) => {
     return (
       <div>
         <h3>Invalid input</h3>
-        <p>{err.message}</p>
+        {err instanceof Error && (
+          <p>
+            {err.message}
+            <br />
+            {err.stack && <code>{err.stack}</code>}
+          </p>
+        )}
       </div>
     )
   }

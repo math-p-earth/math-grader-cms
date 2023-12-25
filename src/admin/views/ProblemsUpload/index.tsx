@@ -66,7 +66,7 @@ const ProblemsUploadView: AdminViewComponent = ({ user, canAccessAdmin }) => {
         className={`${baseClass}__form`}
         method="post"
         action="/api/problems/upload"
-        onSuccess={onSuccess}
+        onSuccess={(json) => onSuccess(json as UploadProblemResponse)}
       >
         <Gutter>
           <h1>Upload Problems in Bulk</h1>

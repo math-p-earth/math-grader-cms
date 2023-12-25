@@ -37,7 +37,12 @@ const StudentsRegister: AdminViewComponent = () => {
     )
   }
 
-  const initialData = {
+  const initialData: {
+    idToken: string
+    email?: string
+    firstName?: string
+    lastName?: string
+  } = {
     idToken: idToken,
   }
   try {
