@@ -1,8 +1,6 @@
-import { useCallback } from 'react'
-
 import { toast } from 'sonner'
 
-export const downloadFile = (data: ArrayBuffer, filename: string, type = 'application/pdf') => {
+const downloadFileFromBuffer = (data: ArrayBuffer, filename: string, type = 'application/pdf') => {
   if (!window) {
     throw new Error('window not found')
   }
@@ -18,14 +16,14 @@ export const downloadFile = (data: ArrayBuffer, filename: string, type = 'applic
   a.remove()
 }
 
-export const downloadFromResponse = async (response: Response): Promise<string> => {
+const downloadFromResponse = async (response: Response): Promise<string> => {
   const buffer = await response.arrayBuffer()
   const filename = filenameFromResponse(response)
-  downloadFile(buffer, filename)
+  downloadFileFromBuffer(buffer, filename)
   return filename
 }
 
-export const filenameFromResponse = (response: Response): string => {
+const filenameFromResponse = (response: Response): string => {
   const filename =
     response.headers.get('Content-Disposition')?.split('filename=')[1].split('"').join('') ?? ''
   return filename
@@ -36,25 +34,19 @@ export interface DownloadOptions {
   method?: 'GET' | 'POST'
 }
 
-export const useDownload = () => {
-  const download = useCallback(async ({ url, method = 'GET' }: DownloadOptions) => {
-    const promise = fetch(url, {
-      method: method,
-      credentials: 'include',
-    })
-    toast.promise(promise, {
-      loading: 'Downloading...',
-      description: 'This may take up to 10 seconds.',
-      success: (response: Response) => {
-        const filename = filenameFromResponse(response)
-        downloadFromResponse(response)
-        return `Downloaded ${filename}!`
-      },
-      error: 'Error downloading file.',
-    })
-  }, [])
-
-  return {
-    download,
-  }
+export function downloadFile({ url, method = 'GET' }: DownloadOptions) {
+  const promise = fetch(url, {
+    method: method,
+    credentials: 'include',
+  })
+  toast.promise(promise, {
+    loading: 'Downloading...',
+    description: 'This may take up to 10 seconds.',
+    success: (response: Response) => {
+      const filename = filenameFromResponse(response)
+      downloadFromResponse(response)
+      return `Downloaded ${filename}!`
+    },
+    error: 'Error downloading file.',
+  })
 }
