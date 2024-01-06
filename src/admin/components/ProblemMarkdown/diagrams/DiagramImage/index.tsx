@@ -3,13 +3,10 @@ import React from 'react'
 import { DiagramImageBlock, Media } from 'payload/generated-types'
 
 import { useQueryMedia } from '../../../../hooks/useQueryMedia'
-import './index.scss'
 
 interface DiagramImageProps {
   diagram: DiagramImageBlock
 }
-
-const baseClass = 'diagram-image'
 
 export const DiagramImage: React.FC<DiagramImageProps> = ({ diagram }) => {
   const { query } = useQueryMedia({ image: diagram.image })
@@ -20,16 +17,16 @@ export const DiagramImage: React.FC<DiagramImageProps> = ({ diagram }) => {
 
   const [width, height] = getComputedWidthHeight(image, diagram.width, diagram.height)
   return (
-    <div className={baseClass}>
+    <div className="flex flex-col items-center">
       <img
-        className={`${baseClass}__img`}
+        className="object-contain"
         src={image.url}
         alt={image.filename}
         width={width}
         height={height}
         style={{ width, height }}
       />
-      {diagram.caption && <caption className={`${baseClass}__caption`}>{diagram.caption}</caption>}
+      {diagram.caption && <caption className="text-sm italic">{diagram.caption}</caption>}
     </div>
   )
 }

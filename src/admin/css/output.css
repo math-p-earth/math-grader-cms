@@ -162,16 +162,38 @@
   grid-template-columns: repeat(9, minmax(0, 1fr))
 }
 
+.flex-col {
+  flex-direction: column
+}
+
 .content-end {
   align-content: flex-end
+}
+
+.items-center {
+  align-items: center
 }
 
 .gap-2 {
   gap: 0.5rem
 }
 
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain
+}
+
 .pl-4 {
   padding-left: 1rem
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem
+}
+
+.italic {
+  font-style: italic
 }
 
 .filter {
