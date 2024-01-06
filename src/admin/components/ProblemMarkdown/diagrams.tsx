@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { DiagramImageBlock } from 'payload/generated-types'
+import { DiagramImageBlock, DiagramListBlock } from 'payload/generated-types'
 
 import { DiagramImage } from './diagrams/DiagramImage'
+import { DiagramList } from './diagrams/DiagramList'
 
 // add future block types here
-const blockTypes = ['diagram-image'] as const
+const blockTypes = ['diagram-image', 'diagram-list'] as const
 type BlockType = typeof blockTypes[number]
 
 export interface DiagramBlock {
@@ -50,5 +51,7 @@ export const ProblemDiagram: React.FC<ProblemDiagramProps> = ({ diagram }) => {
   switch (diagram.blockType) {
     case 'diagram-image':
       return <DiagramImage diagram={diagram as unknown as DiagramImageBlock} />
+    case 'diagram-list':
+      return <DiagramList diagram={diagram as unknown as DiagramListBlock} />
   }
 }

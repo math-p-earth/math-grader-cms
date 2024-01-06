@@ -5,7 +5,7 @@ import { UserTypes, isTypeApprovedStudent, isTypeUser } from '../../access/type'
 import { generateLatexField } from '../../admin/fields/LatexField'
 import { BackpopulateField } from '../../fields/Backpopulate'
 import { Course, Problem, ProblemList, Source } from '../../payload-types'
-import { DiagramImageBlock } from './diagram-blocks/Image'
+import { diagramBlockConfigs } from './diagram-blocks'
 
 const ProblemsReadAccess: Access<Problem, UserTypes> = ({ req: { user } }) => {
   if (isTypeUser(user)) {
@@ -102,7 +102,7 @@ export const Problems: CollectionConfig = {
     {
       name: 'diagrams',
       type: 'blocks',
-      blocks: [DiagramImageBlock],
+      blocks: diagramBlockConfigs,
       admin: {
         description:
           "Diagrams are added after the problem's content. Placeholders (<1>, <2>, etc.) can be used to inject diagrams in the middle of the content.",
@@ -138,7 +138,7 @@ export const Problems: CollectionConfig = {
         {
           name: 'diagrams',
           type: 'blocks',
-          blocks: [DiagramImageBlock],
+          blocks: diagramBlockConfigs,
           admin: {
             description:
               "Diagrams are added after the problem's content. Placeholders (<1>, <2>, etc.) can be used to inject diagrams in the middle of the content.",

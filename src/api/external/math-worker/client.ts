@@ -16,6 +16,15 @@ export const diagramSchema = z.discriminatedUnion('blockType', [
     width: z.number().optional(),
     height: z.number().optional(),
   }),
+  z.object({
+    blockType: z.literal('diagram-list'),
+    itemsPerLine: z.number(),
+    items: z.array(
+      z.object({
+        content: z.string(),
+      })
+    ),
+  }),
 ])
 
 export const problemChoiceSchema = z.object({

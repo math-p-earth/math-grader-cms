@@ -1,4 +1,11 @@
-import { DiagramImageBlock, Media, Problem, ProblemList, Source } from 'payload/generated-types'
+import {
+  DiagramImageBlock,
+  DiagramListBlock,
+  Media,
+  Problem,
+  ProblemList,
+  Source,
+} from 'payload/generated-types'
 
 import { z } from 'zod'
 
@@ -10,8 +17,9 @@ import {
   sourceSchema,
 } from './client'
 
-// TODO: add more union types for other diagram types
-export const mapDiagramToContract = (diagram: DiagramImageBlock): z.infer<typeof diagramSchema> => {
+export const mapDiagramToContract = (
+  diagram: DiagramImageBlock | DiagramListBlock
+): z.infer<typeof diagramSchema> => {
   switch (diagram.blockType) {
     case 'diagram-image': {
       const image = diagram.image as Media
@@ -21,6 +29,15 @@ export const mapDiagramToContract = (diagram: DiagramImageBlock): z.infer<typeof
         caption: diagram.caption,
         width: diagram.width ?? image.width,
         height: diagram.height ?? image.width,
+      }
+    }
+    case 'diagram-list': {
+      return {
+        blockType: diagram.blockType,
+        itemsPerLine: diagram.itemsPerLine,
+        items: diagram.items.map((item) => ({
+          content: item.content,
+        })),
       }
     }
   }

@@ -45,10 +45,10 @@ export interface Problem {
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
   tags?: string[] | Tag[];
   content: string;
-  diagrams?: DiagramImageBlock[];
+  diagrams?: (DiagramImageBlock | DiagramListBlock)[];
   choices?: {
     choice: string;
-    diagrams?: DiagramImageBlock[];
+    diagrams?: (DiagramImageBlock | DiagramListBlock)[];
     id?: string;
   }[];
   answer?: string;
@@ -82,6 +82,16 @@ export interface Media {
   filesize?: number;
   width?: number;
   height?: number;
+}
+export interface DiagramListBlock {
+  itemsPerLine: number;
+  items: {
+    content: string;
+    id?: string;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'diagram-list';
 }
 export interface Source {
   id: string;
