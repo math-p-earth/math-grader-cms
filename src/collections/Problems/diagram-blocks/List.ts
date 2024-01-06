@@ -15,9 +15,12 @@ export const DiagramListBlock: Block = {
       type: 'number',
       required: true,
       defaultValue: 1,
+      admin: {
+        description: 'Number of items per line. Must be between 1 and 12 (inclusive)',
+      },
       validate: (value) => {
-        if (Number(value) < 1) {
-          return 'Items per line must be positive'
+        if (!(Number(value) >= 1 && Number(value) <= 12)) {
+          return 'Items per line must be between 1 and 12 (inclusive)'
         }
         return true
       },

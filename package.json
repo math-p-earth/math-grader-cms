@@ -5,15 +5,16 @@
   "main": "dist/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
-    "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
+    "dev": "pnpm generate:tailwindcss && cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
+    "build:payload": "pnpm generate:tailwindcss && cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
     "build:server": "tsc",
     "build": "pnpm copyfiles && pnpm build:payload && pnpm build:server",
     "serve": "PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
-    "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
+    "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
+    "generate:tailwindcss": "npx tailwindcss -i ./src/admin/css/input.css -o ./src/admin/css/output.css"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.428.0",
@@ -45,6 +46,7 @@
     "remark-math": "^5.1.1",
     "slate": "^0.84.0",
     "sonner": "^1.2.4",
+    "tailwind-merge": "^2.2.0",
     "zod": "^3.20.2"
   },
   "devDependencies": {
@@ -65,6 +67,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "nodemon": "^2.0.6",
     "prettier": "^2.7.1",
+    "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.2"
   }

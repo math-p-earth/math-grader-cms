@@ -62,6 +62,7 @@ export default buildConfig({
     url: MONGODB_URI,
   }),
   admin: {
+    css: path.resolve(__dirname, 'admin/css/output.css'),
     user: Users.slug,
     indexHTML: path.join(__dirname, 'admin/index.html'),
     meta: {
