@@ -1,18 +1,18 @@
-import { Block } from 'payload/types'
+import { Block, Option } from 'payload/types'
 
 import { generateLatexField } from '../../../admin/fields/LatexField'
 
 export const diagramListOrderSchemes = [
-  'unordered:none',
-  'unordered:bullet',
-  'ordered:numbers',
-  'ordered:latex-numbers',
-  'ordered:letters-lower',
-  'ordered:letters-upper',
-  'ordered:latex-letters-lower',
-  'ordered:latex-letters-upper',
+  { value: 'unordered:none', label: 'unordered:none' },
+  { value: 'unordered:bullet', label: 'unordered:bullet "•"' },
+  { value: 'ordered:numbers', label: 'ordered:numbers "1."' },
+  { value: 'ordered:latex-numbers', label: 'ordered:latex-numbers "$(1)$"' },
+  { value: 'ordered:letters-lower', label: 'ordered:letters-lower "a."' },
+  { value: 'ordered:letters-upper', label: 'ordered:letters-upper "A."' },
+  { value: 'ordered:latex-letters-lower', label: 'ordered:latex-letters-lower "$(a)$"' },
+  { value: 'ordered:latex-letters-upper', label: 'ordered:latex-letters-upper "$(A)$"' },
 ] as const
-export type DiagramListOrderScheme = typeof diagramListOrderSchemes[number]
+export type DiagramListOrderScheme = typeof diagramListOrderSchemes[number]['value']
 
 export const DiagramListBlock: Block = {
   slug: 'diagram-list',
@@ -32,6 +32,7 @@ export const DiagramListBlock: Block = {
           defaultValue: 1,
           admin: {
             description: 'Number of items per line. Must be between 1 and 12 (inclusive)',
+            width: '50%',
           },
           validate: (value) => {
             if (!(Number(value) >= 1 && Number(value) <= 12)) {
@@ -45,7 +46,10 @@ export const DiagramListBlock: Block = {
           type: 'select',
           required: true,
           defaultValue: 'ordered:latex-numbers',
-          options: diagramListOrderSchemes as unknown as string[],
+          options: diagramListOrderSchemes as unknown as Option[],
+          admin: {
+            width: '50%',
+          },
         },
       ],
     },

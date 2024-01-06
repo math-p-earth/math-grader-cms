@@ -28,15 +28,18 @@ const gridCols: Record<number, string> = {
 export const DiagramList: React.FC<DiagramListProps> = ({ diagram }) => {
   const { itemsPerLine, orderScheme, items } = diagram
 
-  const gridCol = gridCols[itemsPerLine] ?? gridCols[1]
+  const gridCol = gridCols[itemsPerLine ?? 1] ?? gridCols[1]
 
   return (
     <div className={cn('pl-4 grid', gridCol)}>
       {items.map((item, index) => (
         <span key={index} className="flex gap-2">
-          {orderScheme !== 'unordered:none' && (
-            <LatexMarkdown>{getRowPrefix(index, orderScheme)}</LatexMarkdown>
-          )}
+          {orderScheme !== 'unordered:none' &&
+            (orderScheme?.includes('latex') ? (
+              <LatexMarkdown>{getRowPrefix(index, orderScheme)}</LatexMarkdown>
+            ) : (
+              <span>{getRowPrefix(index, orderScheme)}</span>
+            ))}
           <LatexMarkdown>{item.content}</LatexMarkdown>
         </span>
       ))}
