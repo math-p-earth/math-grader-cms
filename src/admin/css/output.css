@@ -102,6 +102,10 @@
   display: block
 }
 
+.flex {
+  display: flex
+}
+
 .grid {
   display: grid
 }
@@ -160,6 +164,10 @@
 
 .content-end {
   align-content: flex-end
+}
+
+.gap-2 {
+  gap: 0.5rem
 }
 
 .pl-4 {

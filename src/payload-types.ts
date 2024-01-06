@@ -85,6 +85,15 @@ export interface Media {
 }
 export interface DiagramListBlock {
   itemsPerLine: number;
+  orderScheme:
+    | 'unordered:none'
+    | 'unordered:bullet'
+    | 'ordered:numbers'
+    | 'ordered:latex-numbers'
+    | 'ordered:letters-lower'
+    | 'ordered:letters-upper'
+    | 'ordered:latex-letters-lower'
+    | 'ordered:latex-letters-upper';
   items: {
     content: string;
     id?: string;
@@ -173,7 +182,7 @@ export interface User {
   hash?: string;
   loginAttempts?: number;
   lockUntil?: string;
-  password: string;
+  password?: string;
 }
 export interface PayloadPreference {
   id: string;
