@@ -34,7 +34,7 @@ export const LatexField: React.FC<LatexFieldProps> = ({
     ...(diagramsFieldName ? [fields[diagramsFieldName]] : []),
   ])
   if (typeof sourceField?.value === 'undefined') {
-    return <span>Content is undefined!</span>
+    return <ProblemMarkdown>{''}</ProblemMarkdown>
   }
   const source = sourceField?.value as string
   const diagramsValue = diagramsFieldName ? diagramsField?.value : null

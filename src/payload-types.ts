@@ -45,10 +45,10 @@ export interface Problem {
   type: 'MCQ' | 'SHORT' | 'TF' | 'PROOF';
   tags?: string[] | Tag[];
   content: string;
-  diagrams?: (DiagramImageBlock | DiagramListBlock)[];
+  diagrams?: (DiagramImageBlock | DiagramListBlock | DiagramTableBlock)[];
   choices?: {
     choice: string;
-    diagrams?: (DiagramImageBlock | DiagramListBlock)[];
+    diagrams?: (DiagramImageBlock | DiagramListBlock | DiagramTableBlock)[];
     id?: string;
   }[];
   answer?: string;
@@ -101,6 +101,22 @@ export interface DiagramListBlock {
   id?: string;
   blockName?: string;
   blockType: 'diagram-list';
+}
+export interface DiagramTableBlock {
+  rows: number;
+  columns: number;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  id?: string;
+  blockName?: string;
+  blockType: 'diagram-table';
 }
 export interface Source {
   id: string;
