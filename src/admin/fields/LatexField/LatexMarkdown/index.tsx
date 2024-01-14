@@ -1,5 +1,8 @@
 import React, { memo } from 'react'
 
+import { type ClassValue } from 'clsx'
+
+import { cn } from '../../../utils/cn'
 import './index.scss'
 
 const ReactMarkdown = React.lazy(() => import('react-markdown'))
@@ -19,13 +22,18 @@ let remarkMath: typeof import('remark-math')['default']
 
 interface LatexMarkdownProps {
   children: string
+  className?: ClassValue
+  options?: {
+    disablePMarginBottom?: boolean
+  }
 }
 
 const baseClass = 'latex-markdown'
 
-export const LatexMarkdown = memo(({ children }: LatexMarkdownProps) => {
+export const LatexMarkdown = memo(({ children, className, options }: LatexMarkdownProps) => {
+  const featureClasses = [...(options?.disablePMarginBottom ? [] : [`${baseClass}_p-mb`])]
   return (
-    <div className={baseClass}>
+    <div className={cn(baseClass, ...featureClasses, className)}>
       <ReactMarkdown
         children={children}
         remarkPlugins={[remarkMath, remarkGfm, remarkFrontmatter]}

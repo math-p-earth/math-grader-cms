@@ -103,8 +103,6 @@ export interface DiagramListBlock {
   blockType: 'diagram-list';
 }
 export interface DiagramTableBlock {
-  rows: number;
-  columns: number;
   data:
     | {
         [k: string]: unknown;

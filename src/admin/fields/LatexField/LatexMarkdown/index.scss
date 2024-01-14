@@ -1,5 +1,11 @@
 .latex-markdown {
   p {
+    margin-bottom: 0;
+  }
+}
+
+.latex-markdown_p-mb {
+  p {
     margin-bottom: 1rem;
   }
 }
