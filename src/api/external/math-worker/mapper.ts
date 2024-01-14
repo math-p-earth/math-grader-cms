@@ -1,6 +1,7 @@
 import {
   DiagramImageBlock,
   DiagramListBlock,
+  DiagramTableBlock,
   Media,
   Problem,
   ProblemList,
@@ -9,6 +10,7 @@ import {
 
 import { z } from 'zod'
 
+import { diagramTableDataSchema } from '../../../collections/Problems/diagram-blocks/Table'
 import {
   diagramSchema,
   problemChoiceSchema,
@@ -18,7 +20,7 @@ import {
 } from './client'
 
 export const mapDiagramToContract = (
-  diagram: DiagramImageBlock | DiagramListBlock
+  diagram: DiagramImageBlock | DiagramListBlock | DiagramTableBlock
 ): z.infer<typeof diagramSchema> => {
   switch (diagram.blockType) {
     case 'diagram-image': {
@@ -38,6 +40,16 @@ export const mapDiagramToContract = (
         items: diagram.items.map((item) => ({
           content: item.content,
         })),
+      }
+    }
+    case 'diagram-table': {
+      const result = diagramTableDataSchema.safeParse(diagram.data)
+      if (result.success === false) {
+        throw new Error(`Failed to parse data field: ${result.error.errors.join('\n')}`)
+      }
+      return {
+        blockType: diagram.blockType,
+        data: result.data,
       }
     }
   }

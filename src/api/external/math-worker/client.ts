@@ -3,6 +3,7 @@ import { ProblemList } from 'payload/generated-types'
 import { initClient, initContract } from '@ts-rest/core'
 import { z } from 'zod'
 
+import { diagramTableDataSchema } from '../../../collections/Problems/diagram-blocks/Table'
 import { MATH_WORKER_URL } from '../../../config'
 import { mapProblemListToContract } from './mapper'
 
@@ -24,6 +25,10 @@ export const diagramSchema = z.discriminatedUnion('blockType', [
         content: z.string(),
       })
     ),
+  }),
+  z.object({
+    blockType: z.literal('diagram-table'),
+    data: diagramTableDataSchema,
   }),
 ])
 
